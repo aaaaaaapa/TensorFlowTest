@@ -1,0 +1,545 @@
+stk_code:ZYNE                ,exchange_type:P ,money_type:  ,hs_price: 0.85               ,em_price: 0.8504             
+stk_code:ZTAQW               ,exchange_type:P ,money_type:  ,hs_price: 0.3                ,em_price: 0.2963             
+stk_code:ZOM                 ,exchange_type:P ,money_type:  ,hs_price: 0.21               ,em_price: 0.2119             
+stk_code:ZKIN                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8066             
+stk_code:YVR                 ,exchange_type:P ,money_type:  ,hs_price: 0.36               ,em_price: 0.3599             
+stk_code:YJ                  ,exchange_type:P ,money_type:  ,hs_price: 0.86               ,em_price: 0.8550             
+stk_code:YGTYF               ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:YCBD                ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2260             
+stk_code:XYF                 ,exchange_type:P ,money_type:  ,hs_price: 2.33               ,em_price: 2.3250             
+stk_code:XTNT                ,exchange_type:P ,money_type:  ,hs_price: 0.66               ,em_price: 0.6618             
+stk_code:XSPA                ,exchange_type:P ,money_type:  ,hs_price: 0.76               ,em_price: 0.7551             
+stk_code:XL                  ,exchange_type:P ,money_type:  ,hs_price: 0.91               ,em_price: 0.9142             
+stk_code:XIN                 ,exchange_type:P ,money_type:  ,hs_price: 0.53               ,em_price: 0.5299             
+stk_code:XELA                ,exchange_type:P ,money_type:  ,hs_price: 0.49               ,em_price: 0.4911             
+stk_code:WKEY                ,exchange_type:P ,money_type:  ,hs_price: 1.44               ,em_price: 1.4401             
+stk_code:WISH                ,exchange_type:P ,money_type:  ,hs_price: 0.86               ,em_price: 0.8615             
+stk_code:WINT                ,exchange_type:P ,money_type:  ,hs_price: 0.31               ,em_price: 0.3126             
+stk_code:WINSF               ,exchange_type:P ,money_type:  ,hs_price: 0.027              ,em_price: 0.0220             
+stk_code:WAVE                ,exchange_type:P ,money_type:  ,hs_price: 3.76               ,em_price: 3.7550             
+stk_code:VYNT                ,exchange_type:P ,money_type:  ,hs_price: 0.54               ,em_price: 0.5424             
+stk_code:VWE                 ,exchange_type:P ,money_type:  ,hs_price: 2.87               ,em_price: 2.8650             
+stk_code:VTGN                ,exchange_type:P ,money_type:  ,hs_price: 0.15               ,em_price: 0.1520             
+stk_code:VST+A               ,exchange_type:P ,money_type:  ,hs_price: 0.24               ,em_price: 0.2409             
+stk_code:VLDR                ,exchange_type:P ,money_type:  ,hs_price: 0.98               ,em_price: 0.9756             
+stk_code:VISL                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4360             
+stk_code:VIRI                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3913             
+stk_code:VINO                ,exchange_type:P ,money_type:  ,hs_price: 0.22               ,em_price: 0.2204             
+stk_code:VIEWW               ,exchange_type:P ,money_type:  ,hs_price: 0.07               ,em_price: 0.0743             
+stk_code:VHAQ.RT             ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1288             
+stk_code:VGFC                ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1284             
+stk_code:VERB                ,exchange_type:P ,money_type:  ,hs_price: 0.49               ,em_price: 0.4883             
+stk_code:VENAR               ,exchange_type:P ,money_type:  ,hs_price: 0.3                ,em_price: 0.2999             
+stk_code:VEDU                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8075             
+stk_code:VCNX                ,exchange_type:P ,money_type:  ,hs_price: 0.48               ,em_price: 0.4765             
+stk_code:VBLT                ,exchange_type:P ,money_type:  ,hs_price: 0.15               ,em_price: 0.1491             
+stk_code:VAL+                ,exchange_type:P ,money_type:  ,hs_price: 7.82               ,em_price: 7.8199             
+stk_code:UXIN                ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5680             
+stk_code:UWMC+               ,exchange_type:P ,money_type:  ,hs_price: 2.18               ,em_price: 0.1201             
+stk_code:UTSI                ,exchange_type:P ,money_type:  ,hs_price: 3.69               ,em_price: 3.6897             
+stk_code:UPH                 ,exchange_type:P ,money_type:  ,hs_price: 0.52               ,em_price: 0.5202             
+stk_code:UPC                 ,exchange_type:P ,money_type:  ,hs_price: 0.58               ,em_price: 0.5750             
+stk_code:UNTCW               ,exchange_type:P ,money_type:  ,hs_price: 9.15               ,em_price: 12.5900            
+stk_code:UKOMW               ,exchange_type:P ,money_type:  ,hs_price: 0.06               ,em_price: 0.0551             
+stk_code:UK                  ,exchange_type:P ,money_type:  ,hs_price: 2.98               ,em_price: 2.9824             
+stk_code:UFAB                ,exchange_type:P ,money_type:  ,hs_price: 0.54               ,em_price: 0.5431             
+stk_code:UCL                 ,exchange_type:P ,money_type:  ,hs_price: 0.61               ,em_price: 0.6063             
+stk_code:UBX                 ,exchange_type:P ,money_type:  ,hs_price: 0.41               ,em_price: 0.4089             
+stk_code:UAMY                ,exchange_type:P ,money_type:  ,hs_price: 0.36               ,em_price: 0.3620             
+stk_code:TYDE                ,exchange_type:P ,money_type:  ,hs_price: 0.68               ,em_price: 0.6805             
+stk_code:TTOO                ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.0998             
+stk_code:TRX                 ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3771             
+stk_code:TRVN                ,exchange_type:P ,money_type:  ,hs_price: 0.15               ,em_price: 0.1528             
+stk_code:TRIB                ,exchange_type:P ,money_type:  ,hs_price: 1.09               ,em_price: 1.0881             
+stk_code:TOUR                ,exchange_type:P ,money_type:  ,hs_price: 0.67               ,em_price: 0.6720             
+stk_code:TNXP                ,exchange_type:P ,money_type:  ,hs_price: 0.54               ,em_price: 0.5356             
+stk_code:TNTRQ               ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:TMDI                ,exchange_type:P ,money_type:  ,hs_price: 0.46               ,em_price: 0.4612             
+stk_code:TMBR                ,exchange_type:P ,money_type:  ,hs_price: 0.11               ,em_price: 0.1118             
+stk_code:TLIS                ,exchange_type:P ,money_type:  ,hs_price: 0.72               ,em_price: 0.7190             
+stk_code:TIRX                ,exchange_type:P ,money_type:  ,hs_price: 0.6                ,em_price: 0.5959             
+stk_code:THMO                ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1928             
+stk_code:THM                 ,exchange_type:P ,money_type:  ,hs_price: 0.43               ,em_price: 0.4313             
+stk_code:TENX                ,exchange_type:P ,money_type:  ,hs_price: 0.17               ,em_price: 0.1660             
+stk_code:TCBP                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2668             
+stk_code:TAOP                ,exchange_type:P ,money_type:  ,hs_price: 0.59               ,em_price: 0.5890             
+stk_code:TANH                ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1880             
+stk_code:T035884             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:T034452             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:SYBX                ,exchange_type:P ,money_type:  ,hs_price: 0.9                ,em_price: 0.8966             
+stk_code:SY                  ,exchange_type:P ,money_type:  ,hs_price: 0.73               ,em_price: 0.7296             
+stk_code:STIXW               ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1350             
+stk_code:SSKN                ,exchange_type:P ,money_type:  ,hs_price: 0.82               ,em_price: 0.8247             
+stk_code:SPRC                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8087             
+stk_code:SPPI                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4403             
+stk_code:SPBC                ,exchange_type:P ,money_type:  ,hs_price: 19.58              ,em_price: 19.5833            
+stk_code:SONM                ,exchange_type:P ,money_type:  ,hs_price: 0.54               ,em_price: 0.5408             
+stk_code:SNPTY               ,exchange_type:P ,money_type:  ,hs_price: 44                 ,em_price: 45.6600            
+stk_code:SNNAQ               ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:SNMP                ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3181             
+stk_code:SNGX                ,exchange_type:P ,money_type:  ,hs_price: 0.49               ,em_price: 0.4908             
+stk_code:SNES                ,exchange_type:P ,money_type:  ,hs_price: 0.43               ,em_price: 0.4290             
+stk_code:SMOG                ,exchange_type:P ,money_type:  ,hs_price: 117.51             ,em_price: 117.5073           
+stk_code:SMFRW               ,exchange_type:P ,money_type:  ,hs_price: 0.18               ,em_price: 0.1762             
+stk_code:SMFR                ,exchange_type:P ,money_type:  ,hs_price: 0.88               ,em_price: 0.8816             
+stk_code:SMFL                ,exchange_type:P ,money_type:  ,hs_price: 0.35               ,em_price: 0.3527             
+stk_code:SLRX                ,exchange_type:P ,money_type:  ,hs_price: 0.2                ,em_price: 0.1960             
+stk_code:SLCRW               ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3787             
+stk_code:SISI                ,exchange_type:P ,money_type:  ,hs_price: 0.83               ,em_price: 0.8259             
+stk_code:SHIP                ,exchange_type:P ,money_type:  ,hs_price: 0.47               ,em_price: 0.4680             
+stk_code:SHIIY               ,exchange_type:P ,money_type:  ,hs_price: 14.16              ,em_price: 15.3400            
+stk_code:SFET                ,exchange_type:P ,money_type:  ,hs_price: 0.48               ,em_price: 0.4770             
+stk_code:SEDRF               ,exchange_type:P ,money_type:  ,hs_price: 23.1               ,em_price: 28.2000            
+stk_code:SECO                ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3172             
+stk_code:SDC                 ,exchange_type:P ,money_type:  ,hs_price: 0.97               ,em_price: 0.9723             
+stk_code:SCPS                ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2263             
+stk_code:S086305             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:S085532             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:S081074             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:RWLK                ,exchange_type:P ,money_type:  ,hs_price: 0.85               ,em_price: 0.8503             
+stk_code:RUBY                ,exchange_type:P ,money_type:  ,hs_price: 0.45               ,em_price: 0.4480             
+stk_code:RTNB                ,exchange_type:P ,money_type:  ,hs_price: 0.26               ,em_price: 0.0000             
+stk_code:RSLS                ,exchange_type:P ,money_type:  ,hs_price: 0.31               ,em_price: 0.3112             
+stk_code:RNWK                ,exchange_type:P ,money_type:  ,hs_price: 0.69               ,em_price: 0.6924             
+stk_code:RMED                ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1350             
+stk_code:RKDA                ,exchange_type:P ,money_type:  ,hs_price: 0.56               ,em_price: 0.5623             
+stk_code:RGS                 ,exchange_type:P ,money_type:  ,hs_price: 0.96               ,em_price: 0.9649             
+stk_code:REVB                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2715             
+stk_code:RELI                ,exchange_type:P ,money_type:  ,hs_price: 0.8                ,em_price: 0.8001             
+stk_code:REED                ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1422             
+stk_code:REE                 ,exchange_type:P ,money_type:  ,hs_price: 0.73               ,em_price: 0.7290             
+stk_code:RCHGW               ,exchange_type:P ,money_type:  ,hs_price: 0.01               ,em_price: 0.0024             
+stk_code:RAAS                ,exchange_type:P ,money_type:  ,hs_price: 0.73               ,em_price: 0.7346             
+stk_code:R037483             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:QTNT                ,exchange_type:P ,money_type:  ,hs_price: 0.15               ,em_price: 0.1450             
+stk_code:QLGN                ,exchange_type:P ,money_type:  ,hs_price: 0.29               ,em_price: 0.2901             
+stk_code:PTIXW               ,exchange_type:P ,money_type:  ,hs_price: 0.04               ,em_price: 0.0406             
+stk_code:PTE                 ,exchange_type:P ,money_type:  ,hs_price: 0.65               ,em_price: 0.6522             
+stk_code:PT                  ,exchange_type:P ,money_type:  ,hs_price: 0.41               ,em_price: 0.4050             
+stk_code:PSTV                ,exchange_type:P ,money_type:  ,hs_price: 0.47               ,em_price: 0.4720             
+stk_code:PSHG                ,exchange_type:P ,money_type:  ,hs_price: 0.22               ,em_price: 0.2180             
+stk_code:PSDN                ,exchange_type:P ,money_type:  ,hs_price: 2.05               ,em_price: 2.0518             
+stk_code:PRSTW               ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.1015             
+stk_code:PRQR                ,exchange_type:P ,money_type:  ,hs_price: 0.75               ,em_price: 0.7456             
+stk_code:PRPO                ,exchange_type:P ,money_type:  ,hs_price: 0.84               ,em_price: 0.8399             
+stk_code:PRNT                ,exchange_type:P ,money_type:  ,hs_price: 19.78              ,em_price: 19.7750            
+stk_code:POL                 ,exchange_type:P ,money_type:  ,hs_price: 0.55               ,em_price: 0.5510             
+stk_code:POAI                ,exchange_type:P ,money_type:  ,hs_price: 0.37               ,em_price: 0.3728             
+stk_code:PNTPQ               ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:PME                 ,exchange_type:P ,money_type:  ,hs_price: 0.89               ,em_price: 0.8850             
+stk_code:PHUNW               ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4398             
+stk_code:PHIO                ,exchange_type:P ,money_type:  ,hs_price: 0.62               ,em_price: 0.6151             
+stk_code:PHCF                ,exchange_type:P ,money_type:  ,hs_price: 0.46               ,em_price: 0.4550             
+stk_code:PGY                 ,exchange_type:P ,money_type:  ,hs_price: 1.86               ,em_price: 1.8550             
+stk_code:PALL                ,exchange_type:P ,money_type:  ,hs_price: 192.51             ,em_price: 192.5142           
+stk_code:PALI                ,exchange_type:P ,money_type:  ,hs_price: 0.11               ,em_price: 0.1087             
+stk_code:P055962             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:P054775             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:OXBRW               ,exchange_type:P ,money_type:  ,hs_price: 0.2                ,em_price: 0.1979             
+stk_code:OUST                ,exchange_type:P ,money_type:  ,hs_price: 0.97               ,em_price: 0.9656             
+stk_code:OTRK                ,exchange_type:P ,money_type:  ,hs_price: 0.51               ,em_price: 0.5067             
+stk_code:OTIC                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2708             
+stk_code:ORTX                ,exchange_type:P ,money_type:  ,hs_price: 0.49               ,em_price: 0.4859             
+stk_code:OPTT                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8103             
+stk_code:OPP RT              ,exchange_type:P ,money_type:  ,hs_price: 0.01               ,em_price: 0.0018             
+stk_code:OPGN                ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3786             
+stk_code:OP                  ,exchange_type:P ,money_type:  ,hs_price: 0.35               ,em_price: 0.3490             
+stk_code:ONTX                ,exchange_type:P ,money_type:  ,hs_price: 0.9                ,em_price: 0.9001             
+stk_code:ONCR                ,exchange_type:P ,money_type:  ,hs_price: 0.91               ,em_price: 0.9109             
+stk_code:OIG                 ,exchange_type:P ,money_type:  ,hs_price: 0.51               ,em_price: 0.5053             
+stk_code:OGI                 ,exchange_type:P ,money_type:  ,hs_price: 0.89               ,em_price: 0.8949             
+stk_code:OGEN                ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2323             
+stk_code:OCFT                ,exchange_type:P ,money_type:  ,hs_price: 0.78               ,em_price: 0.7832             
+stk_code:OCAXW               ,exchange_type:P ,money_type:  ,hs_price: 0.05               ,em_price: 0.0501             
+stk_code:OBSV                ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1402             
+stk_code:NVNOW               ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2250             
+stk_code:NVFY                ,exchange_type:P ,money_type:  ,hs_price: 0.76               ,em_price: 0.7577             
+stk_code:NUZE                ,exchange_type:P ,money_type:  ,hs_price: 0.4                ,em_price: 0.4010             
+stk_code:NTP                 ,exchange_type:P ,money_type:  ,hs_price: 4.22               ,em_price: 4.2150             
+stk_code:NTG                 ,exchange_type:P ,money_type:  ,hs_price: 31.49              ,em_price: 31.4850            
+stk_code:NSPR                ,exchange_type:P ,money_type:  ,hs_price: 1.5                ,em_price: 1.5023             
+stk_code:NRXP                ,exchange_type:P ,money_type:  ,hs_price: 0.7                ,em_price: 0.7044             
+stk_code:NRTSF               ,exchange_type:P ,money_type:  ,hs_price: 0.0003             ,em_price: 0.0000             
+stk_code:NMTR                ,exchange_type:P ,money_type:  ,hs_price: 0.21               ,em_price: 0.2143             
+stk_code:NISN                ,exchange_type:P ,money_type:  ,hs_price: 0.52               ,em_price: 0.5153             
+stk_code:NILE                ,exchange_type:P ,money_type:  ,hs_price: 0.2                ,em_price: 0.1975             
+stk_code:NDRA                ,exchange_type:P ,money_type:  ,hs_price: 0.31               ,em_price: 0.3070             
+stk_code:NCNA                ,exchange_type:P ,money_type:  ,hs_price: 0.97               ,em_price: 0.9748             
+stk_code:NBY                 ,exchange_type:P ,money_type:  ,hs_price: 0.12               ,em_price: 0.1181             
+stk_code:NAVB                ,exchange_type:P ,money_type:  ,hs_price: 0.25               ,em_price: 0.2486             
+stk_code:NAOV                ,exchange_type:P ,money_type:  ,hs_price: 0.52               ,em_price: 0.5160             
+stk_code:MYSZ                ,exchange_type:P ,money_type:  ,hs_price: 0.21               ,em_price: 0.2057             
+stk_code:MVSTW               ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2699             
+stk_code:MULN                ,exchange_type:P ,money_type:  ,hs_price: 0.33               ,em_price: 0.3322             
+stk_code:MTEM                ,exchange_type:P ,money_type:  ,hs_price: 0.65               ,em_price: 0.6530             
+stk_code:MTCR                ,exchange_type:P ,money_type:  ,hs_price: 0.5                ,em_price: 0.4975             
+stk_code:MSGM                ,exchange_type:P ,money_type:  ,hs_price: 0.6                ,em_price: 0.6025             
+stk_code:MREO                ,exchange_type:P ,money_type:  ,hs_price: 0.86               ,em_price: 0.8564             
+stk_code:MOTS                ,exchange_type:P ,money_type:  ,hs_price: 2.36               ,em_price: 2.3550             
+stk_code:MOHOY               ,exchange_type:P ,money_type:1 ,hs_price:0.047               ,em_price:                    
+stk_code:MOHO                ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.0999             
+stk_code:MOGU                ,exchange_type:P ,money_type:  ,hs_price: 2.49               ,em_price: 2.4899             
+stk_code:MMAT                ,exchange_type:P ,money_type:  ,hs_price: 0.67               ,em_price: 0.6668             
+stk_code:MJXL                ,exchange_type:P ,money_type:  ,hs_price: 0.46               ,em_price: 0.4617             
+stk_code:MILEW               ,exchange_type:P ,money_type:  ,hs_price: 0.07               ,em_price: 0.0586             
+stk_code:MICT                ,exchange_type:P ,money_type:  ,hs_price: 0.69               ,em_price: 0.6899             
+stk_code:MFH                 ,exchange_type:P ,money_type:  ,hs_price: 0.84               ,em_price: 0.8402             
+stk_code:MF                  ,exchange_type:P ,money_type:  ,hs_price: 0.09               ,em_price: 0.0860             
+stk_code:METXW               ,exchange_type:P ,money_type:  ,hs_price: 0.06               ,em_price: 0.0617             
+stk_code:METX                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3916             
+stk_code:MDVL                ,exchange_type:P ,money_type:  ,hs_price: 0.73               ,em_price: 0.7316             
+stk_code:MDNA                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8107             
+stk_code:MDGS                ,exchange_type:P ,money_type:  ,hs_price: 0.51               ,em_price: 0.5102             
+stk_code:MBVXQ               ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:MARK                ,exchange_type:P ,money_type:  ,hs_price: 0.3                ,em_price: 0.2991             
+stk_code:M066193             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:LYL                 ,exchange_type:P ,money_type:  ,hs_price: 0.84               ,em_price: 0.8390             
+stk_code:LTRY                ,exchange_type:P ,money_type:  ,hs_price: 0.24               ,em_price: 0.2350             
+stk_code:LPTX                ,exchange_type:P ,money_type:  ,hs_price: 0.91               ,em_price: 0.9070             
+stk_code:LPCN                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3921             
+stk_code:LOGC                ,exchange_type:P ,money_type:  ,hs_price: 0.28               ,em_price: 0.2824             
+stk_code:LODE                ,exchange_type:P ,money_type:  ,hs_price: 0.42               ,em_price: 0.4152             
+stk_code:LMNL                ,exchange_type:P ,money_type:  ,hs_price: 0.49               ,em_price: 0.4850             
+stk_code:LMACW               ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1930             
+stk_code:LMACU               ,exchange_type:P ,money_type:  ,hs_price: 9.88               ,em_price: 9.8799             
+stk_code:LLL                 ,exchange_type:P ,money_type:  ,hs_price: 0.79               ,em_price: 0.7916             
+stk_code:LKCO                ,exchange_type:P ,money_type:  ,hs_price: 0.18               ,em_price: 0.1785             
+stk_code:LINUF               ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:LGMK                ,exchange_type:P ,money_type:  ,hs_price: 0.8                ,em_price: 0.8002             
+stk_code:LFIN                ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:LCI                 ,exchange_type:P ,money_type:  ,hs_price: 0.45               ,em_price: 0.4502             
+stk_code:LAXXW               ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3879             
+stk_code:LAXXR               ,exchange_type:P ,money_type:  ,hs_price: 0.48               ,em_price: 0.4806             
+stk_code:KUKE                ,exchange_type:P ,money_type:  ,hs_price: 0.61               ,em_price: 0.6099             
+stk_code:KRKR                ,exchange_type:P ,money_type:  ,hs_price: 0.96               ,em_price: 0.9553             
+stk_code:KRBP                ,exchange_type:P ,money_type:  ,hs_price: 0.34               ,em_price: 0.3370             
+stk_code:KLDO                ,exchange_type:P ,money_type:  ,hs_price: 0.0012             ,em_price: 0.2900             
+stk_code:KERNW               ,exchange_type:P ,money_type:  ,hs_price: 0.06               ,em_price: 0.0551             
+stk_code:KERN                ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.0999             
+stk_code:KALA                ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2340             
+stk_code:JZXN                ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3809             
+stk_code:JUPW                ,exchange_type:P ,money_type:  ,hs_price: 0.63               ,em_price: 0.6290             
+stk_code:JSPR                ,exchange_type:P ,money_type:  ,hs_price: 0.88               ,em_price: 0.8772             
+stk_code:JRJRQ               ,exchange_type:P ,money_type:  ,hs_price: 0.0002             ,em_price: 0.0000             
+stk_code:JO                  ,exchange_type:P ,money_type:  ,hs_price: 62.43              ,em_price: 62.4318            
+stk_code:JJN                 ,exchange_type:P ,money_type:  ,hs_price: 28.77              ,em_price: 28.7697            
+stk_code:JG                  ,exchange_type:P ,money_type:  ,hs_price: 0.99               ,em_price: 0.9948             
+stk_code:JFU                 ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2698             
+stk_code:JAGX                ,exchange_type:P ,money_type:  ,hs_price: 0.16               ,em_price: 0.1636             
+stk_code:IZEA                ,exchange_type:P ,money_type:  ,hs_price: 0.69               ,em_price: 0.6888             
+stk_code:ITP                 ,exchange_type:P ,money_type:  ,hs_price: 0.75               ,em_price: 0.7519             
+stk_code:ISR                 ,exchange_type:P ,money_type:  ,hs_price: 0.28               ,em_price: 0.2826             
+stk_code:IRNT+               ,exchange_type:P ,money_type:  ,hs_price: 0.09               ,em_price: 0.0933             
+stk_code:IRNT                ,exchange_type:P ,money_type:  ,hs_price: 0.79               ,em_price: 0.7901             
+stk_code:IPOF WS             ,exchange_type:P ,money_type:  ,hs_price: 0.61               ,em_price: 0.0014             
+stk_code:IONM                ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5676             
+stk_code:INUV                ,exchange_type:P ,money_type:  ,hs_price: 0.42               ,em_price: 0.4167             
+stk_code:INPX                ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1295             
+stk_code:IMTE                ,exchange_type:P ,money_type:  ,hs_price: 0.69               ,em_price: 0.6891             
+stk_code:IMPP                ,exchange_type:P ,money_type:  ,hs_price: 0.3                ,em_price: 0.3032             
+stk_code:IMBI                ,exchange_type:P ,money_type:  ,hs_price: 0.71               ,em_price: 0.7122             
+stk_code:IMAQW               ,exchange_type:P ,money_type:  ,hs_price: 0.03               ,em_price: 0.0333             
+stk_code:IGC                 ,exchange_type:P ,money_type:  ,hs_price: 0.43               ,em_price: 0.4250             
+stk_code:IFMK                ,exchange_type:P ,money_type:  ,hs_price: 0.01               ,em_price: 0.0061             
+stk_code:IDEX                ,exchange_type:P ,money_type:  ,hs_price: 0.33               ,em_price: 0.3294             
+stk_code:ICLK                ,exchange_type:P ,money_type:  ,hs_price: 0.33               ,em_price: 0.3253             
+stk_code:IBIO                ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3160             
+stk_code:IAG                 ,exchange_type:P ,money_type:  ,hs_price: 0.98               ,em_price: 0.9760             
+stk_code:HYMCW               ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.0999             
+stk_code:HYMCL               ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1373             
+stk_code:HYMC                ,exchange_type:P ,money_type:  ,hs_price: 0.6                ,em_price: 0.6003             
+stk_code:HUIZ                ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8072             
+stk_code:HUGE                ,exchange_type:P ,money_type:  ,hs_price: 0.87               ,em_price: 0.8747             
+stk_code:HTGM                ,exchange_type:P ,money_type:  ,hs_price: 0.62               ,em_price: 0.6174             
+stk_code:HOTH                ,exchange_type:P ,money_type:  ,hs_price: 0.37               ,em_price: 0.3666             
+stk_code:HOFV                ,exchange_type:P ,money_type:  ,hs_price: 0.58               ,em_price: 0.5796             
+stk_code:HLBZW               ,exchange_type:P ,money_type:  ,hs_price: 0.09               ,em_price: 0.0944             
+stk_code:HLBZ                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3940             
+stk_code:HK0000489705        ,exchange_type:m ,money_type:2 ,hs_price:10.3949             ,em_price:                    
+stk_code:HK0000464419        ,exchange_type:m ,money_type:2 ,hs_price:1042.949            ,em_price:                    
+stk_code:HK0000464252        ,exchange_type:m ,money_type:2 ,hs_price:1040.983            ,em_price:                    
+stk_code:HK0000384492        ,exchange_type:m ,money_type:1 ,hs_price:8.129               ,em_price:                    
+stk_code:HK0000365384        ,exchange_type:m ,money_type:1 ,hs_price:107.285             ,em_price:                    
+stk_code:HK0000323219        ,exchange_type:m ,money_type:1 ,hs_price:0.803               ,em_price:                    
+stk_code:HK0000312378        ,exchange_type:m ,money_type:1 ,hs_price:107.94              ,em_price:                    
+stk_code:HK0000311842        ,exchange_type:m ,money_type:1 ,hs_price:10.71               ,em_price:                    
+stk_code:HK0000252152        ,exchange_type:m ,money_type:2 ,hs_price:127.43              ,em_price:                    
+stk_code:HK0000161320        ,exchange_type:m ,money_type:2 ,hs_price:9.198               ,em_price:                    
+stk_code:HK0000130705        ,exchange_type:m ,money_type:2 ,hs_price:17.857              ,em_price:                    
+stk_code:HILS                ,exchange_type:P ,money_type:  ,hs_price: 0.8                ,em_price: 0.8020             
+stk_code:HGEN                ,exchange_type:P ,money_type:  ,hs_price: 0.16               ,em_price: 0.1622             
+stk_code:HEPA                ,exchange_type:P ,money_type:  ,hs_price: 0.51               ,em_price: 0.5123             
+stk_code:HCTI                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4370             
+stk_code:HCDI                ,exchange_type:P ,money_type:  ,hs_price: 0.9                ,em_price: 0.9001             
+stk_code:HAPP                ,exchange_type:P ,money_type:  ,hs_price: 0.16               ,em_price: 0.1601             
+stk_code:GURE                ,exchange_type:P ,money_type:  ,hs_price: 3.36               ,em_price: 3.3588             
+stk_code:GTTNQ               ,exchange_type:P ,money_type:  ,hs_price: 0.0075             ,em_price: 0.0231             
+stk_code:GTH                 ,exchange_type:P ,money_type:  ,hs_price: 0.77               ,em_price: 0.7706             
+stk_code:GRAY                ,exchange_type:P ,money_type:  ,hs_price: 0.93               ,em_price: 0.9310             
+stk_code:GLYC                ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5666             
+stk_code:GLL                 ,exchange_type:P ,money_type:  ,hs_price: 38.96              ,em_price: 38.9579            
+stk_code:GLDG                ,exchange_type:P ,money_type:  ,hs_price: 0.76               ,em_price: 0.7612             
+stk_code:GHSI                ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1392             
+stk_code:GFAI                ,exchange_type:P ,money_type:  ,hs_price: 0.24               ,em_price: 0.2374             
+stk_code:GENE                ,exchange_type:P ,money_type:  ,hs_price: 1.25               ,em_price: 1.2450             
+stk_code:GEHI                ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5651             
+stk_code:GBS                 ,exchange_type:P ,money_type:  ,hs_price: 0.4                ,em_price: 0.4014             
+stk_code:G027258             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:FXP                 ,exchange_type:P ,money_type:  ,hs_price: 49.65              ,em_price: 49.6450            
+stk_code:FTFT                ,exchange_type:P ,money_type:  ,hs_price: 0.48               ,em_price: 0.4798             
+stk_code:FSRD                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3946             
+stk_code:FPAY                ,exchange_type:P ,money_type:  ,hs_price: 1.85               ,em_price: 1.8450             
+stk_code:FOA WS              ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1340             
+stk_code:FFIEW               ,exchange_type:P ,money_type:  ,hs_price: 0.16               ,em_price: 0.1625             
+stk_code:FBZ                 ,exchange_type:P ,money_type:  ,hs_price: 9.97               ,em_price: 9.9662             
+stk_code:FBIO                ,exchange_type:P ,money_type:  ,hs_price: 0.77               ,em_price: 0.7662             
+stk_code:FAMI                ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5745             
+stk_code:F040218             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:F040207             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:EXN                 ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3172             
+stk_code:EUCRW               ,exchange_type:P ,money_type:  ,hs_price: 0.03               ,em_price: 0.0329             
+stk_code:ESSCW               ,exchange_type:P ,money_type:  ,hs_price: 0.08               ,em_price: 0.0790             
+stk_code:ESNC                ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:EQOS                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3901             
+stk_code:ENTXW               ,exchange_type:P ,money_type:  ,hs_price: 0.07               ,em_price: 0.0736             
+stk_code:ENSC                ,exchange_type:P ,money_type:  ,hs_price: 0.25               ,em_price: 0.2538             
+stk_code:EM                  ,exchange_type:P ,money_type:  ,hs_price: 0.68               ,em_price: 0.6775             
+stk_code:ELYS                ,exchange_type:P ,money_type:  ,hs_price: 0.47               ,em_price: 0.4650             
+stk_code:ELOX                ,exchange_type:P ,money_type:  ,hs_price: 0.17               ,em_price: 0.1657             
+stk_code:EJH                 ,exchange_type:P ,money_type:  ,hs_price: 0.1                ,em_price: 0.0971             
+stk_code:EFTR                ,exchange_type:P ,money_type:  ,hs_price: 0.56               ,em_price: 0.5641             
+stk_code:EFOI                ,exchange_type:P ,money_type:  ,hs_price: 0.53               ,em_price: 0.5302             
+stk_code:ECOR                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4405             
+stk_code:EBON                ,exchange_type:P ,money_type:  ,hs_price: 0.37               ,em_price: 0.3709             
+stk_code:E031057             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:DXF                 ,exchange_type:P ,money_type:  ,hs_price: 0.31               ,em_price: 0.3131             
+stk_code:DTEA                ,exchange_type:P ,money_type:  ,hs_price: 0.68               ,em_price: 0.6803             
+stk_code:DSS                 ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2651             
+stk_code:DS                  ,exchange_type:P ,money_type:  ,hs_price: 0.66               ,em_price: 0.6588             
+stk_code:DRRX                ,exchange_type:P ,money_type:  ,hs_price: 0.56               ,em_price: 0.5645             
+stk_code:DODRW               ,exchange_type:P ,money_type:  ,hs_price: 1.12               ,em_price: 1.2400             
+stk_code:DNK                 ,exchange_type:P ,money_type:  ,hs_price: 2.37               ,em_price: 0.0000             
+stk_code:DNAWS               ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:DGP                 ,exchange_type:P ,money_type:  ,hs_price: 30.26              ,em_price: 30.2574            
+stk_code:DGLY                ,exchange_type:P ,money_type:  ,hs_price: 0.47               ,em_price: 0.4662             
+stk_code:DFFN                ,exchange_type:P ,money_type:  ,hs_price: 5.46               ,em_price: 5.4550             
+stk_code:DBV                 ,exchange_type:P ,money_type:  ,hs_price: 26.34              ,em_price: 26.3398            
+stk_code:DBGI                ,exchange_type:P ,money_type:  ,hs_price: 0.09               ,em_price: 0.0920             
+stk_code:DAVE                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4354             
+stk_code:DATS                ,exchange_type:P ,money_type:  ,hs_price: 0.66               ,em_price: 0.6605             
+stk_code:D050964             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:CYTO                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2693             
+stk_code:CXDC                ,exchange_type:P ,money_type:  ,hs_price: 0.0022             ,em_price: 0.0026             
+stk_code:CTIB                ,exchange_type:P ,money_type:  ,hs_price: 0.7                ,em_price: 0.7003             
+stk_code:CRXTQ               ,exchange_type:P ,money_type:  ,hs_price: 0.0298             ,em_price: 0.0990             
+stk_code:CRTD                ,exchange_type:P ,money_type:  ,hs_price: 0.2                ,em_price: 0.1950             
+stk_code:CRIS                ,exchange_type:P ,money_type:  ,hs_price: 0.7                ,em_price: 0.7003             
+stk_code:CREX                ,exchange_type:P ,money_type:  ,hs_price: 0.6                ,em_price: 0.5950             
+stk_code:CRBP                ,exchange_type:P ,money_type:  ,hs_price: 0.16               ,em_price: 0.1561             
+stk_code:COCP                ,exchange_type:P ,money_type:  ,hs_price: 0.28               ,em_price: 0.2802             
+stk_code:CO                  ,exchange_type:P ,money_type:  ,hs_price: 2.99               ,em_price: 2.9876             
+stk_code:CNSP                ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1901             
+stk_code:CNET                ,exchange_type:P ,money_type:  ,hs_price: 0.97               ,em_price: 0.9693             
+stk_code:CLVR                ,exchange_type:P ,money_type:  ,hs_price: 0.61               ,em_price: 0.6135             
+stk_code:CLRB                ,exchange_type:P ,money_type:  ,hs_price: 3.68               ,em_price: 3.6806             
+stk_code:CLPS                ,exchange_type:P ,money_type:  ,hs_price: 1.42               ,em_price: 1.4199             
+stk_code:CLEU                ,exchange_type:P ,money_type:  ,hs_price: 0.87               ,em_price: 0.8699             
+stk_code:CIH                 ,exchange_type:P ,money_type:  ,hs_price: 0.93               ,em_price: 0.9251             
+stk_code:CIDM                ,exchange_type:P ,money_type:  ,hs_price: 0.44               ,em_price: 0.4399             
+stk_code:CHNR                ,exchange_type:P ,money_type:  ,hs_price: 0.55               ,em_price: 0.5497             
+stk_code:CHEK                ,exchange_type:P ,money_type:  ,hs_price: 0.29               ,em_price: 0.2855             
+stk_code:CFRX                ,exchange_type:P ,money_type:  ,hs_price: 0.18               ,em_price: 0.1755             
+stk_code:CFMS                ,exchange_type:P ,money_type:  ,hs_price: 0.2                ,em_price: 0.1980             
+stk_code:CETX                ,exchange_type:P ,money_type:  ,hs_price: 0.24               ,em_price: 0.2350             
+stk_code:CEMI                ,exchange_type:P ,money_type:  ,hs_price: 0.37               ,em_price: 0.3650             
+stk_code:CEI                 ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1875             
+stk_code:CCNC                ,exchange_type:P ,money_type:  ,hs_price: 0.15               ,em_price: 0.1514             
+stk_code:CBRI                ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:CBIO                ,exchange_type:P ,money_type:  ,hs_price: 0.48               ,em_price: 0.4835             
+stk_code:CANF                ,exchange_type:P ,money_type:  ,hs_price: 0.75               ,em_price: 0.7530             
+stk_code:CAF                 ,exchange_type:P ,money_type:  ,hs_price: 13.72              ,em_price: 13.7152            
+stk_code:C108772             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:C104620             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:C104619             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:C088093             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:C088092             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:C088007             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:BYSI                ,exchange_type:P ,money_type:  ,hs_price: 0.97               ,em_price: 0.9749             
+stk_code:BXRX                ,exchange_type:P ,money_type:  ,hs_price: 0.26               ,em_price: 0.2550             
+stk_code:BVXV                ,exchange_type:P ,money_type:  ,hs_price: 0.85               ,em_price: 0.8472             
+stk_code:BTX                 ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2289             
+stk_code:BTOG                ,exchange_type:P ,money_type:  ,hs_price: 0.37               ,em_price: 0.3660             
+stk_code:BTCM                ,exchange_type:P ,money_type:  ,hs_price: 0.29               ,em_price: 0.2902             
+stk_code:BTB                 ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1349             
+stk_code:BSPM                ,exchange_type:P ,money_type:  ,hs_price: 0.01               ,em_price: 0.0000             
+stk_code:BRQS                ,exchange_type:P ,money_type:  ,hs_price: 0.65               ,em_price: 0.6460             
+stk_code:BRLIW               ,exchange_type:P ,money_type:  ,hs_price: 0.02               ,em_price: 0.0249             
+stk_code:BPTS                ,exchange_type:P ,money_type:  ,hs_price: 0.58               ,em_price: 0.5807             
+stk_code:BOXD                ,exchange_type:P ,money_type:  ,hs_price: 0.98               ,em_price: 0.9778             
+stk_code:BNTC                ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3187             
+stk_code:BLRX                ,exchange_type:P ,money_type:  ,hs_price: 0.89               ,em_price: 0.8948             
+stk_code:BLBX                ,exchange_type:P ,money_type:  ,hs_price: 0.77               ,em_price: 0.7710             
+stk_code:BIQIF               ,exchange_type:P ,money_type:  ,hs_price: 0.0001             ,em_price: 0.0000             
+stk_code:BIOR                ,exchange_type:P ,money_type:  ,hs_price: 0.5                ,em_price: 0.4998             
+stk_code:BIMI                ,exchange_type:P ,money_type:  ,hs_price: 0.29               ,em_price: 0.2942             
+stk_code:BHSEW               ,exchange_type:P ,money_type:  ,hs_price: 0.04               ,em_price: 0.0391             
+stk_code:BFRI                ,exchange_type:P ,money_type:  ,hs_price: 0.88               ,em_price: 0.8764             
+stk_code:BEST                ,exchange_type:P ,money_type:  ,hs_price: 0.7                ,em_price: 0.6951             
+stk_code:BASXQ               ,exchange_type:P ,money_type:  ,hs_price: 0.01               ,em_price: 0.0000             
+stk_code:BAOS                ,exchange_type:P ,money_type:  ,hs_price: 0.92               ,em_price: 0.9155             
+stk_code:BACK                ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3840             
+stk_code:B070688             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:B070687             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:B070686             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:AYRO                ,exchange_type:P ,money_type:  ,hs_price: 0.64               ,em_price: 0.6350             
+stk_code:AYLA                ,exchange_type:P ,money_type:  ,hs_price: 0.93               ,em_price: 0.9294             
+stk_code:AWH                 ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3875             
+stk_code:AVGR                ,exchange_type:P ,money_type:  ,hs_price: 1.2                ,em_price: 1.1950             
+stk_code:AUST                ,exchange_type:P ,money_type:  ,hs_price: 0.88               ,em_price: 0.8798             
+stk_code:AUMN                ,exchange_type:P ,money_type:  ,hs_price: 0.23               ,em_price: 0.2331             
+stk_code:ATOS                ,exchange_type:P ,money_type:  ,hs_price: 0.82               ,em_price: 0.8240             
+stk_code:ATNX                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2650             
+stk_code:ATNF                ,exchange_type:P ,money_type:  ,hs_price: 0.7                ,em_price: 0.7016             
+stk_code:ATHE                ,exchange_type:P ,money_type:  ,hs_price: 0.45               ,em_price: 0.4522             
+stk_code:ASXC                ,exchange_type:P ,money_type:  ,hs_price: 0.42               ,em_price: 0.4150             
+stk_code:ASTR                ,exchange_type:P ,money_type:  ,hs_price: 0.62               ,em_price: 0.6214             
+stk_code:ASTC                ,exchange_type:P ,money_type:  ,hs_price: 0.45               ,em_price: 0.4535             
+stk_code:ASPU                ,exchange_type:P ,money_type:  ,hs_price: 0.33               ,em_price: 0.3298             
+stk_code:ASNS                ,exchange_type:P ,money_type:  ,hs_price: 0.85               ,em_price: 0.8523             
+stk_code:ASM                 ,exchange_type:P ,money_type:  ,hs_price: 0.5                ,em_price: 0.4997             
+stk_code:AQMS                ,exchange_type:P ,money_type:  ,hs_price: 0.8                ,em_price: 0.8001             
+stk_code:AQB                 ,exchange_type:P ,money_type:  ,hs_price: 0.73               ,em_price: 0.7280             
+stk_code:APTX                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3910             
+stk_code:APRE                ,exchange_type:P ,money_type:  ,hs_price: 0.66               ,em_price: 0.6646             
+stk_code:ANY                 ,exchange_type:P ,money_type:  ,hs_price: 0.45               ,em_price: 0.4544             
+stk_code:ANTE                ,exchange_type:P ,money_type:  ,hs_price: 0.69               ,em_price: 0.6940             
+stk_code:ANPC                ,exchange_type:P ,money_type:  ,hs_price: 0.14               ,em_price: 0.1420             
+stk_code:AMST                ,exchange_type:P ,money_type:  ,hs_price: 0.27               ,em_price: 0.2749             
+stk_code:AMPE                ,exchange_type:P ,money_type:  ,hs_price: 0.06               ,em_price: 0.0640             
+stk_code:AMBO                ,exchange_type:P ,money_type:  ,hs_price: 0.32               ,em_price: 0.3195             
+stk_code:ALSAW               ,exchange_type:P ,money_type:  ,hs_price: 0.04               ,em_price: 0.0376             
+stk_code:ALRN                ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1925             
+stk_code:AKTX                ,exchange_type:P ,money_type:  ,hs_price: 0.56               ,em_price: 0.5591             
+stk_code:AKAN                ,exchange_type:P ,money_type:  ,hs_price: 0.51               ,em_price: 0.5130             
+stk_code:AIHS                ,exchange_type:P ,money_type:  ,hs_price: 0.84               ,em_price: 0.8350             
+stk_code:AIH                 ,exchange_type:P ,money_type:  ,hs_price: 1.69               ,em_price: 1.6850             
+stk_code:AIEQ                ,exchange_type:P ,money_type:  ,hs_price: 28.88              ,em_price: 28.8836            
+stk_code:AHG                 ,exchange_type:P ,money_type:  ,hs_price: 0.81               ,em_price: 0.8098             
+stk_code:AGTC                ,exchange_type:P ,money_type:  ,hs_price: 0.3                ,em_price: 0.3018             
+stk_code:AGRX                ,exchange_type:P ,money_type:  ,hs_price: 0.28               ,em_price: 0.2845             
+stk_code:AGMH                ,exchange_type:P ,money_type:  ,hs_price: 1.6                ,em_price: 1.6008             
+stk_code:AGLE                ,exchange_type:P ,money_type:  ,hs_price: 0.46               ,em_price: 0.4604             
+stk_code:AGFY                ,exchange_type:P ,money_type:  ,hs_price: 0.38               ,em_price: 0.3820             
+stk_code:AGE                 ,exchange_type:P ,money_type:  ,hs_price: 0.57               ,em_price: 0.5705             
+stk_code:AGBAR               ,exchange_type:P ,money_type:  ,hs_price: 0.13               ,em_price: 0.1254             
+stk_code:AEMD                ,exchange_type:P ,money_type:  ,hs_price: 0.64               ,em_price: 0.6350             
+stk_code:AEI                 ,exchange_type:P ,money_type:  ,hs_price: 0.19               ,em_price: 0.1884             
+stk_code:AEHL                ,exchange_type:P ,money_type:  ,hs_price: 0.93               ,em_price: 0.9320             
+stk_code:ADXS                ,exchange_type:P ,money_type:  ,hs_price: 2.08               ,em_price: 0.0887             
+stk_code:ADVM                ,exchange_type:P ,money_type:  ,hs_price: 0.88               ,em_price: 0.8806             
+stk_code:ADMP                ,exchange_type:P ,money_type:  ,hs_price: 0.26               ,em_price: 0.2559             
+stk_code:ADIL                ,exchange_type:P ,money_type:  ,hs_price: 0.39               ,em_price: 0.3881             
+stk_code:ACST                ,exchange_type:P ,money_type:  ,hs_price: 0.59               ,em_price: 0.5877             
+stk_code:ACRX                ,exchange_type:P ,money_type:  ,hs_price: 0.21               ,em_price: 0.2144             
+stk_code:ACOR                ,exchange_type:P ,money_type:  ,hs_price: 0.29               ,em_price: 0.2910             
+stk_code:ACHL                ,exchange_type:P ,money_type:  ,hs_price: 2.7                ,em_price: 2.6950             
+stk_code:A054925             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:A053559             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:A052630             ,exchange_type:P ,money_type:1 ,hs_price:0                   ,em_price:                    
+stk_code:729                 ,exchange_type:K ,money_type:  ,hs_price: 0.19               ,em_price: 0.000              
+stk_code:45912               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45907               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45906               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45905               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45903               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45902               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45901               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:45900               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44962               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44394               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44393               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44392               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44390               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44380               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44378               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44374               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44371               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44370               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44367               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44354               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44348               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44296               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44295               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44293               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44289               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44288               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44284               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44282               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44281               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44280               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44273               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44267               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44265               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44264               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44262               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44259               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44258               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44257               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44256               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44254               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44253               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44252               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44251               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44246               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44244               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44239               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44231               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44228               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44225               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44223               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44212               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44209               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44208               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44203               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44198               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44197               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44194               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44190               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44176               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44175               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44174               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44169               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44167               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44166               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44165               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44162               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44161               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44160               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44159               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44156               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44154               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44152               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44151               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44148               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44147               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44142               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44141               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44140               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44138               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44137               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44136               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44135               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44128               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44127               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44126               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44125               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44124               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44119               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44118               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44117               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44111               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44104               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44103               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44101               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44041               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
+stk_code:44012               ,exchange_type:K ,money_type:2 ,hs_price:0                   ,em_price:                    
