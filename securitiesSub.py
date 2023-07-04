@@ -109,9 +109,12 @@ def new_bond(user_id, pwd):
     bond_list_response = req.post(bond_list_url, verify=verify_str, proxies=proxies)
     result = json.loads(bond_list_response.content)
     submit_bond_list = []
+    success_num = 0
     if len(result['Data']) > 0:
         for stkData in result['Data']:
             if stkData['ExIsToday']:
+                if stkData['ExStatus'] == 2:
+                    success_num = success_num + 1
                 bond = {
                     'StockCode': stkData['SUBCODE'],
                     'StockName': stkData['SUBNAME'],
@@ -126,6 +129,8 @@ def new_bond(user_id, pwd):
 
         if len(submit_bond_list) == 0:
             return {'status': 0}
+        if success_num == len(submit_bond_list):
+            return {'status': 1, 'user_id': user_id, 'message': '该客户已申购成功，请勿重复申购！'}
         submit_response = req.post(submit_url, json=submit_bond_list, verify=verify_str, proxies=proxies)
         result = json.loads(submit_response.content)
         return {'status': 1, 'user_id': user_id, 'message': result['Message']}
@@ -335,7 +340,7 @@ def annual_revenue(user_id, pwd):
 
 def is_new_bond(req, is_today):
     today = datetime.date.today()
-    t_2_workday = find_workday(-3,today)
+    t_2_workday = find_workday(-3, today)
 
     bond_list_response = req.get(new_bond_url, verify=verify_str, proxies=proxies)
     bond_list_response.encoding = 'utf-8'
@@ -581,6 +586,8 @@ def exec_task(req, select, user_id_list):
     if select == 4:
         if is_new_bond(req, True):
             bath_task(select, user_id_list, is_purchase)
+        else:
+            print("今日无新债")
 
     if select == 5:
         schedule_task(req, select, user_id_list)
@@ -612,6 +619,8 @@ def schedule_task(req, select, user_id_list):
     # 每天9：30执行
 
     schedule.every().day.at("09:30").do(schedule_task_new_bond, req, select, user_id_list)
+    schedule.every().day.at("09:50").do(schedule_task_new_bond, req, select, user_id_list)
+
     global task_is_run
     while True:
         if task_is_run:

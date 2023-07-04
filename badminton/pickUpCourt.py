@@ -18,6 +18,7 @@ import schedule
 import urllib3
 import win32con
 import win32gui
+from chinese_calendar import is_workday, is_holiday
 
 temp_url = "https://user.jusssportsvenue.com/api/block/ground/list?venuesId={}&sportsType=9&startTime={}&skuId={}&_t={}"
 notice_url = 'http://www.pushplus.plus/send?token=7cb7768ebc2b41a4b4ca047ccdc621a1&title={}&content={}&template=html'
@@ -85,16 +86,27 @@ def _main_():
             w.close()
     clear_index = 0
     wechat_list = []
-    thread = threading.Thread(target=schedule_task, kwargs={'exec_time': '12:00'})
+    exec_time = '12:00'
+    thread = threading.Thread(target=schedule_task, kwargs={'exec_time': exec_time})
     thread.start()
+    time.sleep(0.1)
     # schedule_task('12:00')
+    temp_time = datetime.datetime.strptime(exec_time, '%H:%M')
     while True:
         if clear_index > 100:
             clear_index = 0
             wechat_list = []
 
         windll.user32.BlockInput(0)
-        exec_search(False)
+        curr_date = datetime.datetime.today()
+        temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
+        diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
+        if 0 < diff_seconds < 5:
+            print('12点数据收集中，等待10秒')
+            time.sleep(10)
+            continue
+        else:
+            exec_search(False)
 
         current_random = random.randint(random_start * 1000, random_end * 1000)
         print('等待{}毫秒，重新搜索~'.format(current_random))
@@ -103,10 +115,9 @@ def _main_():
 
 
 def exec_search(is_current):
-    global begin_time, task_is_run
-    if is_current:
-        task_is_run = True
-    print("{}开始搜索空闲场地~~".format(datetime.datetime.now()))
+    global begin_time
+
+    print("{}开始搜索{}空闲场地~~".format(datetime.datetime.now(),'整点' if is_current else '常规'))
 
     windll.user32.BlockInput(0)
     obj_list = []
@@ -124,7 +135,7 @@ def exec_search(is_current):
                 start_times = []
                 today = datetime.date.today()
                 item_date = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=i + 1)
-                temp = week_timespans if item_date.isoweekday() == 6 or item_date.isoweekday() == 7 else timespans
+                temp = week_timespans if is_holiday(item_date) else timespans
                 for timespan in temp:
                     start_times.append(
                         get_total_milliseconds(item_date +
@@ -138,8 +149,8 @@ def exec_search(is_current):
         print_result(obj_list, is_current)
 
 
-
 def print_result(obj_list, is_current):
+    global task_is_run
     print_list = []
     for data in as_completed(obj_list):
         if isinstance(data.result(), list):
@@ -148,9 +159,11 @@ def print_result(obj_list, is_current):
         else:
             print_list.append(data.result())
     interval = datetime.datetime.now() - begin_time
-    print('搜索用时：{}毫秒'.format(int(interval.total_seconds() * 1000)))
+    print('{},搜索用时：{}毫秒'.format(datetime.datetime.now(), int(interval.total_seconds() * 1000)))
     print_win(print_list)
     print_wechat(print_list, is_current)
+    if is_current:
+        task_is_run = True
 
 
 def print_wechat(print_list, is_current):
@@ -195,7 +208,7 @@ def print_wechat(print_list, is_current):
         if i == 0 or print_temp[i]['date'] != print_temp[i - 1]['date']:
             wechat_arr.append(
                 '****日期:{},星期{}****'.format(print_temp[i]['date'],
-                                            get_week_name(print_temp[i]['site_time'].isoweekday())))
+                                                get_week_name(print_temp[i]['site_time'].isoweekday())))
         wechat_arr.append("时间段:{},场地号:{}".format(
             print_temp[i]['time'],
             print_temp[i]['site']))
@@ -208,6 +221,9 @@ def print_wechat(print_list, is_current):
         wechat_arr.append("时间段:{},场地号:{}".format(
             uses[i]['time'],
             uses[i]['site']))
+    if len(wechat_arr) > 0:
+        wechat_arr.insert(0, "时间点:{}".format(datetime.datetime.now()))
+        write_txt_real(wechat_arr)
     if len(wechat_name) != 0:
         send_msg(wechat_name, wechat_arr, names)
     if is_current:
@@ -217,6 +233,14 @@ def print_wechat(print_list, is_current):
 def write_txt(log):
     curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
     with open(curr_date_str + 'log.txt', 'w', encoding='utf8') as w:
+        w.write("\n".join(log))
+        w.write('\n')
+        w.close()
+
+
+def write_txt_real(log):
+    curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
+    with open(curr_date_str + 'real_log.txt', 'a+', encoding='utf8') as w:
         w.write("\n".join(log))
         w.close()
 
@@ -263,10 +287,10 @@ def print_win(print_list):
 
 def request_get(url):
     if is_agent:
-        return requests.get(url, proxies=proxies, verify=verify_str)
+        return requests.get(url, proxies=proxies, verify=verify_str, stream=True)
     else:
 
-        return requests.get(url, verify=False)
+        return requests.get(url, verify=False, stream=True)
 
 
 def http_request(url, start_times):

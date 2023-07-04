@@ -24,357 +24,7 @@ stadiumId = '2c93809e821eb0ed018229e727b600ae'
 headers = {
     "Content-Type": "application/json"
 }
-court_all_list = [
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611304093470722', 'fieldName': '一号场（单）', 'fieldNo': 1, 'periodDate': '2023-02-08',
-     'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611356115423233', 'fieldName': '二号场', 'fieldNo': 2, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611387094552578', 'fieldName': '三号场', 'fieldNo': 3, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611419185172481', 'fieldName': '四号场', 'fieldNo': 4, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611457810518018', 'fieldName': '五号场', 'fieldNo': 5, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611503041892353', 'fieldName': '六号场', 'fieldNo': 6, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611537552625666', 'fieldName': '七号场', 'fieldNo': 7, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611779849179137', 'fieldName': '八号场', 'fieldNo': 8, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611815538511873', 'fieldName': '九号场（单）', 'fieldNo': 9, 'periodDate': '2023-02-08',
-     'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611859796807682', 'fieldName': '十号场', 'fieldNo': 10, 'periodDate': '2023-02-08', 'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08',
-     'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08',
-     'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08',
-     'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08',
-     'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611900867432449', 'fieldName': '十一号场', 'fieldNo': 11, 'periodDate': '2023-02-08',
-     'start': 1260,
-     'time': 21.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 540,
-     'time': 9.0, 'price': 2000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 600,
-     'time': 10.0, 'price': 2000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 660,
-     'time': 11.0, 'price': 2000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 720,
-     'time': 12.0, 'price': 2000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 780,
-     'time': 13.0, 'price': 2000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 840,
-     'time': 14.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 900,
-     'time': 15.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08', 'start': 960,
-     'time': 16.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08',
-     'start': 1020,
-     'time': 17.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08',
-     'start': 1080,
-     'time': 18.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08',
-     'start': 1140,
-     'time': 19.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08',
-     'start': 1200,
-     'time': 20.0, 'price': 6000},
-    {'fieldId': '1540611939924791298', 'fieldName': '十二号场', 'fieldNo': 12, 'periodDate': '2023-02-08',
-     'start': 1260,
-     'time': 21.0, 'price': 6000}
-
-]
+court_all_list = []
 req = requests.session()
 info_list = []
 task_is_run = True
@@ -410,14 +60,14 @@ def _main_():
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
 
     for time_s in times:
-        info_list.append({'resourceDate': init_date, 'fieldNo': field_no, 'time': float(time_s)})
+        info_list.append({'resourceDate': init_date, 'fieldNo': field_no, 'time': float(time_s), 'price': 80})
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
     # fiddler_start()
     close_win_class()
-    # login()
-    # task()
-    schedule_task(exec_time)
+    login()
+    task()
+    # schedule_task(exec_time)
 
 
 def close_win_class():
@@ -427,12 +77,12 @@ def close_win_class():
 
 
 def task():
-    global task_is_run
+    global task_is_run, court_all_list
     task_is_run = True
-    # current_random = float(random.randint(1 * 1000, 2 * 1000)) / 1000
+    current_random = float(random.randint(float(start_diff) * 1000, (float(start_diff) + 0.5) * 1000)) / 1000
     # print('延迟{}秒'.format(current_random))
     # time.sleep(current_random)
-
+    time.sleep(current_random)
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
     for info in info_list:
         info['resourceDate'] = init_date
@@ -440,13 +90,14 @@ def task():
     # info_list[1]['resourceDate'] = init_date
     while True:
         try:
-            result_list = get_court()
+
+            court_all_list = get_court()
             court_no_first = 0
             court_no_second = 0
             num = int(info_list[0]['fieldNo'])
             temp_first = 0
             temp_second = 0
-            for item in result_list:
+            for item in court_all_list:
                 if item['fieldNo'] == 1 or item['fieldNo'] == 9:
                     continue
                 if num == 0:
@@ -523,6 +174,7 @@ def pickup_court():
         requests.get(notice_url.format('卢湾{}场地预订成功'.format(info_list[0]['fieldNo']), info_list))
     else:
         print('卢湾{}场地预订失败'.format(info_list[0]['fieldNo']))
+        print(submit_param)
     end = time.perf_counter()
     print('提交耗时：{:.4f}s'.format(end - submit_start))
     print('下订单成功总耗时：{:.4f}s'.format(end - start))
@@ -547,7 +199,7 @@ def get_court():
                          'price': client_item['price']}
                 data_list.append(param)
     if len(data_list) == 0:
-        print('{}18点以后的场地无'.format(info_list[0]['resourceDate']))
+        print('{}没有场地了'.format(info_list[0]['resourceDate']))
     else:
         for item in data_list:
             print(item)
@@ -567,7 +219,7 @@ def write_txt(log, name):
 def save_log(token):
     curr_date_str = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     with open('access_token.txt', 'a', encoding='utf8') as w:
-        w.write(curr_date_str+' '+token + '\n')
+        w.write(curr_date_str + ' ' + token + '\n')
         w.close()
 
 
@@ -605,8 +257,8 @@ def get_access_token():
             break
         if os.path.exists(token_file_path):
             print('4当前时间：{}'.format(datetime.datetime.now()))
-            if next_run_time > datetime.datetime.now():
-                return None
+            # if next_run_time > datetime.datetime.now():
+            #     return None
             break
         time.sleep(0.01)
         num = num + 1
@@ -665,12 +317,14 @@ def schedule_task(exec_time):
             curr_date = datetime.datetime.today()
         temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
         diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
-        if 300 > diff_seconds > 0 and fiddler_is_start is False:
+        if 600 > diff_seconds > 0 and fiddler_is_start is False:
             fiddler_start()
+            time.sleep(10)
+            login()
         if 0 < diff_seconds < 30:
             interval = 0.01
-        if float(start_diff) >= diff_seconds > 0 and logged is False:
-            login()
+        # if 300> diff_seconds > 0 and logged is False:
+        #     login()
         time.sleep(interval)
 
 
