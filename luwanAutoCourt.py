@@ -4,6 +4,7 @@ import math
 import os
 import random
 import sys
+import threading
 import time
 import traceback
 
@@ -38,10 +39,11 @@ logged = False
 fiddler_is_start = False
 start_diff = '1'
 next_run_time = datetime.datetime.now()
+court_sort_no = 0
 
 
 def _main_():
-    global info_list, start_diff
+    global info_list, start_diff, court_sort_no
     exec_time = '00:00'
     with open("configInfo/51yundong.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
@@ -56,6 +58,7 @@ def _main_():
             exec_time = config.replace('\n', '').split('=')[1]
         if config.startswith('场地号'):
             field_no = config.replace('\n', '').split('=')[1]
+            court_sort_no = int(field_no)
         if config.startswith('时间段'):
             times_str = config.replace('\n', '').split('=')[1]
             if times_str != '':
@@ -65,7 +68,7 @@ def _main_():
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
 
     for time_s in times:
-        info_list.append({'resourceDate': init_date, 'fieldNo': field_no, 'time': float(time_s), 'price': 80})
+        info_list.append({'resourceDate': init_date, 'fieldNo': 0, 'time': float(time_s), 'price': 80})
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
     # fiddler_start()
@@ -81,8 +84,51 @@ def close_win_class():
     time.sleep(0.1)
 
 
+def before_calc(content):
+    global court_all_list, info_list
+    court_all_list = calc_result_json(content)
+    court_no_first = 0
+    court_no_second = 0
+    num = court_sort_no
+    temp_first = 0
+    temp_second = 0
+
+    for item in court_all_list:
+        if item['fieldNo'] == 1 or item['fieldNo'] == 9:
+            continue
+        if num == 0:
+            break
+        if int(info_list[0]['time']) == int(item['time']):
+            court_no_first = item['fieldNo']
+        if len(info_list) == 2 and int(info_list[1]['time']) == int(item['time']):
+            court_no_second = item['fieldNo']
+        if court_no_first == court_no_second and court_no_first != 0:
+            temp_first = court_no_first
+            temp_second = court_no_second
+            court_no_first = 0
+            court_no_second = 0
+            num = num - 1
+    if len(info_list) == 2 and (court_no_first == 0 or court_no_second == 0) and (
+            temp_first == 0 or temp_second == 0):
+        print('{}没有{}时间段场地'.format(info_list[0]['resourceDate'],
+                                          str(int(info_list[0]['time'])) + '、' + str(
+                                              int(info_list[1]['time']))))
+
+    else:
+        if len(info_list) == 1 and court_no_first == 0 and temp_first == 0:
+            print('{}没有{}时间段场地'.format(info_list[0]['resourceDate'],
+                                              str(int(info_list[0]['time']))))
+            return False
+        if len(info_list) == 2 and (court_no_first == 0 or court_no_second == 0):
+            court_no_first = temp_first
+            court_no_second = temp_second
+        info_list[0]['fieldNo'] = court_no_first
+        if len(info_list) == 2:
+            info_list[1]['fieldNo'] = court_no_second
+
+
 def task(days):
-    global task_is_run, court_all_list
+    global task_is_run
     task_is_run = True
     current_random = float(random.randint(float(start_diff) * 1000, (float(start_diff) + 0.5) * 1000)) / 1000
     # print('延迟{}秒'.format(current_random))
@@ -96,63 +142,28 @@ def task(days):
     while True:
         try:
 
-            court_all_list = get_court()
-            court_no_first = 0
-            court_no_second = 0
-            num = int(info_list[0]['fieldNo'])
-            temp_first = 0
-            temp_second = 0
-
-            for item in court_all_list:
-                if item['fieldNo'] == 1 or item['fieldNo'] == 9:
-                    continue
-                if num == 0:
-                    break
-                if int(info_list[0]['time']) == int(item['time']):
-                    court_no_first = item['fieldNo']
-                if len(info_list) == 2 and int(info_list[1]['time']) == int(item['time']):
-                    court_no_second = item['fieldNo']
-                if court_no_first == court_no_second and court_no_first != 0:
-                    temp_first = court_no_first
-                    temp_second = court_no_second
-                    court_no_first = 0
-                    court_no_second = 0
-                    num = num - 1
-            if len(info_list) == 2 and (court_no_first == 0 or court_no_second == 0) and (
-                    temp_first == 0 or temp_second == 0):
-                print('{}没有{}时间段场地'.format(info_list[0]['resourceDate'],
-                                                  str(int(info_list[0]['time'])) + '、' + str(
-                                                      int(info_list[1]['time']))))
-
-            else:
-                if len(info_list) == 1 and court_no_first == 0 and temp_first == 0:
-                    print('{}没有{}时间段场地'.format(info_list[0]['resourceDate'],
-                                                      str(int(info_list[0]['time']))))
-                    break
-                if len(info_list) == 2 and (court_no_first == 0 or court_no_second == 0):
-                    court_no_first = temp_first
-                    court_no_second = temp_second
-                info_list[0]['fieldNo'] = court_no_first
-                if len(info_list) == 2:
-                    info_list[1]['fieldNo'] = court_no_second
-                # pickup_court()
-                if os.path.exists(fllow_file_path):
-                    os.remove(fllow_file_path)
-                auto_pickup()
+            # thread = threading.Thread(target=before_calc)
+            # thread.start()
+            # pickup_court()
+            if os.path.exists(fllow_file_path):
+                os.remove(fllow_file_path)
+            auto_pickup()
             break
         except:
             traceback.print_exc()
             sys.exit()
-        # try:
-        #     if get_court():
-        #         pickup_court()
-        #         break
-        #     else:
-        #         current_random = random.randint(1000, 7000)
-        #         time.sleep(float(current_random)/1000)
-        #         print('等待{}毫秒，继续查询'.format(float(current_random)/1000))
-        # except:
-        #     traceback.print_exc()
+
+
+# try:
+#     if get_court():
+#         pickup_court()
+#         break
+#     else:
+#         current_random = random.randint(1000, 7000)
+#         time.sleep(float(current_random)/1000)
+#         print('等待{}毫秒，继续查询'.format(float(current_random)/1000))
+# except:
+#     traceback.print_exc()
 
 
 def pickup_court():
@@ -189,7 +200,11 @@ def get_court():
     result_response = req.get(temp_url, headers=headers, verify=verify_str, proxies=proxies)
     end = time.perf_counter()
     print('加载场地数据耗时：{:.4f}s'.format(end - start))
-    result_json = json.loads(result_response.content)
+    return calc_result_json(result_response.content)
+
+
+def calc_result_json(content):
+    result_json = json.loads(content)
     data_list = []
     for item in result_json['data']:
         for client_item in item['fieldResource']:
@@ -207,7 +222,6 @@ def get_court():
         write_txt(data_list, 'luwan.txt')
     print('3当前时间：{}'.format(datetime.datetime.now()))
     return data_list
-
 
 def write_txt(log, name):
     curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
@@ -382,7 +396,7 @@ def auto_pickup():
     curr = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
     time.sleep(0.01)
     pyautogui.click((curr[0] + 370, curr[1] + 750), clicks=1)
-    time.sleep(0.1)
+    time.sleep(0.2)
     pyautogui.click((curr[0] + 70, curr[1] + 350), clicks=1)
     is_run(is_success, 50, 'api/stadium/favorites')
     time.sleep(0.2)
@@ -390,14 +404,31 @@ def auto_pickup():
     is_run(is_success, 50, 'api/stadium/resources')
     pyautogui.scroll(-900)
     time.sleep(0.2)
+    load_start = time.perf_counter()
     pyautogui.click((curr[0] + 350, curr[1] + 685), clicks=1)
     is_run(is_success, 50, 'matrix?stadiumItemId')
+    # 加载数据
+    logs = load_log()
+    for log in logs:
+        infos = log.split('||')
+        if len(infos) == 2 and 'matrix?stadiumItemId' in str(infos[0]):
+            before_calc(infos[1])
+    end = time.perf_counter()
+    print('加载场地耗时：{:.4f}s'.format(end - load_start))
     pyautogui.scroll(-900)
     time.sleep(0.2)
     pyautogui.moveTo((curr[0] + 250, curr[1] + 525), duration=0)
     pyautogui.keyDown('shift')
     pyautogui.scroll(-900)
     pyautogui.keyUp('shift')
+    end = time.perf_counter()
+    print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
+    court_sum = 0
+    for info in info_list:
+        court_sum = court_sum + int(info['fieldNo'])
+    if court_sum == 0:
+        print('无场地')
+        return
     x_diff = 66
     y_diff = 53
     for info in info_list:
