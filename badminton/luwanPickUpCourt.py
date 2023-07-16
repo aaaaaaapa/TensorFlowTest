@@ -1,5 +1,6 @@
 import datetime
 import json
+import math
 import os
 import random
 import sys
@@ -12,6 +13,8 @@ import win32gui
 import win32con
 
 import requests
+
+from login.util import encrypt_pwd
 
 proxies = {"http": "http://127.0.0.1:8888", "https": "http://127.0.0.1:8888"}
 verify_str = "FiddlerRoot.pem"
@@ -33,6 +36,9 @@ logged = False
 fiddler_is_start = False
 start_diff = '1'
 next_run_time = datetime.datetime.now()
+# public_key = '-----BEGIN PUBLIC KEY-----\n' +'MIGfMA0GCSqGSIb3\n'+'DQEBAQUAA4GNADCB\n'+'iQKBgQCRNPY55sDn\n'+'wFARqVkDsuJ9m68K\n'+'awFK2uWiGI783QtN\n'+'Ab+O3HViGFOG1Jie\n'+'NexIzoN8fCdhg802\n'+'KDaUUYqzOlxA4i+g\n'+'kocERxPvuW9LQJVP\n'+'7DQAYx4hrydcLMZE\n'+'MSXpBlbzFKiJ4vgt\n'+'XfqWhZ8YohGhLk0e\n'+'QnQNEyHRfs0y6FoC\n'+'BwIDAQAB\n'+ '-----END PUBLIC KEY----- '
+# public_key = '-----BEGIN PUBLIC KEY-----\n' + 'MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCRNPY55sDnwFARqVkDsuJ9m68K\n' + 'awFK2uWiGI783QtNAb+O3HViGFOG1JieNexIzoN8fCdhg802KDaUUYqzOlxA4i+g\n' + 'kocERxPvuW9LQJVP7DQAYx4hrydcLMZEMSXpBlbzFKiJ4vgtXfqWhZ8YohGhLk0e\n' + 'QnQNEyHRfs0y6FoCBwIDAQAB\n' + '-----END PUBLIC KEY-----'
+public_key = "-----BEGIN PUBLIC KEY-----\n" + "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDHdsyxT66pDG4p73yope7jxA92\n" + "c0AT4qIJ/xtbBcHkFPK77upnsfDTJiVEuQDH+MiMeb+XhCLNKZGp0yaUU6GlxZdp\n" + "+nLW8b7Kmijr3iepaDhcbVTsYBWchaWUXauj9Lrhz58/6AE/NF0aMolxIGpsi+ST\n" + "2hSHPu3GSXMdhPCkWQIDAQAB\n" + "-----END PUBLIC KEY----- "
 
 
 def _main_():
@@ -66,7 +72,7 @@ def _main_():
     # fiddler_start()
     close_win_class()
     login()
-    task()
+    task(1)
     # schedule_task(exec_time)
 
 
@@ -76,14 +82,14 @@ def close_win_class():
     time.sleep(0.1)
 
 
-def task():
+def task(days):
     global task_is_run, court_all_list
     task_is_run = True
     current_random = float(random.randint(float(start_diff) * 1000, (float(start_diff) + 0.5) * 1000)) / 1000
     # print('延迟{}秒'.format(current_random))
     # time.sleep(current_random)
     time.sleep(current_random)
-    init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
+    init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=days), '%Y-%m-%d')
     for info in info_list:
         info['resourceDate'] = init_date
     # info_list[0]['resourceDate'] = init_date
@@ -97,14 +103,15 @@ def task():
             num = int(info_list[0]['fieldNo'])
             temp_first = 0
             temp_second = 0
+
             for item in court_all_list:
-                if item['fieldNo'] == 1 or item['fieldNo'] == 9:
-                    continue
+                # if item['fieldNo'] == 1 or item['fieldNo'] == 9:
+                #     continue
                 if num == 0:
                     break
                 if int(info_list[0]['time']) == int(item['time']):
                     court_no_first = item['fieldNo']
-                if int(info_list[1]['time']) == int(item['time']):
+                if len(info_list) == 2 and int(info_list[1]['time']) == int(item['time']):
                     court_no_second = item['fieldNo']
                 if court_no_first == court_no_second and court_no_first != 0:
                     temp_first = court_no_first
@@ -112,7 +119,8 @@ def task():
                     court_no_first = 0
                     court_no_second = 0
                     num = num - 1
-            if (court_no_first == 0 or court_no_second == 0) and (temp_first == 0 or temp_second == 0):
+            if len(info_list) == 2 and (court_no_first == 0 or court_no_second == 0) and (
+                    temp_first == 0 or temp_second == 0):
                 print('{}没有{}时间段场地'.format(info_list[0]['resourceDate'],
                                                   str(int(info_list[0]['time'])) + '、' + str(
                                                       int(info_list[1]['time']))))
@@ -121,7 +129,8 @@ def task():
                     court_no_first = temp_first
                     court_no_second = temp_second
                 info_list[0]['fieldNo'] = court_no_first
-                info_list[1]['fieldNo'] = court_no_second
+                if len(info_list) == 2:
+                    info_list[1]['fieldNo'] = court_no_second
                 pickup_court()
 
             break
@@ -148,7 +157,8 @@ def pickup_court():
     submit_param = {"app": "MAP", "stadiumItemId": stadiumItemId,
                     "stadiumId": stadiumId,
                     "details": [],
-                    "stadiumSource": stadiumSource, "channel": 1, "orderType": "1"}
+                    "stadiumSource": stadiumSource, "channel": 1, "orderType": "1", "userMobile": 18001716508,
+                    "timestamp": int(datetime.datetime.now().timestamp() * 1000)}
     for item in info_list:
         fieldId = None
         fieldName = None
@@ -167,7 +177,18 @@ def pickup_court():
                   "sessionId": item['resourceDate']}
         submit_param['details'].append(detail)
     submit_start = time.perf_counter()
-    result_response = req.post(submit_url, json=submit_param, headers=headers, verify=verify_str, proxies=proxies)
+    submit_str = json.dumps(submit_param)
+    encrypt_len = math.ceil(float(len(submit_str)) / 117)
+    param = ''
+    for i in range(encrypt_len):
+        last = (i + 1) * 117
+        if last > len(submit_str):
+            last = len(submit_str)
+        sub_temp = submit_str[i * 117 + 1: last]
+        param = param + encrypt_pwd(sub_temp, public_key)
+    result = to_base64(param)
+    result_response = req.post(submit_url, json={'longParam': result, 'orderType': '1'}, headers=headers,
+                               verify=verify_str, proxies=proxies)
     result_json = json.loads(result_response.content)
     print(result_json)
     if result_json['code'] == 200:
@@ -354,6 +375,30 @@ def close_win(win_name):
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
     time.sleep(0.5)
+
+
+u = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+
+
+def to_base64(e):
+    r = ""
+    t = 0
+    while t + 3 <= len(e):
+        n = int(e[t:t + 3], 16)
+        r += u[n >> 6] + u[63 & n]
+        t += 3
+
+    if t + 1 == len(e):
+        n = int(e[t:t + 1], 16)
+        r += u[n << 2]
+    elif t + 2 == len(e):
+        n = int(e[t:t + 2], 16)
+        r += u[n >> 2] + u[(3 & n) << 4]
+
+    while len(r) % 4 != 0:
+        r += "="
+
+    return r
 
 
 if __name__ == '__main__':

@@ -7,6 +7,7 @@ import random
 
 import requests
 import schedule
+from chinese_calendar import is_holiday
 from pandas import DataFrame
 
 from config import proxies, verify_str
@@ -23,6 +24,8 @@ req = requests.session()
 username = '17301706429'
 password = 'zx2651yf'
 sit_times = [19, 20, 21]
+holiday_sit_times = [10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
+work_sit_times = [19, 20, 21]
 init_date = datetime.datetime.today()
 court_num = 2
 goods_info = None
@@ -30,11 +33,11 @@ pickup_days = 6
 
 
 def _main_():
-    global username, password, sit_times
+    global username, password, sit_times, holiday_sit_times, court_num, work_sit_times
     with open("quyundong.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
-    if len(configList) != 5:
+    if len(configList) != 6:
         print('配置文件错误！')
         input('输入任意键退出')
         sys.exit()
@@ -48,7 +51,11 @@ def _main_():
         if config.startswith('时间段'):
             name_str = config.replace('\n', '').split('=')[1]
             if name_str != '':
-                sit_times = name_str.split(',')
+                work_sit_times = name_str.split(',')
+        if config.startswith('假日时间段'):
+            name_str = config.replace('\n', '').split('=')[1]
+            if name_str != '':
+                holiday_sit_times = name_str.split(',')
         if config.startswith('抢票时间'):
             exec_time = config.replace('\n', '').split('=')[1]
 
@@ -69,9 +76,13 @@ def client_task():
 
 
 def task():
-    global task_is_run, init_date, goods_info
+    global task_is_run, init_date, goods_info, sit_times
 
     init_date = datetime.datetime.today() + datetime.timedelta(days=pickup_days)
+    if is_holiday(init_date):
+        sit_times = holiday_sit_times
+    else:
+        sit_times = work_sit_times
     print('当前时间：{}'.format(datetime.datetime.now()))
     start = time.perf_counter()
     goods_result = get_goods_result()
