@@ -1,20 +1,17 @@
 import datetime
 import json
-import math
 import os
 import random
 import sys
-import threading
 import time
 import traceback
 
 import psutil
 import pyautogui
-import schedule
-import win32gui
-import win32con
-
 import requests
+import schedule
+import win32con
+import win32gui
 
 from comm import autoUtil
 
@@ -40,6 +37,8 @@ fiddler_is_start = False
 start_diff = '1'
 next_run_time = datetime.datetime.now()
 court_sort_no = 0
+success_num = 0
+curr_point = []
 
 
 def _main_():
@@ -72,10 +71,11 @@ def _main_():
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
     # fiddler_start()
-    close_win_class()
-    login()
-    task(1)
-    # schedule_task(exec_time)
+    # for i in range(1):
+    #     close_win_class()
+    #     login()
+    #     task(1)
+    schedule_task(exec_time)
 
 
 def close_win_class():
@@ -127,14 +127,14 @@ def before_calc(content):
             info_list[1]['fieldNo'] = court_no_second
 
 
-def task(days):
+def task():
     global task_is_run
     task_is_run = True
     current_random = float(random.randint(float(start_diff) * 1000, (float(start_diff) + 0.5) * 1000)) / 1000
     # print('延迟{}秒'.format(current_random))
     # time.sleep(current_random)
     time.sleep(current_random)
-    init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=days), '%Y-%m-%d')
+    init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
     for info in info_list:
         info['resourceDate'] = init_date
     # info_list[0]['resourceDate'] = init_date
@@ -223,6 +223,7 @@ def calc_result_json(content):
     print('3当前时间：{}'.format(datetime.datetime.now()))
     return data_list
 
+
 def write_txt(log, name):
     curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
     with open(curr_date_str + '_' + name, 'w', encoding='utf8') as w:
@@ -288,13 +289,13 @@ def get_access_token():
 
 
 def login():
-    global start, logged
+    global start, logged, curr_point
     logged = True
     start = time.perf_counter()
+
     for i in range(5):
         if os.path.exists(token_file_path):
             os.remove(token_file_path)
-
         os.startfile(r"C:\Users\Administrator\Desktop\来沪动丨健身地图.lnk")
         print('1当前时间：{}'.format(datetime.datetime.now()))
         access_token = get_access_token()
@@ -305,7 +306,14 @@ def login():
             continue
         else:
             break
-    headers['Authorization'] = 'Bearer ' + access_token
+    curr_point = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
+    print(curr_point)
+    time.sleep(0.5)
+    pyautogui.click((curr_point[0] + 370, curr_point[1] + 750), clicks=1, duration=1)
+    time.sleep(0.5)
+    pyautogui.click((curr_point[0] + 70, curr_point[1] + 350), clicks=1, duration=1)
+    is_run(is_success, 100, 'api/stadium/favorites')
+    # headers['Authorization'] = 'Bearer ' + access_token
     end = time.perf_counter()
     print('打开小程序耗时：{:.4f}s'.format(end - start))
 
@@ -392,21 +400,30 @@ def close_win(win_name):
 
 
 def auto_pickup():
+    global success_num
     auto_start = time.perf_counter()
-    curr = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
-    time.sleep(0.01)
-    pyautogui.click((curr[0] + 370, curr[1] + 750), clicks=1)
+
     time.sleep(0.2)
-    pyautogui.click((curr[0] + 70, curr[1] + 350), clicks=1)
-    is_run(is_success, 50, 'api/stadium/favorites')
-    time.sleep(0.2)
-    pyautogui.click((curr[0] + 80, curr[1] + 100), clicks=1)
-    is_run(is_success, 50, 'api/stadium/resources')
-    pyautogui.scroll(-900)
-    time.sleep(0.2)
+    pyautogui.click((curr_point[0] + 80, curr_point[1] + 100), clicks=1, duration=0.2)
+    is_run(is_success, 100, 'api/stadium/resources')
+    # 检查加载了几个日期的场地
+    is_scroll = False
+    click_y = 685
+    logs = load_log()
+    for log in logs:
+        infos = log.split('||')
+        if len(infos) == 2 and 'api/stadium/resources' in str(infos[0]):
+            json_result = json.loads(infos[1])
+            is_scroll = len(json_result['data']) == 2
+    time.sleep(0.1)
+    if is_scroll:
+        pyautogui.scroll(-100)
+        time.sleep(0.2)
+    else:
+        click_y = 710
     load_start = time.perf_counter()
-    pyautogui.click((curr[0] + 350, curr[1] + 685), clicks=1)
-    is_run(is_success, 50, 'matrix?stadiumItemId')
+    pyautogui.click((curr_point[0] + 350, curr_point[1] + click_y), clicks=1, duration=0.2)
+    is_run(is_success, 100, 'matrix?stadiumItemId')
     # 加载数据
     logs = load_log()
     for log in logs:
@@ -415,11 +432,16 @@ def auto_pickup():
             before_calc(infos[1])
     end = time.perf_counter()
     print('加载场地耗时：{:.4f}s'.format(end - load_start))
+
+    pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 525), duration=0)
+    time.sleep(0.1)
     pyautogui.scroll(-900)
-    time.sleep(0.2)
-    pyautogui.moveTo((curr[0] + 250, curr[1] + 525), duration=0)
+    time.sleep(0.1)
+    num = int(info_list[0]['time'])
+    if num > 18:
+        num = 18
     pyautogui.keyDown('shift')
-    pyautogui.scroll(-900)
+    pyautogui.scroll(-24 * (num - 9))
     pyautogui.keyUp('shift')
     end = time.perf_counter()
     print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
@@ -431,28 +453,35 @@ def auto_pickup():
         return
     x_diff = 66
     y_diff = 53
+    variate = 2
     for info in info_list:
         time.sleep(0.1)
         pyautogui.click(
-            (curr[0] + 115 + x_diff * (int(info['time']) - 18)), curr[1] + 55 + y_diff * (int(info['fieldNo']) - 2),
+            (curr_point[0] + 115 + x_diff * (int(info['time']) - num)),
+            curr_point[1] + 55 + y_diff * (int(info['fieldNo']) - variate),
             clicks=1)
+        if int(info['fieldNo']) > 10:
+            pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 325), duration=0)
+            time.sleep(0.1)
+            variate = 5
+            pyautogui.scroll(-55)
+            time.sleep(0.1)
+
     time.sleep(0.1)
-    pyautogui.click((curr[0] + 270, curr[1] + 720), clicks=1)
+    # success_num = success_num + 1
+    # end = time.perf_counter()
+    # print('成功耗时：{:.4f}s'.format(end - auto_start))
+    # return
+    pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
     submit_result = is_run(is_success, 50, 'orders?orderType=1')
     if submit_result:
-        print('提交成功')
+        info_str = str(info_list[0]['time'])
+        if len(info_list) == 2:
+            info_str = str(info_list[0]['time']) + '、' + str(info_list[1]['time'])
+        print('卢湾{}场地预订成功,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
+        # requests.get(notice_url.format('卢湾{}场地预订成功'.format(info_list[0]['fieldNo']), info_list))
     end = time.perf_counter()
     print('提交耗时：{:.4f}s'.format(end - auto_start))
-    # time.sleep(0.5)
-    # for i in range(4):
-    #     for j in range(11):
-    #         time.sleep(0.5)
-    #         pyautogui.click((curr[0] + 115 + (i * x_diff), curr[1] + 55 + j * y_diff), clicks=1)
-    # pyautogui.click((curr[0] + 147+66, curr[1] + 80), clicks=1)
-
-    # time.sleep(0.5)
-    # pyautogui.click((curr[0] + 147 + 66, curr[1] + 80+54), clicks=1)
-    # pyautogui.click((curr[0] + 120+x_diff, curr[1] + 60+x_diff), clicks=1)
 
 
 def is_run(task, max_num=5, args=None):
