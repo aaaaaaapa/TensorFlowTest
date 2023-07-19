@@ -135,7 +135,7 @@ def schedule_task(exec_time):
         diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
         if diff_seconds < 10:
             interval = 0.01
-        if 40 >= diff_seconds > 0 and logged is False:
+        if 600 >= diff_seconds > 0 and logged is False:
             close_win("WeChatAppEx.exe")
             prepare()
         time.sleep(interval)
@@ -176,9 +176,10 @@ def login_wechat():
         win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
     win32gui.SetForegroundWindow(hwnd)
     curr = win32gui.GetWindowRect(hwnd)
+
     # 1 登录
     login_coord = (curr[0] + 140, curr[1] + 280)
-    pyautogui.click(login_coord, clicks=1)
+    pyautogui.click(login_coord, clicks=1,duration=1)
 
 
 def prepare():
@@ -186,6 +187,9 @@ def prepare():
     logged = True
     login_wechat()
     time.sleep(10)
+    hwnd = win32gui.FindWindow("WeChatMainWndForPC", "微信")  # 获取窗口
+    show_info = win32gui.ShowWindow(hwnd, win32con.SW_HIDE)
+    print(show_info)
     for i in range(2):
         close_win("WeChatAppEx.exe")
         if os.path.exists(log_file_path):
@@ -417,13 +421,13 @@ def click_start():
     # image_l = find_image('img\\0.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord1, clicks=1)
+    pyautogui.click(coord1, clicks=1,duration=1)
     if is_run(second_is_success, 200) is False:
         return False
     # image_l = find_image('img\\00.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord2, clicks=1)
+    pyautogui.click(coord2, clicks=1,duration=1)
     if is_run(third_is_success, 200) is False:
         return False
     return True
