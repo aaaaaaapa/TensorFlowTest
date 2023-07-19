@@ -103,10 +103,10 @@ def _main_():
                 times = times_str.split(',')
         if config_str.startswith('几天后'):
             pickup_days = config_str.replace('\n', '').split('=')[1]
-    # pickup_days = 6
-    # field_no = '9'
-    # times = ['21']
-    # for i in range(2):
+    # pickup_days = 7
+    # field_no = '8'
+    # times = ['15', '16']
+    # for i in range(1):
     #     prepare()
     #     if pickup_court():
     #         break
@@ -176,10 +176,9 @@ def login_wechat():
         win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
     win32gui.SetForegroundWindow(hwnd)
     curr = win32gui.GetWindowRect(hwnd)
-
     # 1 登录
     login_coord = (curr[0] + 140, curr[1] + 280)
-    pyautogui.click(login_coord, clicks=1,duration=1)
+    pyautogui.click(login_coord, clicks=1, duration=0.5)
 
 
 def prepare():
@@ -231,12 +230,12 @@ def pickup_court():
         code_validation()
         if get_answer(['correct answer']):
             end = time.perf_counter()
-            print('2耗时：{:.4f}s'.format(end - start))
+            print('订购成功耗时：{:.4f}s'.format(end - start))
             is_run(pay_is_begin, 100)
             # image_l = pyautogui.locateOnScreen('img\\6.png', 5)
             # center = pyautogui.center(image_l)
             pyautogui.click(coord8, clicks=1)
-            print('订购成功')
+            print('订购成功,场地{},时间{}'.format(field_no, times))
             requests.get(
                 notice_url.format('预定场地成功', '预定场地成功,等待付款,场地{},时间{}'.format(field_no, times)),
                 proxies=proxies,
@@ -421,13 +420,13 @@ def click_start():
     # image_l = find_image('img\\0.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord1, clicks=1,duration=1)
+    pyautogui.click(coord1, clicks=1, duration=0.5)
     if is_run(second_is_success, 200) is False:
         return False
     # image_l = find_image('img\\00.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord2, clicks=1,duration=1)
+    pyautogui.click(coord2, clicks=1, duration=0.5)
     if is_run(third_is_success, 200) is False:
         return False
     return True
@@ -450,18 +449,18 @@ def find_image(image, num):
 
 def click_venue(x, y, sku_id):
     if sku_id == 38:
-        pyautogui.click(x + 260, y + 40, clicks=1, duration=0)
+        pyautogui.click(x + 280, y + 40, clicks=1, duration=0.1)
     else:
-        pyautogui.click(x + 100, y + 40, clicks=1, duration=0)
+        pyautogui.click(x + 100, y + 40, clicks=1, duration=0.1)
 
 
 def click_court(x, y, sku_id):
     if sku_id == 38 or sku_id == 35:
-        pyautogui.click(x + 50, y + 220, clicks=1, duration=0)
+        pyautogui.click(x + 50, y + 220, clicks=1, duration=0.1)
     if sku_id == 36:
-        pyautogui.click(x + 210, y + 220, clicks=1, duration=0)
+        pyautogui.click(x + 210, y + 220, clicks=1, duration=0.1)
     if sku_id == 37:
-        pyautogui.click(x + 330, y + 220, clicks=1, duration=0)
+        pyautogui.click(x + 330, y + 220, clicks=1, duration=0.1)
 
 
 def click_day(x, y, days):
@@ -497,15 +496,16 @@ def click_time(court_id, time_ids):
     # center = pyautogui.center(image_l)
     x, y = coord4[0], coord4[1]
     # 按住shift，往右滚动
-    pyautogui.moveTo(x + 40, y, duration=0)
-    pyautogui.keyDown('shift')
-    if court_id >= 9:
-        scroll = court_id - 9
-    else:
-        scroll = court_id - 3
-    pyautogui.scroll(-36 * scroll)
-    pyautogui.keyUp('shift')
-    time.sleep(0.01)
+    if court_id > 1:
+        pyautogui.moveTo(x + 40, y, duration=0)
+        pyautogui.keyDown('shift')
+        if court_id >= 9:
+            scroll = court_id - 9
+        else:
+            scroll = court_id - 3
+        pyautogui.scroll(-36 * scroll)
+        pyautogui.keyUp('shift')
+        time.sleep(0.01)
     for time_id in time_ids:
         if court_id in [5, 6, 7, 8]:
             pyautogui.click(x + (court_id - 4) * 80, y + (int(time_id) - 19) * 40, clicks=1,
@@ -513,6 +513,10 @@ def click_time(court_id, time_ids):
             continue
         if court_id > 32:
             pyautogui.click(x + (court_id - 31) * 80, y + (int(time_id) - 19) * 40, clicks=1,
+                            duration=0.11)
+            continue
+        if court_id == 2:
+            pyautogui.click(x + court_id * 80, y + (int(time_id) - 19) * 40, clicks=1,
                             duration=0.11)
             continue
         pyautogui.click(x + 80, y + (int(time_id) - 19) * 40, clicks=1,
@@ -540,8 +544,10 @@ def pick_up():
     # 点击9-33
     click_venue(x, y, skuId)
     # 点击9-21号场
+    time.sleep(0.1)
     click_court(x, y, skuId)
     # 点击days天后
+    time.sleep(0.1)
     click_day(x, y, days)
 
     start_time = get_total_milliseconds(item_date)
