@@ -1,3 +1,10 @@
+import datetime
+import json
+import os
+import time
+import traceback
+from concurrent.futures import ThreadPoolExecutor
+
 import requests
 import random
 from lxml import etree
@@ -18,7 +25,8 @@ headers = {
 }
 
 url = 'https://www.nihaowua.com/'
-
+proxies = []
+proxies_num=5
 
 def get_ip_list(url, headers):
     web_data = requests.get(url, headers=headers)
@@ -28,25 +36,41 @@ def get_ip_list(url, headers):
     for i in range(1, len(ips)):
         ip_info = ips[i]
         tds = ip_info.find_all('td')
-        ip_list.append(tds[1].text + ':' + tds[2].text)
+        ip_list.append(tds[0].text + ':' + tds[1].text)
     return ip_list
 
 
-def get_random_ip(ip_list):
-    proxy_list = []
+def get_random_ip():
+    if len(proxies) == 0:
+        return None
+    proxy_ip = random.choice(proxies)
+    proxy = json.load(proxy_ip)
+    return proxy
+
+
+def bath_get_proxies():  # 随机IP
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
+    # url = 'https://www.kuaidaili.com/free/'
+    proxies_list = []
+    with ThreadPoolExecutor(max_workers=5) as t:
+        obj_list = []
+        for i in range(proxies_num):
+            obj = t.submit(get_proxies, i)
+            obj_list.append(obj)
+    for i in range(10):
+        time.sleep(5)
+        for obj in obj_list:
+            if obj.done() is False:
+                break
+
+
+def get_proxies(index):
+    global proxies
+    if index != 0:
+        agent_url = 'https://www.kuaidaili.com/free/inha/{}'.format(str(index) + '/')
+    ip_list = get_ip_list(agent_url, headers=headers)
     for ip in ip_list:
-        proxy_list.append('http://' + ip)
-    proxy_ip = random.choice(proxy_list)
-    proxies = {'http': proxy_ip}
-    return proxies
-
-
-def get_proxies():  # 随机IP
-    # url = 'http://www.xicidaili.com/nn/'
-    url = 'https://free.kuaidaili.com/free/inha'
-    ip_list = get_ip_list(url, headers=headers)
-    proxies = get_random_ip(ip_list)
-    return proxies
+        proxies.append({'http': 'http://' + ip})
 
 
 def main_print():  # 直接打印输出程序
@@ -54,7 +78,7 @@ def main_print():  # 直接打印输出程序
     while True:
         data = {"exchange_type": "K", "_t": 1660046466}
         res = requests.post("https://101.227.99.128:10443/gmggt_api/common/getTradeDaysResponse", headers=headers,
-                               json=data)
+                            json=data)
         res.encoding = 'utf-8'
         selector = etree.HTML(res.text)
         xpath_reg = "//section/div/*/text()"
@@ -67,9 +91,10 @@ def main_print():  # 直接打印输出程序
 
 def main_keep():  # 写入txt文本程序
     count = 0
+    requests.packages.urllib3.disable_warnings()
     with open("NiHaoWu.txt", "a") as f:
         while True:
-            res = requests.get(url=url, headers=headers, proxies=get_proxies())
+            res = requests.get(url=url, headers=headers, verify=False, proxies=get_random_ip())
             res.encoding = 'utf-8'
             selector = etree.HTML(res.text)
             xpath_reg = "//section/div/*/text()"
@@ -78,7 +103,18 @@ def main_keep():  # 写入txt文本程序
             f.write(content + '\n')
             count += 1
             print('********正在爬取中，这是第{}次爬取********'.format(count))
+            time.sleep(1)
 
 
 if __name__ == '__main__':
-    main_print()
+    file_path = 'proxies' + datetime.datetime.today().strftime('%Y-%m-%d') + '.txt'
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding='utf8') as f:
+            proxies = f.readlines()
+            f.close()
+    else:
+        bath_get_proxies()
+        with open(file_path, "a") as f:
+            f.writelines(json.dump(proxies))
+            f.close()
+    main_keep()
