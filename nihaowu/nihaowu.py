@@ -1,15 +1,13 @@
 import datetime
 import json
 import os
+import random
 import time
-import traceback
-from concurrent.futures import ThreadPoolExecutor
 
 import requests
-import random
-from lxml import etree
 from bs4 import BeautifulSoup
 from fake_useragent import UserAgent
+from lxml import etree
 
 
 def get_random_ua():  # 随机UA
@@ -21,15 +19,18 @@ headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/104.0.0.0 Safari/537.36",
     "Content-Type": "application/json",
     "Cookie": 'SESSION=YzYzYzk5OWMtN2I0ZC00OGJjLWIzZjgtMzA4ZTYzZjU4YjI2; CRM_API_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX3Rva2VuX2luZm8iOnsidXNlcklkIjoiMjEzMDAwMTQ5OTY1MTU3NjY1IiwicHJvZHVjdElkIjoiMjEzMDAwMTM4MDM1NTQ3NzI4IiwiZGV2aWNlIjoiQ2hyb21lIiwidGltZW91dCI6MTIwMCwic3lzTm8iOiJkY2hrX29tcCJ9LCJpYXQiOjE2NjAwNDE0Mjd9.pAdjSiyeaVUVgjrRv8vrUDZaAc9wZcMCrX3ei9qEVMooYoWzomfFRtvA6NGEobnjHG8Mu0x910UbZLuZcE-Y2A',
-    "dchktoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX3Rva2VuX2luZm8iOnsidXNlcklkIjoiMjEzMDAwMTQ5OTY1MTU3NjY1IiwicHJvZHVjdElkIjoiMjEzMDAwMTM4MDM1NTQ3NzI4IiwiZGV2aWNlIjoiQ2hyb21lIiwidGltZW91dCI6MTIwMCwic3lzTm8iOiJkY2hrX29tcCJ9LCJpYXQiOjE2NjAwNDE0Mjd9.pAdjSiyeaVUVgjrRv8vrUDZaAc9wZcMCrX3ei9qEVMooYoWzomfFRtvA6NGEobnjHG8Mu0x910UbZLuZcE-Y2A"
+    "dchktoken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJ1c2VyX3Rva2VuX2luZm8iOnsidXNlcklkIjoiMjEzMDAwMTQ5OTY1MTU3NjY1IiwicHJvZHVjdElkIjoiMjEzMDAwMTM4MDM1NTQ3NzI4IiwiZGV2aWNlIjoiQ2hyb21lIiwidGltZW91dCI6MTIwMCwic3lzTm8iOiJkY2hrX29tcCJ9LCJpYXQiOjE2NjAwNDE0Mjd9.pAdjSiyeaVUVgjrRv8vrUDZaAc9wZcMCrX3ei9qEVMooYoWzomfFRtvA6NGEobnjHG8Mu0x910UbZLuZcE-Y2A",
+'Connection': 'close'
+
 }
 
 url = 'https://www.nihaowua.com/'
 proxies = []
-proxies_num=5
+proxies_num = 5
 
-def get_ip_list(url, headers):
-    web_data = requests.get(url, headers=headers)
+
+def get_ip_list(url):
+    web_data = requests.get(url)
     soup = BeautifulSoup(web_data.text, 'lxml')
     ips = soup.find_all('tr')
     ip_list = []
@@ -52,23 +53,27 @@ def bath_get_proxies():  # 随机IP
     agent_url = 'https://www.kuaidaili.com/free/inha/'
     # url = 'https://www.kuaidaili.com/free/'
     proxies_list = []
-    with ThreadPoolExecutor(max_workers=5) as t:
-        obj_list = []
-        for i in range(proxies_num):
-            obj = t.submit(get_proxies, i)
-            obj_list.append(obj)
-    for i in range(10):
-        time.sleep(5)
-        for obj in obj_list:
-            if obj.done() is False:
-                break
+    for i in range(proxies_num):
+        get_proxies(i)
+        time.sleep(0.2)
+    # with ThreadPoolExecutor(max_workers=5) as t:
+    #     obj_list = []
+    #     for i in range(proxies_num):
+    #         obj = t.submit(get_proxies, i)
+    #         obj_list.append(obj)
+    # for i in range(10):
+    #     time.sleep(5)
+    #     for obj in obj_list:
+    #         if obj.done() is False:
+    #             break
 
 
 def get_proxies(index):
     global proxies
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
     if index != 0:
         agent_url = 'https://www.kuaidaili.com/free/inha/{}'.format(str(index) + '/')
-    ip_list = get_ip_list(agent_url, headers=headers)
+    ip_list = get_ip_list(agent_url)
     for ip in ip_list:
         proxies.append({'http': 'http://' + ip})
 
