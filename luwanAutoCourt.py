@@ -344,6 +344,8 @@ def schedule_task(exec_time):
         if 600 > diff_seconds > 0 and fiddler_is_start is False:
             fiddler_start()
             time.sleep(10)
+            pyautogui.hotkey('winleft','m')
+            time.sleep(0.5)
             login()
         if 0 < diff_seconds < 30:
             interval = 0.01
