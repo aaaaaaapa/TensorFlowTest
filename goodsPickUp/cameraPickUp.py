@@ -6,6 +6,7 @@ import sys
 import time
 import traceback
 import requests
+from bs4 import BeautifulSoup
 
 # 100011488878
 url = 'https://api.m.jd.com/?appid=pc-item-soa&functionId=pc_detailpage_wareBusiness&client=pc&clientVersion=1.0.0&t={}&body=%7B%22skuId%22%3A100011488878%2C%22cat%22%3A%22652%2C654%2C831%22%2C%22area%22%3A%222_2813_61126_0%22%2C%22shopId%22%3A%221000000858%22%2C%22venderId%22%3A1000000858%2C%22paramJson%22%3A%22%7B%5C%22platform2%5C%22%3A%5C%22100000000001%5C%22%2C%5C%22specialAttrStr%5C%22%3A%5C%22p0ppppppppp2p1ppppppppppppp%5C%22%2C%5C%22skuMarkStr%5C%22%3A%5C%2200%5C%22%7D%22%2C%22num%22%3A1%2C%22bbTraffic%22%3A%22%22%7D&h5st=20230718165111486%3B8656582560057196%3Bfb5df%3Btk03wb1d21c2918ndq18yiG8eo0LZZcvic4pUy6fW2jg8nRG4he1cw4_gkj4KfZUzb5feDWMFB0dlHNKpa5rU3wAYQZQ%3Bf181857ac1456d1a35f079404aefaab81249ac0abb153303bcd2cf3ba832d958%3B3.1%3B1689670271486%3B24c9ee85e67cf80746dd82817ecbeafc7a829b35c7f446a4c7d476cc9faa1d8834a93323ad7bce9bef1bba682b93d2e34bc39582ed3ca02a8625831e475b0500fa9547df63a2887c8e7f06415e95f9ac90be8ac46f1409dc5c72568820e2979bb89f1eed5e203d21f18d6ca9773e84c3&x-api-eid-token=jdd03Q3VNOGVW67BGBYBSMCR2FNHHJKH5SYZ4GSQROUGQPGOEUQAAPYOGJM3SNYB56NXEN24OW3ZI2ZC2FI2SAQQ56LOD3AAAAAMJNAZEDBAAAAAAD2KKH624RE3XY4X&loginType=3&uuid=122270672.1679626950385406120060.1679626950.1689666377.1689670082.13'
@@ -35,9 +36,16 @@ headers = {
     'Origin': 'https://item.jd.com'
     # 'Cookie': 'shshshfpa=a4036330-9ac6-f2d7-5bdc-812543da7734-1690178502; shshshfpx=a4036330-9ac6-f2d7-5bdc-812543da7734-1690178502; __jdc=122270672; __jdv=122270672|direct|-|none|-|1690178503053; 3AB9D23F7A4B3C9B=RF7TH6Q3EPUBKKCQ2OYI5OH3RK4ZRTJ7GZQ6PC4CB4R7M22LMGX2YVBLOC3DY2SXDT6AKS7OKQUXNQF5X7OQL6RV5I; shshshfpb=rE2uxVGfOIrhEhaSN7I6CtA; areaId=2; __jdu=1690178503053154636277; ipLoc-djd=2-2813-61125-0; jsavif=1; 3AB9D23F7A4B3CSS=jdd03RF7TH6Q3EPUBKKCQ2OYI5OH3RK4ZRTJ7GZQ6PC4CB4R7M22LMGX2YVBLOC3DY2SXDT6AKS7OKQUXNQF5X7OQL6RV5IAAAAMJQ3DKEYAAAAAADBCO3QKAUTVN7UX; _gia_d=1; __jda=122270672.1690178503053154636277.1690178503.1690178503.1690183312.2; token=e16be163663272bbd7dfdc839975f54a,2,938990; __tk=0389e34022cf7e78f7e3b5167f896a34,2,938990; __jdb=122270672.2.1690178503053154636277|2.1690183312'
 }
+agent_headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+    "Sec-Ch-Ua":'Not/A)Brand";v="99", "Google Chrome";v="115", "Chromium";v="115',
+    'Sec-Ch-Ua-Platform':'Windows',
+    'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7'
+}
 enable = True
 sckey = 'SCT217112TYc3y947VdAioG3AjfVDuY1Zb'
 proxies = []
+proxies_num = 50
 
 
 def get_total_milliseconds(exec_date):
@@ -64,12 +72,13 @@ urls = [{'url': url, 'goods_no': 100011488878}
     , {'url': two_url, 'goods_no': 100046206079}
     , {'url': three_url, 'goods_no': 100057529076}
         # ,{'url': four_url, 'goods_no': 100038651615}
-    # , {'url': five_url, 'goods_no': 100026081829}
+        # , {'url': five_url, 'goods_no': 100026081829}
         ]
 
 
-def _main_():
-    file_path = 'proxies' + '.txt'
+
+def refush_proxy_file(file_path):
+    global proxies
     if os.path.exists(file_path):
         with open(file_path, "r", encoding='utf8') as f:
             proxies = f.readlines()
@@ -77,8 +86,20 @@ def _main_():
                 proxies[i] = proxies[i].replace('\n', '')
 
             f.close()
+    else:
+        bath_get_proxies()
+        with open(file_path, "a") as f:
+            for pro in proxies:
+                f.write(pro + '\n')
+            f.close()
+
+def _main_():
+    global proxies
 
     while True:
+        file_path = 'proxies' + datetime.datetime.today().strftime('%Y-%m-%d') + '.txt'
+        if os.path.exists(file_path):
+            refush_proxy_file(file_path)
         randint_time = random.randint(5 * 1000, 20 * 1000)
 
         start = time.perf_counter()
@@ -117,13 +138,63 @@ def _main_():
             if status_str == '有货':
                 notify_str = '商品{}有货啦'.format(goods_id)
                 resp = requests.get(
-                    'https://sc.ftqq.com/{}.send?text={}&desp={}'.format(sckey, notify_str, notify_str)
+                    'https://sc.ftqq.com/{}.send?text={}&desp={}'.format(sckey, result, notify_str)
                 )
-                resp_json = json.loads(resp.text)
+                save_log(result)
+
         end = time.perf_counter()
         print('耗时：{:.4f}s'.format(end - start))
         print('等待：{:.4f}s'.format(randint_time / 1000))
         time.sleep(randint_time / 1000)
+
+
+def save_log(msg):
+    with open('camera_log.txt', "a",encoding='utf-8') as f:
+        f.write('时间：{}，msg:{}\n'.format(datetime.datetime.now(), msg))
+        f.close()
+
+
+def bath_get_proxies():  # 随机IP
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
+    # url = 'https://www.kuaidaili.com/free/'
+    proxies_list = []
+    for i in range(proxies_num):
+        get_proxies(i)
+        interval = float(random.randint(1, 30)) / 10
+        print('当前页数{},间隔{}秒'.format(str(i), str(interval)))
+        time.sleep(interval)
+    # with ThreadPoolExecutor(max_workers=5) as t:
+    #     obj_list = []
+    #     for i in range(proxies_num):
+    #         obj = t.submit(get_proxies, i)
+    #         obj_list.append(obj)
+    # for i in range(10):
+    #     time.sleep(5)
+    #     for obj in obj_list:
+    #         if obj.done() is False:
+    #             break
+
+
+def get_proxies(index):
+    global proxies
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
+    if index != 0:
+        agent_url = 'https://www.kuaidaili.com/free/inha/{}'.format(str(index) + '/')
+    ip_list = get_ip_list(agent_url)
+    for ip in ip_list:
+        proxies.append(json.dumps({'http': 'http://' + ip}))
+
+def get_ip_list(url):
+    web_data = requests.get(url, headers=agent_headers)
+
+    soup = BeautifulSoup(web_data.text, 'lxml')
+    ips = soup.find_all('tr')
+    ip_list = []
+    for i in range(1, len(ips)):
+        ip_info = ips[i]
+        tds = ip_info.find_all('td')
+        ip_list.append(tds[0].text + ':' + tds[1].text)
+    return ip_list
 
 
 if __name__ == '__main__':
@@ -131,6 +202,9 @@ if __name__ == '__main__':
         _main_()
     except:
         traceback.print_exc()
+        requests.get(
+            'https://sc.ftqq.com/{}.send?text={}&desp={}'.format(sckey, '需要重启', '京东相机监测报错了')
+        )
     print('按回车键退出')
     input()
     sys.exit()

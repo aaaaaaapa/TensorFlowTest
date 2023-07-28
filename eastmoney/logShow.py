@@ -19,7 +19,7 @@ driver = webdriver.Chrome(service=service)
 
 url = 'http://180.163.42.202:18000/login/?t=1661233009.706505&sr=log'
 
-
+0
 # 每日风控数据比对自动获取
 def _main_():
     driver.get(url)

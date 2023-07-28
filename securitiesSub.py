@@ -391,8 +391,9 @@ def is_purchase(user_id, pwd):
 
 def bath_task(select, user_id_list, task):
     global password
+    obj_list = []
     with ThreadPoolExecutor(max_workers=5) as t:
-        obj_list = []
+
         for user in user_id_list:
             obj = t.submit(task, user['fundaccount'], user['pwd'])
             obj_list.append(obj)
@@ -400,6 +401,7 @@ def bath_task(select, user_id_list, task):
         print_result(select, obj_list)
         print_result_1(select)
         print("账户数量：{}".format(len(user_id_list)))
+
 
 
 def print_result(select, obj_list):

@@ -103,14 +103,23 @@ def _main_():
                 times = times_str.split(',')
         if config_str.startswith('几天后'):
             pickup_days = config_str.replace('\n', '').split('=')[1]
-    # pickup_days = 7
-    # field_no = '8'
-    # times = ['15', '16']
-    # for i in range(1):
-    #     prepare()
-    #     if pickup_court():
-    #         break
-    schedule_task(exec_time)
+    pickup_days = 7
+    field_no = '8'
+    times = ['15', '16']
+    for i in range(1):
+        prepare()
+        if pickup_court():
+            break
+    # schedule_task(exec_time)
+
+
+def manual_exec(day_input,field_no_input,times_input):
+    global pickup_days,field_no,times
+    pickup_days = day_input
+    field_no = field_no_input
+    times = times_input
+
+    pickup_court()
 
 
 def schedule_task(exec_time):
