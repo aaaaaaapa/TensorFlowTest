@@ -4,6 +4,7 @@ import base64
 import datetime
 import json
 import os
+import sqlite3
 import sys
 import time
 import traceback
@@ -79,16 +80,20 @@ coord7 = {}
 coord8 = {}
 success = 0
 error = 0
+duration = 0.5
+court_no = ''
+db_file_path = ''
+buy_account = 'test'
 
 
 def _main_():
-    global field_no, times, pickup_days, success, error
+    global field_no, times, pickup_days, success, error, db_file_path, buy_account
     if not os.path.exists('D:\\private'):
         os.makedirs('D:\\private')
     with open("autojiushi.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
-    if len(configList) != 4:
+    if len(configList) != 6:
         print('配置文件错误！')
         input('输入任意键退出')
         sys.exit()
@@ -103,18 +108,54 @@ def _main_():
                 times = times_str.split(',')
         if config_str.startswith('几天后'):
             pickup_days = config_str.replace('\n', '').split('=')[1]
-    pickup_days = 7
-    field_no = '8'
-    times = ['15', '16']
-    for i in range(1):
-        prepare()
-        if pickup_court():
-            break
+        if config_str.startswith('当前账号'):
+            buy_account = config_str.replace('\n', '').split('=')[1]
+        if config_str.startswith('数据库路径'):
+            db_file_path = config_str.replace('\n', '').split('=')[1]
+    loop_sqlite()
+    # pickup_days = 7
+    # field_no = '8'
+    # times = ['15', '16']
+    # for i in range(1):
+    #     prepare()
+    #     if pickup_court():
+    #         break
     # schedule_task(exec_time)
 
 
-def manual_exec(day_input,field_no_input,times_input):
-    global pickup_days,field_no,times
+def loop_sqlite():
+    global pickup_days, field_no, times, court_no
+    prepare()
+    while True:
+        conn = sqlite3.connect(db_file_path)
+        c = conn.cursor()
+        c.execute('select * from jiushi_court where COURT_STATUS=0 limit 1')
+        rows = c.fetchall()
+        if len(rows) == 0:
+            time.sleep(2)
+            continue
+        else:
+            c.execute("select * from jiushi_court where buy_account='{}' and COURT_DATE='{}' and COURT_STATUS>0 limit 1".format(
+                buy_account, rows[0][1]))
+            result_row = c.fetchall()
+            if len(result_row) > 0:
+                print('当前账号已订购日期{}的场地了'.format(rows[0][1]))
+                time.sleep(2)
+                continue
+            current = datetime.datetime.strptime(rows[0][1], '%Y-%m-%d') - datetime.datetime.today()
+            pickup_days = current.days + 1
+            field_no = rows[0][2]
+            times = str(rows[0][3]).split(',')
+            court_no = rows[0][7]
+            for i in range(1):
+                if pickup_court():
+                    prepare()
+                    break
+                prepare()
+
+
+def manual_exec(day_input, field_no_input, times_input):
+    global pickup_days, field_no, times
     pickup_days = day_input
     field_no = field_no_input
     times = times_input
@@ -185,6 +226,7 @@ def login_wechat():
         win32gui.ShowWindow(hwnd, win32con.SW_SHOWNORMAL)
     win32gui.SetForegroundWindow(hwnd)
     curr = win32gui.GetWindowRect(hwnd)
+    print(curr)
     # 1 登录
     login_coord = (curr[0] + 140, curr[1] + 280)
     pyautogui.click(login_coord, clicks=1, duration=0.5)
@@ -209,6 +251,8 @@ def prepare():
 
         os.startfile(r"C:\Users\Administrator\Desktop\久事体育场馆.lnk")
         is_run(first_is_success, 200)
+        win32gui.ShowWindow(hwnd, win32con.SW_HIDE)
+        time.sleep(1)
         active_window()
         if click_start():
             break
@@ -226,7 +270,8 @@ def pickup_court():
     global init_date, task_is_run
     start = time.perf_counter()
     print('当前时间：{}'.format(datetime.datetime.now()))
-    active_window()
+    if active_window() is False:
+        return False
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=int(pickup_days)),
                                            '%Y%m%d')
     task_is_run = True
@@ -245,8 +290,9 @@ def pickup_court():
             # center = pyautogui.center(image_l)
             pyautogui.click(coord8, clicks=1)
             print('订购成功,场地{},时间{}'.format(field_no, times))
+            save_result(2)
             requests.get(
-                notice_url.format('预定场地成功', '预定场地成功,等待付款,场地{},时间{}'.format(field_no, times)),
+                notice_url.format('预定场地成功', '预定场地成功,等待付款,日期{},场地{},时间{}'.format(init_date,field_no, times)),
                 proxies=proxies,
                 verify="FiddlerRoot.pem")
             return True
@@ -255,7 +301,18 @@ def pickup_court():
             continue
     end = time.perf_counter()
     print('3失败耗时：{:.4f}s'.format(end - start))
+    save_result(3)
     return False
+
+
+def save_result(court_status):
+    conn = sqlite3.connect(db_file_path)
+    c = conn.cursor()
+    c.execute(
+        "update jiushi_court set COURT_STATUS={},BUY_ACCOUNT='{}' where COURT_NO='{}'".format(court_status, buy_account,
+                                                                                              court_no))
+    conn.commit()
+    conn.close()
 
 
 def active_window():
@@ -263,12 +320,12 @@ def active_window():
     result = u.GetForegroundWindow()
     if result == 0 or result == 67622:
         print('锁屏状态不能推送消息')
-        return
+        return False
     # windll.user32.BlockInput(1)
     hwnd = win32gui.FindWindow("Chrome_WidgetWin_0", "久事体育场馆")  # 获取窗口
     if hwnd == 0:
         print('久事体育窗口未打开')
-        return
+        return False
     if win32gui.IsWindowVisible(hwnd) == 0:
         win32gui.ShowWindow(hwnd, win32con.SW_SHOW)
     if win32gui.IsIconic(hwnd) == 0:
@@ -291,6 +348,7 @@ def active_window():
     coord7 = (curr[0] + 330, curr[1] + 557)
     # 8 立即支付
     coord8 = (curr[0] + 330, curr[1] + 710)
+    return True
 
 
 def get_answer(captcha_msg):
@@ -429,13 +487,13 @@ def click_start():
     # image_l = find_image('img\\0.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord1, clicks=1, duration=0.5)
+    pyautogui.click(coord1, clicks=1, duration=duration)
     if is_run(second_is_success, 200) is False:
         return False
     # image_l = find_image('img\\00.png', 20)
     # center = pyautogui.center(image_l)
     # print(center)
-    pyautogui.click(coord2, clicks=1, duration=0.5)
+    pyautogui.click(coord2, clicks=1, duration=duration)
     if is_run(third_is_success, 200) is False:
         return False
     return True
@@ -458,24 +516,24 @@ def find_image(image, num):
 
 def click_venue(x, y, sku_id):
     if sku_id == 38:
-        pyautogui.click(x + 280, y + 40, clicks=1, duration=0.1)
+        pyautogui.click(x + 280, y + 40, clicks=1, duration=duration)
     else:
-        pyautogui.click(x + 100, y + 40, clicks=1, duration=0.1)
+        pyautogui.click(x + 100, y + 40, clicks=1, duration=duration)
 
 
 def click_court(x, y, sku_id):
     if sku_id == 38 or sku_id == 35:
-        pyautogui.click(x + 50, y + 220, clicks=1, duration=0.1)
+        pyautogui.click(x + 50, y + 220, clicks=1, duration=duration)
     if sku_id == 36:
-        pyautogui.click(x + 210, y + 220, clicks=1, duration=0.1)
+        pyautogui.click(x + 210, y + 220, clicks=1, duration=duration)
     if sku_id == 37:
-        pyautogui.click(x + 330, y + 220, clicks=1, duration=0.1)
+        pyautogui.click(x + 330, y + 220, clicks=1, duration=duration)
 
 
 def click_day(x, y, days):
     if os.path.exists(ground_file_path):
         os.remove(ground_file_path)
-    pyautogui.click(x, y + 300, clicks=0)
+    pyautogui.click(x, y + 300, clicks=0, duration=duration)
     time.sleep(0.01)
     index = days
     if days > 3:
@@ -488,9 +546,9 @@ def click_day(x, y, days):
             index = days - 4
         else:
             index = days - 3
-    pyautogui.click(x + index * 100, y + 300, clicks=1)
+    pyautogui.click(x + index * 100, y + 300, clicks=1, duration=duration)
     if days == 0:
-        pyautogui.click(x + 100, y + 300, clicks=0, duration=0)
+        pyautogui.click(x + 100, y + 300, clicks=0, duration=duration)
     time.sleep(0.01)
 
 
@@ -506,7 +564,7 @@ def click_time(court_id, time_ids):
     x, y = coord4[0], coord4[1]
     # 按住shift，往右滚动
     if court_id > 1:
-        pyautogui.moveTo(x + 40, y, duration=0)
+        pyautogui.moveTo(x + 40, y, duration=duration)
         pyautogui.keyDown('shift')
         if court_id >= 9:
             scroll = court_id - 9
@@ -518,18 +576,18 @@ def click_time(court_id, time_ids):
     for time_id in time_ids:
         if court_id in [5, 6, 7, 8]:
             pyautogui.click(x + (court_id - 4) * 80, y + (int(time_id) - 19) * 40, clicks=1,
-                            duration=0.11)
+                            duration=duration)
             continue
         if court_id > 32:
             pyautogui.click(x + (court_id - 31) * 80, y + (int(time_id) - 19) * 40, clicks=1,
-                            duration=0.11)
+                            duration=duration)
             continue
         if court_id == 2:
             pyautogui.click(x + court_id * 80, y + (int(time_id) - 19) * 40, clicks=1,
-                            duration=0.11)
+                            duration=duration)
             continue
         pyautogui.click(x + 80, y + (int(time_id) - 19) * 40, clicks=1,
-                        duration=0.11)
+                        duration=duration)
         time.sleep(0.01)
 
 

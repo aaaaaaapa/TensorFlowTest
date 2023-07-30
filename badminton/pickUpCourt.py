@@ -2,10 +2,12 @@
 # date: 2022/11/05 16:12
 import datetime
 import json
+import os
 import random
 import sys
 import threading
 import time
+import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from ctypes import windll
 from itertools import groupby
@@ -18,7 +20,9 @@ import schedule
 import urllib3
 import win32con
 import win32gui
+from bs4 import BeautifulSoup
 from chinese_calendar import is_workday, is_holiday
+import sqlite3
 
 temp_url = "https://user.jusssportsvenue.com/api/block/ground/list?venuesId={}&sportsType=9&startTime={}&skuId={}&_t={}"
 notice_url = 'http://www.pushplus.plus/send?token=7cb7768ebc2b41a4b4ca047ccdc621a1&title={}&content={}&template=html'
@@ -36,61 +40,113 @@ random_end = 20
 wechat_list = []
 wechat_name = []
 names = []
-proxies = {"http": "http://127.0.0.1:8888", "https": "http://127.0.0.1:8888"}
+proxies = []
+# proxies = {"http": "http://127.0.0.1:8888", "https": "http://127.0.0.1:8888"}
 begin_time = None
 verify_str = "FiddlerRoot.pem"
 is_agent = True
 task_is_run = True
 urllib3.disable_warnings()
 timing_days = 6
+proxies_num = 50
+agent_headers = {
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
+}
+db_file_path=''
+day_n='1'
+def get_ip_list(url):
+    web_data = requests.get(url, headers=agent_headers)
+
+    soup = BeautifulSoup(web_data.text, 'lxml')
+    ips = soup.find_all('tr')
+    ip_list = []
+    for i in range(1, len(ips)):
+        ip_info = ips[i]
+        tds = ip_info.find_all('td')
+        ip_list.append(tds[0].text + ':' + tds[1].text)
+    return ip_list
+
+
+def get_proxies(index):
+    global proxies
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
+    if index != 0:
+        agent_url = 'https://www.kuaidaili.com/free/inha/{}'.format(str(index) + '/')
+    ip_list = get_ip_list(agent_url)
+    for ip in ip_list:
+        proxies.append(json.dumps({'http': 'http://' + ip}))
+
+
+def bath_get_proxies():  # 随机IP
+    agent_url = 'https://www.kuaidaili.com/free/inha/'
+    # url = 'https://www.kuaidaili.com/free/'
+    proxies_list = []
+    for i in range(proxies_num):
+        get_proxies(i)
+        interval = float(random.randint(1, 30)) / 10
+        print('当前页数{},间隔{}秒'.format(str(i), str(interval)))
+        time.sleep(interval)
+
+
+def refush_proxy_file(file_path):
+    global proxies
+    if os.path.exists(file_path):
+        with open(file_path, "r", encoding='utf8') as f:
+            proxies = f.readlines()
+            for i in range(len(proxies)):
+                proxies[i] = proxies[i].replace('\n', '')
+
+            f.close()
+    else:
+        bath_get_proxies()
+        with open(file_path, "a") as f:
+            for pro in proxies:
+                f.write(pro + '\n')
+            f.close()
 
 
 def _main_():
-    global timespans, week_timespans, random_start, random_end, wechat_name, names, wechat_list, is_agent
-    try:
-        with open("config.txt", "r", encoding='utf8') as f:
-            configList = f.readlines()
-            f.close()
-        if len(configList) != 6:
-            print('配置文件错误！')
-            input('输入任意键退出')
-            sys.exit()
-        for config in configList:
-            if config.startswith('时间段'):
-                timespans = config.replace('\n', '').split('=')[1].split(',')
-            if config.startswith('周末时间段'):
-                week_timespans = config.replace('\n', '').split('=')[1].split(',')
-            if config.startswith('搜索间隔时间'):
-                intervalArr = config.replace('\n', '').split('=')[1].split('-')
-                random_start = int(intervalArr[0])
-                random_end = int(intervalArr[1])
-            if config.startswith('群名称'):
-                name_str = config.replace('\n', '').split('=')[1]
-                if name_str != '':
-                    wechat_name = name_str.split(',')
+    global timespans, week_timespans, random_start, random_end, wechat_name, names, wechat_list, is_agent,db_file_path,day_n
 
-            if config.startswith('艾特人名拼音'):
-                temp = config.replace('\n', '').split('=')[1]
-                if temp.strip() != '':
-                    names = temp.split(',')
-            if config.startswith('是否代理'):
-                agent_str = config.replace('\n', '').split('=')[1]
-                is_agent = agent_str == '1'
-    except IOError:
-        with open('config.txt', 'w', encoding='utf8') as w:
-            w.writelines('时间段=1830,1900,1930,2000\n')
-            w.writelines('周末时间段=1300,1330,1400,1430,1500,1530,1600,1630,1700,1730,1800,1830,1900,1930,2000\n')
-            w.writelines('搜索间隔时间=20-40')
-            w.writelines('群名称=徐汇羽毛球公益组织')
-            w.writelines('艾特人名拼音=')
-            w.close()
+    file_path = 'proxies' + datetime.datetime.today().strftime('%Y-%m-%d') + '.txt'
+    refush_proxy_file(file_path)
+    with open("config.txt", "r", encoding='utf8') as f:
+        configList = f.readlines()
+        f.close()
+    if len(configList) != 8:
+        print('配置文件错误！')
+        input('输入任意键退出')
+        sys.exit()
+    for config in configList:
+        if config.startswith('时间段'):
+            timespans = config.replace('\n', '').split('=')[1].split(',')
+        if config.startswith('周末时间段'):
+            week_timespans = config.replace('\n', '').split('=')[1].split(',')
+        if config.startswith('搜索间隔时间'):
+            intervalArr = config.replace('\n', '').split('=')[1].split('-')
+            random_start = int(intervalArr[0])
+            random_end = int(intervalArr[1])
+        if config.startswith('群名称'):
+            name_str = config.replace('\n', '').split('=')[1]
+            if name_str != '':
+                wechat_name = name_str.split(',')
+
+        if config.startswith('艾特人名拼音'):
+            temp = config.replace('\n', '').split('=')[1]
+            if temp.strip() != '':
+                names = temp.split(',')
+        if config.startswith('是否代理'):
+            agent_str = config.replace('\n', '').split('=')[1]
+            is_agent = agent_str == '1'
+        if config.startswith('数据库路径'):
+            db_file_path = config.replace('\n', '').split('=')[1]
+        if config.startswith('监测几天后的数据'):
+            day_n = config.replace('\n', '').split('=')[1]
+
     clear_index = 0
     wechat_list = []
     exec_time = '12:00'
-    thread = threading.Thread(target=schedule_task, kwargs={'exec_time': exec_time})
-    thread.start()
-    time.sleep(0.1)
-    # schedule_task('12:00')
+
     temp_time = datetime.datetime.strptime(exec_time, '%H:%M')
     while True:
         if clear_index > 100:
@@ -117,7 +173,7 @@ def _main_():
 def exec_search(is_current):
     global begin_time
 
-    print("{}开始搜索{}空闲场地~~".format(datetime.datetime.now(),'整点' if is_current else '常规'))
+    print("{}开始搜索{}空闲场地~~".format(datetime.datetime.now(), '整点' if is_current else '常规'))
 
     windll.user32.BlockInput(0)
     obj_list = []
@@ -126,6 +182,8 @@ def exec_search(is_current):
         for i in range(7):
             if datetime.datetime.now().hour < 12 and i == 6:
                 continue
+            if i <int(day_n):
+                continue
             if is_current is True:
                 if i != timing_days:
                     continue
@@ -133,7 +191,7 @@ def exec_search(is_current):
                     print("{}开始搜索空闲场地~~12点场地".format(datetime.datetime.now()))
             for item in group_param:
                 start_times = []
-                today = datetime.date.today()
+                today = datetime.datetime.today()
                 item_date = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=i + 1)
                 temp = week_timespans if is_holiday(item_date) else timespans
                 for timespan in temp:
@@ -254,7 +312,8 @@ def print_win(print_list):
         timedelta = print_list[i + 1]['site_time'] - print_list[i]['site_time']
         if abs(timedelta.total_seconds()) == 3600 \
                 and print_list[i + 1] not in np.array(uses) \
-                and print_list[i + 1]['date'] == print_list[i]['date']:
+                and print_list[i + 1]['date'] == print_list[i]['date'] \
+                and print_list[i + 1]['site'] == print_list[i]['site']:
             uses.append(print_list[i])
             uses.append(print_list[i + 1])
 
@@ -281,16 +340,24 @@ def print_win(print_list):
             '****************************************************' + data_str)
 
         uses_str = uses_str + data_str + '\n'
-    # if len(uses) > 0:
+    insert_court(uses)
     #     request_get(notice_url.format('2小时场地数量：{}'.format(int(len(uses) / 2)), uses_str))
 
 
 def request_get(url):
     if is_agent:
-        return requests.get(url, proxies=proxies, verify=verify_str, stream=True)
+        return requests.get(url, proxies=get_random_ip(), verify=False, stream=True)
     else:
 
         return requests.get(url, verify=False, stream=True)
+
+
+def get_random_ip():
+    if len(proxies) == 0:
+        return None
+    proxy_ip = random.choice(proxies)
+    proxy = json.loads(proxy_ip)
+    return proxy
 
 
 def http_request(url, start_times):
@@ -417,10 +484,63 @@ def schedule_task(exec_time):
         time.sleep(interval)
 
 
+
+
+
+def conn_sqlite():
+    return sqlite3.connect(db_file_path)
+
+
+def create_court_table():
+    conn = conn_sqlite()
+    c = conn.cursor()
+    c.execute('''CREATE TABLE jiushi_court
+           (ID INTEGER PRIMARY KEY AUTOINCREMENT,-- 主键
+           COURT_DATE           TEXT    NOT NULL,-- 日期
+           COURT_SITE            TEXT     NOT NULL,-- 场地号
+           COURT_TIME        TEXT    NOT NULL,-- 时间段
+           COURT_STATUS         int NOT NULL,-- 状态 0、闲置；1、抢购中；2、成功；3、失败；4、过期
+           BUY_ACCOUNT      TEXT NOT NULL, -- 抢购的微信账号
+           APPEAR_TIME      TEXT    NOT NULL, -- 出现的时间
+           COURT_NO             TEXT NOT NULL -- 场地编号
+           );''')
+    print("数据表创建成功")
+    conn.commit()
+    conn.close()
+
+
+def insert_court(court_list):
+    conn = conn_sqlite()
+    c = conn.cursor()
+    c.execute('DELETE FROM jiushi_court WHERE court_status in (0,1) ')
+    if len(court_list) != 0:
+        uses = []
+        for i in range(len(court_list) - 1):
+            timedelta = court_list[i + 1]['site_time'] - court_list[i]['site_time']
+            if abs(timedelta.total_seconds()) == 3600 \
+                    and court_list[i + 1] not in np.array(uses) \
+                    and court_list[i + 1]['date'] == court_list[i]['date'] \
+                    and court_list[i + 1]['site'] == court_list[i]['site']:
+                uses.append(court_list[i])
+                uses.append(court_list[i + 1])
+                COURT_TIME = str(court_list[i]['time']).replace(':00', '').replace(':30', '') + ',' + str(
+                    court_list[i + 1]['time']).replace(':00', '').replace(':30', '')
+                COURT_NO = court_list[i]['date'] + str(court_list[i]['site']) + COURT_TIME
+                c.execute("INSERT INTO jiushi_court (COURT_DATE,COURT_SITE,COURT_TIME,COURT_STATUS,BUY_ACCOUNT,APPEAR_TIME,COURT_NO) \
+                      VALUES ('{}', '{}','{}',{},'{}','{}','{}')".format(court_list[i]['date'], court_list[i]['site'],
+                                                                         COURT_TIME, 0,
+                                                                         '', str(datetime.datetime.now()),
+                                                                         COURT_NO))
+
+    conn.commit()
+    conn.close()
+
+
 if __name__ == '__main__':
     while True:
         try:
             _main_()
-        except Exception as ex:
+        except:
             windll.user32.BlockInput(0)
-            print(ex)
+            traceback.print_exc()
+        time.sleep(5)
