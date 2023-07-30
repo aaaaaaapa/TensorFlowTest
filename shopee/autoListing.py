@@ -21,16 +21,16 @@ ocr = DdddOcr()
 service = Service(r'C:\Users\Administrator\PycharmProjects\TensorFlowTest\venv\Scripts\chromedriver.exe')
 option1 = webdriver.ChromeOptions
 option2 = webdriver.ChromeOptions
-option1.add_argument("--user-data-dir=" + r"D:/ChromeDev/01")
-option2.add_argument("--user-data-dir=" + r"D:/ChromeDev/02")
+# option1.add_argument("--user-data-dir=" + r"D:/ChromeDev/01")
+# option2.add_argument("--user-data-dir=" + r"D:/ChromeDev/02")
 
-driver = webdriver.Chrome(service=service, chrome_options=option1)
-driver1 = webdriver.Chrome(service=service, chrome_options=option2)
+driver = webdriver.Chrome(service=service )
+# driver1 = webdriver.Chrome(service=service, chrome_options=option2)
 url = 'https://shopee.tw/'
 cookies_List = [
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724825083.305166,
+        "expirationDate": 1725164432.289078,
         "hostOnly": False,
         "httpOnly": False,
         "name": "_ga_E1H7XE0312",
@@ -39,11 +39,11 @@ cookies_List = [
         "secure": False,
         "session": False,
         "storeId": 'None',
-        "value": "GS1.1.1690263717.7.1.1690265083.0.0.0"
+        "value": "GS1.1.1690603939.12.1.1690604432.0.0.0"
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103521,
+        "expirationDate": 1725164433.959584,
         "hostOnly": False,
         "httpOnly": True,
         "name": "SPC_T_ID",
@@ -52,7 +52,7 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": "7rfZGPxlqvQ0tTQEkZQfkXzoOnpMAztayXlP5vpgZG7fB9DhVQmTepcaOeanyqgwRz4mkSHUidU2L4vezqasR/61YnOxA13OON3wP6QdrUBGI+aSfURtFgEDOHAnmofGsecAguwzgGBf+7wOsNGDI1wTAdtfIf6cqiqjj5XP2zA="
+        "value": "evev25ma60T3c9eoR9gQ+3Sb5VMo0d8mf1K0IfDQXDDhL0RWtYbJ0gPXVbYPfnuhbSiPWQYkh4oyLy3S70qQwPrunEKchH3urlugPYzWmW9QckBHv5Nnn6TwZu/8LC+Ho9XaspEfjkytHCxSeg2Lrqs9pLKSkKxAfa7UpcZCmmQ="
     },
     {
         "domain": ".shopee.tw",
@@ -69,7 +69,7 @@ cookies_List = [
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103503,
+        "expirationDate": 1725164433.959653,
         "hostOnly": False,
         "httpOnly": False,
         "name": "SPC_R_T_ID",
@@ -78,11 +78,11 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": "7rfZGPxlqvQ0tTQEkZQfkXzoOnpMAztayXlP5vpgZG7fB9DhVQmTepcaOeanyqgwRz4mkSHUidU2L4vezqasR/61YnOxA13OON3wP6QdrUBGI+aSfURtFgEDOHAnmofGsecAguwzgGBf+7wOsNGDI1wTAdtfIf6cqiqjj5XP2zA="
+        "value": "evev25ma60T3c9eoR9gQ+3Sb5VMo0d8mf1K0IfDQXDDhL0RWtYbJ0gPXVbYPfnuhbSiPWQYkh4oyLy3S70qQwPrunEKchH3urlugPYzWmW9QckBHv5Nnn6TwZu/8LC+Ho9XaspEfjkytHCxSeg2Lrqs9pLKSkKxAfa7UpcZCmmQ="
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1690267318,
+        "expirationDate": 1690607803,
         "hostOnly": False,
         "httpOnly": False,
         "name": "AMP_TOKEN",
@@ -95,20 +95,7 @@ cookies_List = [
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1690348250.625762,
-        "hostOnly": False,
-        "httpOnly": True,
-        "name": "SPC_SC_UD",
-        "path": "/",
-        "sameSite": 'None',
-        "secure": True,
-        "session": False,
-        "storeId": 'None',
-        "value": "35420973"
-    },
-    {
-        "domain": ".shopee.tw",
-        "expirationDate": 1690353670.103538,
+        "expirationDate": 1690690833.959602,
         "hostOnly": False,
         "httpOnly": True,
         "name": "SPC_SI",
@@ -121,20 +108,20 @@ cookies_List = [
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1690348250.62568,
+        "expirationDate": 1690604492,
         "hostOnly": False,
-        "httpOnly": True,
-        "name": "SPC_SC_TK",
+        "httpOnly": False,
+        "name": "_dc_gtm_UA-61915057-6",
         "path": "/",
         "sameSite": 'None',
-        "secure": True,
+        "secure": False,
         "session": False,
         "storeId": 'None',
-        "value": "182b3fc1d8e36410a3c2cd3cba9253d5"
+        "value": "1"
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103465,
+        "expirationDate": 1725164433.959645,
         "hostOnly": False,
         "httpOnly": True,
         "name": "SPC_EC",
@@ -143,11 +130,11 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": "WDN4dWlMWlJ4WHphd1dCbNRcyFtRKNqbyXZLJjfSk+75ulsetJbDtYrDso1PXl/3AD0IOj7jQy+2C5BZ6+XrnbWDH04nw+1Vy/ZOfCk0RUYwaRHwXwIEadqFTb6ODxmPB1ORkOlkXFU5b3ZjjAIZ/2mrvkd2z5D4BPpQIGcNHac="
+        "value": "dXF6dFlqUjB2UFJWNFY0cSr3U4AgdwGIPYyODo+pdrRmAurkcqoZGxupUSGtJjTJKhN2UM9RjuSCySRYH8/LTGMeB/2ajfZI0Dlujxr6XSFEmjzhpcMYgarh4dasB/cOEdOls1S0QPY6XWFH/ShFN7PUjg5yN6G2s3ioVurcKnQ="
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1698041082,
+        "expirationDate": 1698380432,
         "hostOnly": False,
         "httpOnly": False,
         "name": "_fbp",
@@ -160,7 +147,7 @@ cookies_List = [
     },
     {
         "domain": "shopee.tw",
-        "expirationDate": 1690296623,
+        "expirationDate": 1690635970,
         "hostOnly": True,
         "httpOnly": False,
         "name": "ds",
@@ -169,11 +156,11 @@ cookies_List = [
         "secure": False,
         "session": False,
         "storeId": 'None',
-        "value": "e474e4bd2aff852412fa8c2b2b1c0de9"
+        "value": "eaec026a670ab74407da716a6f4af04b"
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724825083.305837,
+        "expirationDate": 1725164432.289397,
         "hostOnly": False,
         "httpOnly": False,
         "name": "_ga",
@@ -315,7 +302,7 @@ cookies_List = [
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1690351483,
+        "expirationDate": 1690690832,
         "hostOnly": False,
         "httpOnly": False,
         "name": "_gid",
@@ -324,7 +311,7 @@ cookies_List = [
         "secure": False,
         "session": False,
         "storeId": 'None',
-        "value": "GA1.2.1000368152.1690166585"
+        "value": "GA1.2.1281721519.1690604204"
     },
     {
         "domain": ".shopee.tw",
@@ -341,7 +328,7 @@ cookies_List = [
     },
     {
         "domain": "shopee.tw",
-        "expirationDate": 1690295252,
+        "expirationDate": 1690635481,
         "hostOnly": True,
         "httpOnly": False,
         "name": "_QPWSDCXHZQA",
@@ -418,7 +405,7 @@ cookies_List = [
     },
     {
         "domain": "shopee.tw",
-        "expirationDate": 1690296623,
+        "expirationDate": 1690635970,
         "hostOnly": True,
         "httpOnly": False,
         "name": "shopee_webUnique_ccd",
@@ -427,7 +414,7 @@ cookies_List = [
         "secure": False,
         "session": False,
         "storeId": 'None',
-        "value": "9oTJ66OYk8UKAMd9%2BUOxLQ%3D%3D%7CxwHTlLqzcSnXgHRW2GuXqza202i%2FCkLEWO6jN9A1q9FAESmZD%2FFlfX%2BCzXtAD5fQume68ZcTEvXidDe8OJWQVqyKHKTy%2BCZNlg%3D%3D%7CusHoW76taamgGfu0%7C06%7C3"
+        "value": "GUBV2EhclViNqEwtgkr49A%3D%3D%7CD8306WDUXeRqt0ylc8oS8Gehe2gS%2BCKyRH32zyINReVfD8syrrEGazrVGVAH2DOeWBC2eUidB2U%3D%7CusHoW76taamgGfu0%7C08%7C3"
     },
     {
         "domain": ".shopee.tw",
@@ -456,7 +443,7 @@ cookies_List = [
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103513,
+        "expirationDate": 1725164433.959565,
         "hostOnly": False,
         "httpOnly": False,
         "name": "SPC_R_T_IV",
@@ -465,11 +452,11 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": "VEw4WjFTQzB0eGhldlJJSQ=="
+        "value": "Y0NTUHBvV0VzdEJrczI0Tg=="
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103547,
+        "expirationDate": 1725164433.95963,
         "hostOnly": False,
         "httpOnly": True,
         "name": "SPC_ST",
@@ -478,24 +465,11 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": ".MjZ1ajNZM3BCOXNGQjdhUbgpEyDjs3nF0OovEXWPjim95pyRSLkug4/qd49EadJyxApL+LOb17PgJCpebjL5Bcfz2IIpLWrKC2+71+/mRTdiQrMBjPnltZWvnrcaE7lyZ0eHfjbO67zK1uzzj9As/Ymff38oWgPxnuAfMSo13AGhhGN8N435/cmueCgNRMSbKsoO05yZTU7m2aMHRRwMuA=="
+        "value": ".ektqN2FxZGY3Y0ZnRXpWVFZdsfGWk0T9W+rrC4Sv0Sh5xe67CXGkvZ+8KiksTSQoVrZRMoQ24/JuGjznUPgomL/qSc8rukrpqgkeoCgAHAc5cAFgmDvtvVtQlsXVc+nA2jrthhL0iUcqrlLTLgtglYTsih9cJ2l2wdiquoGymNMhYDy4klt0er7K5fruK+avMU7sTkd60XyUtAk3ckxxnw=="
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1690348250.625798,
-        "hostOnly": False,
-        "httpOnly": False,
-        "name": "SPC_STK",
-        "path": "/",
-        "sameSite": 'None',
-        "secure": True,
-        "session": False,
-        "storeId": 'None',
-        "value": "LQSBfRJShQhE/gE8qyEz7GhcU4joE4MFpb8mlwzeBCtblXmHsavSS3/yqdSpwNW79KpnQ7I5cp6Cwj/+H2/KH1gnIk26Z8NvdfxVOrk0dtSqMuPx1fwh73Khjcw/SGJp/iFXFeAtH4JdhU6parxUZ3mAUPokG9okNT+oSbjo8SI="
-    },
-    {
-        "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103531,
+        "expirationDate": 1725164433.959594,
         "hostOnly": False,
         "httpOnly": True,
         "name": "SPC_T_IV",
@@ -504,11 +478,11 @@ cookies_List = [
         "secure": True,
         "session": False,
         "storeId": 'None',
-        "value": "VEw4WjFTQzB0eGhldlJJSQ=="
+        "value": "Y0NTUHBvV0VzdEJrczI0Tg=="
     },
     {
         "domain": ".shopee.tw",
-        "expirationDate": 1724827270.103555,
+        "expirationDate": 1725164433.959638,
         "hostOnly": False,
         "httpOnly": False,
         "name": "SPC_U",
@@ -981,7 +955,7 @@ def download_img():
          "ctx.drawImage(img, 0, 0,img.naturalWidth, img.naturalHeight);" \
          "let base64String = c.toDataURL();return base64String;"
 
-    base64_str = driver1.execute_script(js)
+    base64_str = driver.execute_script(js)
     img = base64_to_image(base64_str)
     rgb_im = img.convert('RGB')
     rgb_im.save('d:/private/1.jpg')
@@ -992,8 +966,8 @@ if __name__ == '__main__':
         # download('d:/private/1.jpg', 'https://s-cf-sg.shopeesz.com/file/d807f7e8e2804251fab15d11768ca889')
         # os.remove('d:/private/img1.jpg')
         # urllib_download()
-        driver1.get('https://s-cf-sg.shopeesz.com/file/d807f7e8e2804251fab15d11768ca889')
-        download_img()
+        # driver.get('https://s-cf-sg.shopeesz.com/file/d807f7e8e2804251fab15d11768ca889')
+        # download_img()
         _main_()
 
 
