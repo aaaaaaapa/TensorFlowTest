@@ -157,10 +157,10 @@ def _main_():
         curr_date = datetime.datetime.today()
         temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
         diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
-        if 0 < diff_seconds < 5:
-            print('12点数据收集中，等待10秒')
-            time.sleep(10)
-            continue
+        if 0 < diff_seconds < 10:
+            print('12点数据收集中，等待{}秒'.format(str(diff_seconds + 0.01)))
+            time.sleep(diff_seconds + 0.01)
+            exec_search(True)
         else:
             exec_search(False)
 
