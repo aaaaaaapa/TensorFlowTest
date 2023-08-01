@@ -40,15 +40,16 @@ next_run_time = datetime.datetime.now()
 court_sort_no = 0
 success_num = 0
 curr_point = []
-days=5
+days = 6
+
 
 def _main_():
-    global info_list, start_diff, court_sort_no
+    global info_list, start_diff, court_sort_no,days
     exec_time = '00:00'
     with open("configInfo/51yundong.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
-    if len(configList) != 4:
+    if len(configList) != 5:
         print('配置文件错误！')
         input('输入任意键退出')
         sys.exit()
@@ -65,17 +66,19 @@ def _main_():
                 times = times_str.split(',')
         if config.startswith('启动时差'):
             start_diff = config.replace('\n', '').split('=')[1]
+        if config.startswith('抢几天后的场地'):
+            days = config.replace('\n', '').split('=')[1]
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
 
     for time_s in times:
         info_list.append({'resourceDate': init_date, 'fieldNo': 0, 'time': float(time_s), 'price': 80})
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
-    fiddler_start()
-    for i in range(1):
-        close_win_class()
-        login()
-        task()
+    # fiddler_start()
+    # for i in range(1):
+    #     close_win_class()
+    #     login()
+    #     task()
     # schedule_task(exec_time)
 
 
@@ -128,6 +131,9 @@ def before_calc(content):
             info_list[1]['fieldNo'] = court_no_second
 
 
+court_type = 2
+
+
 def task():
     global task_is_run
     task_is_run = True
@@ -141,7 +147,7 @@ def task():
             if os.path.exists(fllow_file_path):
                 os.remove(fllow_file_path)
             # 卢湾
-            # auto_pickup()
+            auto_pickup()
             # 万体
             wanti_auto_pickup()
             break
@@ -224,30 +230,44 @@ def save_log(token):
 
 
 def get_court_no(court_name):
-    if court_name == '一号场（单）':
-        return 1
-    elif court_name == '二号场':
-        return 2
-    elif court_name == '三号场':
-        return 3
-    elif court_name == '四号场':
-        return 4
-    elif court_name == '五号场':
-        return 5
-    elif court_name == '六号场':
-        return 6
-    elif court_name == '七号场':
-        return 7
-    elif court_name == '八号场':
-        return 8
-    elif court_name == '九号场（单）':
-        return 9
-    elif court_name == '十号场':
-        return 10
-    elif court_name == '十一号场':
-        return 11
-    elif court_name == '十二号场':
-        return 12
+    if court_type == 1:
+        if court_name == '一号场（单）':
+            return 1
+        elif court_name == '二号场':
+            return 2
+        elif court_name == '三号场':
+            return 3
+        elif court_name == '四号场':
+            return 4
+        elif court_name == '五号场':
+            return 5
+        elif court_name == '六号场':
+            return 6
+        elif court_name == '七号场':
+            return 7
+        elif court_name == '八号场':
+            return 8
+        elif court_name == '九号场（单）':
+            return 9
+        elif court_name == '十号场':
+            return 10
+        elif court_name == '十一号场':
+            return 11
+        elif court_name == '十二号场':
+            return 12
+    else:
+        if court_name == '羽毛球3号场':
+            return 1
+        elif court_name == '羽毛球4号场':
+            return 2
+        elif court_name == '羽毛球5号场':
+            return 3
+        elif court_name == '羽毛球6号场':
+            return 4
+        elif court_name == '羽毛球7号场':
+            return 5
+        elif court_name == '羽毛球8号场':
+            return 6
 
 
 def get_access_token():
@@ -517,26 +537,29 @@ def load_log():
 
 
 def wanti_auto_pickup():
-    global success_num
+    global success_num, court_type
+    court_type = 2
     auto_start = time.perf_counter()
     print('万体抢场地开始：{}'.format(datetime.datetime.now()))
     pyautogui.click((curr_point[0] + 280, curr_point[1] + 100), clicks=1, duration=0.1)
-    is_run(is_success, 100, 'api/stadium/resources')
+    is_run(is_success, 200, 'api/stadium/resources')
 
-    #点击展开
-    pyautogui.click((curr_point[0] + 280, curr_point[1] + 400), clicks=1, duration=0.1)
-    #点击羽毛球空间
-    pyautogui.click((curr_point[0] + 350, curr_point[1] + 650), clicks=1, duration=0.1)
-    is_run(is_success, 100, 'dates?stadiumItemId')
+    # 点击展开
+    pyautogui.click((curr_point[0] + 367, curr_point[1] + 512), clicks=1, duration=0.1)
+    time.sleep(0.5)
+    # 点击羽毛球空间
+    pyautogui.click((curr_point[0] + 150, curr_point[1] + 555), clicks=1, duration=0.1)
+    is_run(is_success, 200, 'dates?stadiumItemId')
+    time.sleep(0.5)
     # 往下滚动
     pyautogui.scroll(-500)
-    time.sleep(0.2)
-    #点击最新日期
+    time.sleep(0.5)
+    # 点击最新日期
     print('场馆详情页面点击：{}'.format(datetime.datetime.now()))
-    pyautogui.click((curr_point[0] + 200, curr_point[1] + (days*50)+400), clicks=1, duration=0.1)
+    pyautogui.click((curr_point[0] + 345, curr_point[1] + (days * 57) + 300), clicks=1, duration=0.1)
     print('开始加载数据：{}'.format(datetime.datetime.now()))
     load_start = time.perf_counter()
-    is_run(is_success, 100, 'matrix?stadiumItemId')
+    is_run(is_success, 200, 'matrix?stadiumItemId')
 
     # 加载数据
     logs = load_log()
@@ -550,13 +573,13 @@ def wanti_auto_pickup():
 
     pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 525), duration=0)
     time.sleep(0.1)
-    pyautogui.scroll(-100)
+    pyautogui.scroll(-50)
     time.sleep(0.1)
     num = int(info_list[0]['time'])
     if num > 18:
         num = 18
     pyautogui.keyDown('shift')
-    pyautogui.scroll(-24 * (num - 9))
+    pyautogui.scroll(-29 * (num - 9))
     pyautogui.keyUp('shift')
     end = time.perf_counter()
     print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
@@ -572,10 +595,8 @@ def wanti_auto_pickup():
     variate = 2
     for info in info_list:
         time.sleep(0.1)
-        pyautogui.click(
-            (curr_point[0] + 115 + x_diff * (int(info['time']) - num)),
-            curr_point[1] + 55 + y_diff * (int(info['fieldNo']) - variate),
-            clicks=1)
+        pyautogui.click((curr_point[0] + 135 + x_diff * (int(info['time']) - num)),
+                        (curr_point[1] + 365 + y_diff * (int(info['fieldNo']) - variate)), clicks=1)
         if int(info['fieldNo']) > 10:
             pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 325), duration=0)
             time.sleep(0.1)
@@ -584,21 +605,19 @@ def wanti_auto_pickup():
             time.sleep(0.1)
 
     time.sleep(0.1)
-    # success_num = success_num + 1
-    # end = time.perf_counter()
-    # print('成功耗时：{:.4f}s'.format(end - auto_start))
-    # return
+
     pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
     submit_result = is_run(is_success, 50, 'orders?orderType=1')
     info_str = str(info_list[0]['time'])
+    court_no = str(int(info_list[0]['fieldNo']) + 2)
     if submit_result:
 
         if len(info_list) == 2:
             info_str = str(info_list[0]['time']) + '、' + str(info_list[1]['time'])
-        print('卢湾{}场地预订成功,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
+        print('万体{}场地预订成功,时间点：{}'.format(court_no, info_str))
         # requests.get(notice_url.format('卢湾{}场地预订成功'.format(info_list[0]['fieldNo']), info_list))
     else:
-        print('卢湾{}场地预订失败,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
+        print('万体{}场地预订失败,时间点：{}'.format(court_no, info_str))
     end = time.perf_counter()
     print('提交耗时：{:.4f}s'.format(end - auto_start))
 
