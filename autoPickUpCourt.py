@@ -132,16 +132,24 @@ def loop_sqlite():
         c.execute('select * from jiushi_court where COURT_STATUS=0 limit 1')
         rows = c.fetchall()
         if len(rows) == 0:
+            conn.close()
             time.sleep(2)
             continue
         else:
-            c.execute("select * from jiushi_court where buy_account='{}' and COURT_DATE='{}' and COURT_STATUS>0 limit 1".format(
-                buy_account, rows[0][1]))
+            c.execute(
+                "select * from jiushi_court where buy_account='{}' and COURT_DATE='{}' and COURT_STATUS>0 limit 1".format(
+                    buy_account, rows[0][1]))
             result_row = c.fetchall()
             if len(result_row) > 0:
                 print('当前账号已订购日期{}的场地了'.format(rows[0][1]))
                 time.sleep(2)
                 continue
+            c.execute(
+                "update jiushi_court set COURT_STATUS=1,BUY_ACCOUNT='{}' where id='{}'".format(
+                    buy_account,
+                    rows[0][0]))
+            conn.commit()
+            conn.close()
             current = datetime.datetime.strptime(rows[0][1], '%Y-%m-%d') - datetime.datetime.today()
             pickup_days = current.days + 1
             field_no = rows[0][2]
@@ -289,10 +297,12 @@ def pickup_court():
             # image_l = pyautogui.locateOnScreen('img\\6.png', 5)
             # center = pyautogui.center(image_l)
             pyautogui.click(coord8, clicks=1)
-            print('订购成功,场地{},时间{}'.format(field_no, times))
+            print('{}，订购成功,场地{},时间{},购买账号{}'.format(datetime.datetime.now(), field_no, times, buy_account))
             save_result(2)
             requests.get(
-                notice_url.format('预定场地成功', '预定场地成功,等待付款,日期{},场地{},时间{}'.format(init_date,field_no, times)),
+                notice_url.format('预定场地成功',
+                                  '预定场地成功,等待付款,日期{},场地{},时间{},购买账号{}'.format(init_date, field_no,
+                                                                                                 times, buy_account)),
                 proxies=proxies,
                 verify="FiddlerRoot.pem")
             return True

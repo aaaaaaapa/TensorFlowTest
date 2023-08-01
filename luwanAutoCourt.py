@@ -5,6 +5,7 @@ import random
 import sys
 import time
 import traceback
+from ctypes import windll
 
 import psutil
 import pyautogui
@@ -39,7 +40,7 @@ next_run_time = datetime.datetime.now()
 court_sort_no = 0
 success_num = 0
 curr_point = []
-
+days=5
 
 def _main_():
     global info_list, start_diff, court_sort_no
@@ -70,12 +71,12 @@ def _main_():
         info_list.append({'resourceDate': init_date, 'fieldNo': 0, 'time': float(time_s), 'price': 80})
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
-    # fiddler_start()
-    # for i in range(1):
-    #     close_win_class()
-    #     login()
-    #     task(1)
-    schedule_task(exec_time)
+    fiddler_start()
+    for i in range(1):
+        close_win_class()
+        login()
+        task()
+    # schedule_task(exec_time)
 
 
 def close_win_class():
@@ -130,40 +131,23 @@ def before_calc(content):
 def task():
     global task_is_run
     task_is_run = True
-    current_random = float(random.randint(float(start_diff) * 1000, (float(start_diff) + 0.5) * 1000)) / 1000
-    # print('延迟{}秒'.format(current_random))
-    # time.sleep(current_random)
-    time.sleep(current_random)
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
     for info in info_list:
         info['resourceDate'] = init_date
-    # info_list[0]['resourceDate'] = init_date
-    # info_list[1]['resourceDate'] = init_date
+
     while True:
         try:
-
-            # thread = threading.Thread(target=before_calc)
-            # thread.start()
-            # pickup_court()
+            pyautogui.moveTo((curr_point[0] + 80, curr_point[1] + 100))
             if os.path.exists(fllow_file_path):
                 os.remove(fllow_file_path)
-            auto_pickup()
+            # 卢湾
+            # auto_pickup()
+            # 万体
+            wanti_auto_pickup()
             break
         except:
             traceback.print_exc()
             sys.exit()
-
-
-# try:
-#     if get_court():
-#         pickup_court()
-#         break
-#     else:
-#         current_random = random.randint(1000, 7000)
-#         time.sleep(float(current_random)/1000)
-#         print('等待{}毫秒，继续查询'.format(float(current_random)/1000))
-# except:
-#     traceback.print_exc()
 
 
 def pickup_court():
@@ -298,15 +282,21 @@ def login():
             os.remove(token_file_path)
         os.startfile(r"C:\Users\Administrator\Desktop\来沪动丨健身地图.lnk")
         print('1当前时间：{}'.format(datetime.datetime.now()))
-        access_token = get_access_token()
+        # access_token = get_access_token()
+        is_run(is_success, 100, '/api/user/users/info')
         print('2当前时间：{}'.format(datetime.datetime.now()))
-        if access_token is None:
-            print('access_token is none')
-            close_win_class()
-            continue
-        else:
-            break
-    curr_point = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
+        # if access_token is None:
+        #     print('access_token is none')
+        #     close_win_class()
+        #
+        #     continue
+        # else:
+        #     break
+    try:
+        curr_point = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
+    except:
+        print('未获得焦点')
+        traceback.print_exc()
     print(curr_point)
     time.sleep(0.5)
     pyautogui.click((curr_point[0] + 370, curr_point[1] + 750), clicks=1, duration=1)
@@ -344,7 +334,7 @@ def schedule_task(exec_time):
         if 600 > diff_seconds > 0 and fiddler_is_start is False:
             fiddler_start()
             time.sleep(10)
-            pyautogui.hotkey('winleft','m')
+            pyautogui.hotkey('winleft', 'm')
             time.sleep(0.5)
             login()
         if 0 < diff_seconds < 30:
@@ -404,11 +394,11 @@ def close_win(win_name):
 def auto_pickup():
     global success_num
     auto_start = time.perf_counter()
-
-    time.sleep(0.2)
-    pyautogui.click((curr_point[0] + 80, curr_point[1] + 100), clicks=1, duration=0.2)
+    print('开始：{}'.format(datetime.datetime.now()))
+    pyautogui.click((curr_point[0] + 80, curr_point[1] + 100), clicks=1, duration=0.1)
     is_run(is_success, 100, 'api/stadium/resources')
     # 检查加载了几个日期的场地
+    print('开始检查：{}'.format(datetime.datetime.now()))
     is_scroll = False
     click_y = 685
     logs = load_log()
@@ -423,9 +413,12 @@ def auto_pickup():
         time.sleep(0.2)
     else:
         click_y = 710
-    load_start = time.perf_counter()
-    pyautogui.click((curr_point[0] + 350, curr_point[1] + click_y), clicks=1, duration=0.2)
+    print('场馆详情页面点击：{}'.format(datetime.datetime.now()))
+    pyautogui.click((curr_point[0] + 350, curr_point[1] + click_y), clicks=1, duration=0)
+    print('场馆详情页面点击后：{}'.format(datetime.datetime.now()))
     is_run(is_success, 100, 'matrix?stadiumItemId')
+    print('开始加载数据：{}'.format(datetime.datetime.now()))
+    load_start = time.perf_counter()
     # 加载数据
     logs = load_log()
     for log in logs:
@@ -434,6 +427,7 @@ def auto_pickup():
             before_calc(infos[1])
     end = time.perf_counter()
     print('加载场地耗时：{:.4f}s'.format(end - load_start))
+    print('加载完毕：{}'.format(datetime.datetime.now()))
 
     pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 525), duration=0)
     time.sleep(0.1)
@@ -447,6 +441,7 @@ def auto_pickup():
     pyautogui.keyUp('shift')
     end = time.perf_counter()
     print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
+    print('开始选择场地：{}'.format(datetime.datetime.now()))
     court_sum = 0
     for info in info_list:
         court_sum = court_sum + int(info['fieldNo'])
@@ -476,12 +471,15 @@ def auto_pickup():
     # return
     pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
     submit_result = is_run(is_success, 50, 'orders?orderType=1')
+    info_str = str(info_list[0]['time'])
     if submit_result:
-        info_str = str(info_list[0]['time'])
+
         if len(info_list) == 2:
             info_str = str(info_list[0]['time']) + '、' + str(info_list[1]['time'])
         print('卢湾{}场地预订成功,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
         # requests.get(notice_url.format('卢湾{}场地预订成功'.format(info_list[0]['fieldNo']), info_list))
+    else:
+        print('卢湾{}场地预订失败,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
     end = time.perf_counter()
     print('提交耗时：{:.4f}s'.format(end - auto_start))
 
@@ -490,7 +488,7 @@ def is_run(task, max_num=5, args=None):
     index = 0
     while index < max_num:
         index = index + 1
-        print('方法名：{}，参数：{}，run次数：{}'.format(task.__name__, args, str(index)))
+        print('方法名：{}，参数：{}，run次数：{}，时间：{}'.format(task.__name__, args, str(index), datetime.datetime.now()))
         if task(args):
             return True
         else:
@@ -516,6 +514,93 @@ def load_log():
         return urls
     except FileNotFoundError:
         return ''
+
+
+def wanti_auto_pickup():
+    global success_num
+    auto_start = time.perf_counter()
+    print('万体抢场地开始：{}'.format(datetime.datetime.now()))
+    pyautogui.click((curr_point[0] + 280, curr_point[1] + 100), clicks=1, duration=0.1)
+    is_run(is_success, 100, 'api/stadium/resources')
+
+    #点击展开
+    pyautogui.click((curr_point[0] + 280, curr_point[1] + 400), clicks=1, duration=0.1)
+    #点击羽毛球空间
+    pyautogui.click((curr_point[0] + 350, curr_point[1] + 650), clicks=1, duration=0.1)
+    is_run(is_success, 100, 'dates?stadiumItemId')
+    # 往下滚动
+    pyautogui.scroll(-500)
+    time.sleep(0.2)
+    #点击最新日期
+    print('场馆详情页面点击：{}'.format(datetime.datetime.now()))
+    pyautogui.click((curr_point[0] + 200, curr_point[1] + (days*50)+400), clicks=1, duration=0.1)
+    print('开始加载数据：{}'.format(datetime.datetime.now()))
+    load_start = time.perf_counter()
+    is_run(is_success, 100, 'matrix?stadiumItemId')
+
+    # 加载数据
+    logs = load_log()
+    for log in logs:
+        infos = log.split('||')
+        if len(infos) == 2 and 'matrix?stadiumItemId' in str(infos[0]):
+            before_calc(infos[1])
+    end = time.perf_counter()
+    print('加载场地耗时：{:.4f}s'.format(end - load_start))
+    print('加载完毕：{}'.format(datetime.datetime.now()))
+
+    pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 525), duration=0)
+    time.sleep(0.1)
+    pyautogui.scroll(-100)
+    time.sleep(0.1)
+    num = int(info_list[0]['time'])
+    if num > 18:
+        num = 18
+    pyautogui.keyDown('shift')
+    pyautogui.scroll(-24 * (num - 9))
+    pyautogui.keyUp('shift')
+    end = time.perf_counter()
+    print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
+    print('开始选择场地：{}'.format(datetime.datetime.now()))
+    court_sum = 0
+    for info in info_list:
+        court_sum = court_sum + int(info['fieldNo'])
+    if court_sum == 0:
+        print('无场地')
+        return
+    x_diff = 66
+    y_diff = 53
+    variate = 2
+    for info in info_list:
+        time.sleep(0.1)
+        pyautogui.click(
+            (curr_point[0] + 115 + x_diff * (int(info['time']) - num)),
+            curr_point[1] + 55 + y_diff * (int(info['fieldNo']) - variate),
+            clicks=1)
+        if int(info['fieldNo']) > 10:
+            pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 325), duration=0)
+            time.sleep(0.1)
+            variate = 5
+            pyautogui.scroll(-55)
+            time.sleep(0.1)
+
+    time.sleep(0.1)
+    # success_num = success_num + 1
+    # end = time.perf_counter()
+    # print('成功耗时：{:.4f}s'.format(end - auto_start))
+    # return
+    pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
+    submit_result = is_run(is_success, 50, 'orders?orderType=1')
+    info_str = str(info_list[0]['time'])
+    if submit_result:
+
+        if len(info_list) == 2:
+            info_str = str(info_list[0]['time']) + '、' + str(info_list[1]['time'])
+        print('卢湾{}场地预订成功,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
+        # requests.get(notice_url.format('卢湾{}场地预订成功'.format(info_list[0]['fieldNo']), info_list))
+    else:
+        print('卢湾{}场地预订失败,时间点：{}'.format(info_list[0]['fieldNo'], info_str))
+    end = time.perf_counter()
+    print('提交耗时：{:.4f}s'.format(end - auto_start))
 
 
 if __name__ == '__main__':
