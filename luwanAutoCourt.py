@@ -44,8 +44,8 @@ days = 6
 
 
 def _main_():
-    global info_list, start_diff, court_sort_no,days
-    exec_time = '00:00'
+    global info_list, start_diff, court_sort_no, days
+    exec_times =[ '00:00','12:00']
     with open("configInfo/51yundong.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
@@ -56,7 +56,7 @@ def _main_():
     for config in configList:
         config = config.replace('\uFEFF', '')
         if config.startswith('抢票时间'):
-            exec_time = config.replace('\n', '').split('=')[1]
+            exec_times = config.replace('\n', '').split('=')[1].split(',')
         if config.startswith('场地号'):
             field_no = config.replace('\n', '').split('=')[1]
             court_sort_no = int(field_no)
@@ -79,7 +79,7 @@ def _main_():
     #     close_win_class()
     #     login()
     #     task()
-    # schedule_task(exec_time)
+    schedule_task(exec_times)
 
 
 def close_win_class():
@@ -134,9 +134,10 @@ def before_calc(content):
 court_type = 2
 
 
-def task():
-    global task_is_run
+def task(courttype):
+    global task_is_run, court_type
     task_is_run = True
+    court_type = courttype
     init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=1), '%Y-%m-%d')
     for info in info_list:
         info['resourceDate'] = init_date
@@ -146,10 +147,12 @@ def task():
             pyautogui.moveTo((curr_point[0] + 80, curr_point[1] + 100))
             if os.path.exists(fllow_file_path):
                 os.remove(fllow_file_path)
-            # 卢湾
-            auto_pickup()
-            # 万体
-            wanti_auto_pickup()
+            if court_type == 1:
+                # 卢湾
+                auto_pickup()
+            else:
+                # 万体
+                wanti_auto_pickup()
             break
         except:
             traceback.print_exc()
@@ -328,42 +331,6 @@ def login():
     print('打开小程序耗时：{:.4f}s'.format(end - start))
 
 
-def schedule_task(exec_time):
-    # 每天exec_time执行
-    temp_time = datetime.datetime.strptime(exec_time, '%H:%M')
-    schedule.every().day.at(exec_time).do(task)
-    global task_is_run, logged, fiddler_is_start, next_run_time
-    while True:
-        if task_is_run:
-            task_is_run = False
-            logged = False
-            fiddler_is_start = False
-            close_win_class()
-            next_run_time = schedule.next_run()
-            print("下次运行时间：{}".format(next_run_time))
-
-        schedule.run_pending()
-        interval = 5
-        if temp_time.hour < datetime.datetime.now().hour or (
-                temp_time.hour == datetime.datetime.now().hour and temp_time.minute < datetime.datetime.now().minute):
-            curr_date = datetime.datetime.today() + datetime.timedelta(days=1)
-        else:
-            curr_date = datetime.datetime.today()
-        temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
-        diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
-        if 600 > diff_seconds > 0 and fiddler_is_start is False:
-            fiddler_start()
-            time.sleep(10)
-            pyautogui.hotkey('winleft', 'm')
-            time.sleep(0.5)
-            login()
-        if 0 < diff_seconds < 30:
-            interval = 0.01
-        # if 300> diff_seconds > 0 and logged is False:
-        #     login()
-        time.sleep(interval)
-
-
 def fiddler_start():
     global fiddler_is_start
     fiddler_is_start = True
@@ -537,8 +504,10 @@ def load_log():
 
 
 def wanti_auto_pickup():
-    global success_num, court_type
-    court_type = 2
+    global success_num, info_list
+    init_date = datetime.datetime.strftime(datetime.datetime.today() + datetime.timedelta(days=int(days)), '%Y-%m-%d')
+    for info in info_list:
+        info['resourceDate'] = init_date
     auto_start = time.perf_counter()
     print('万体抢场地开始：{}'.format(datetime.datetime.now()))
     pyautogui.click((curr_point[0] + 280, curr_point[1] + 100), clicks=1, duration=0.1)
@@ -556,7 +525,7 @@ def wanti_auto_pickup():
     time.sleep(0.5)
     # 点击最新日期
     print('场馆详情页面点击：{}'.format(datetime.datetime.now()))
-    pyautogui.click((curr_point[0] + 345, curr_point[1] + (days * 57) + 300), clicks=1, duration=0.1)
+    pyautogui.click((curr_point[0] + 345, curr_point[1] + (int(days) * 57) + 300), clicks=1, duration=0.1)
     print('开始加载数据：{}'.format(datetime.datetime.now()))
     load_start = time.perf_counter()
     is_run(is_success, 200, 'matrix?stadiumItemId')
@@ -620,6 +589,46 @@ def wanti_auto_pickup():
         print('万体{}场地预订失败,时间点：{}'.format(court_no, info_str))
     end = time.perf_counter()
     print('提交耗时：{:.4f}s'.format(end - auto_start))
+
+
+def schedule_task(exec_times):
+    # 每天exec_time执行
+    temp_times = []
+    for info in exec_times:
+        temp_times.append(datetime.datetime.strptime(info, '%H:%M:%S'))
+    schedule.every().day.at(exec_times[0]).do(task, 1)
+    schedule.every().day.at(exec_times[1]).do(task, 2)
+    global task_is_run, logged, fiddler_is_start, next_run_time
+    while True:
+        if task_is_run:
+            task_is_run = False
+            logged = False
+            fiddler_is_start = False
+            close_win_class()
+            next_run_time = schedule.next_run()
+            print("下次运行时间：{}".format(next_run_time))
+
+        schedule.run_pending()
+        interval = 5
+        for temp_time in temp_times:
+            if temp_time.hour < datetime.datetime.now().hour or (
+                    temp_time.hour == datetime.datetime.now().hour and temp_time.minute < datetime.datetime.now().minute):
+                curr_date = datetime.datetime.today() + datetime.timedelta(days=1)
+            else:
+                curr_date = datetime.datetime.today()
+            temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour,
+                                          temp_time.minute)
+            diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
+            if 600 > diff_seconds > 0 and fiddler_is_start is False:
+                fiddler_start()
+                time.sleep(10)
+                pyautogui.hotkey('winleft', 'm')
+                time.sleep(0.5)
+                login()
+            if 0 < diff_seconds < 30:
+                interval = 0.01
+
+        time.sleep(interval)
 
 
 if __name__ == '__main__':
