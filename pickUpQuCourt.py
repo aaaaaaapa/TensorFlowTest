@@ -79,6 +79,7 @@ def task():
     global task_is_run, init_date, goods_info, sit_times
 
     init_date = datetime.datetime.today() + datetime.timedelta(days=pickup_days)
+    # sit_times = holiday_sit_times
     if is_holiday(init_date):
         sit_times = holiday_sit_times
     else:
@@ -252,7 +253,9 @@ def get_total_milliseconds(exec_date):
 
 def write_txt(log):
     curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
+    log_date = datetime.datetime.today() + datetime.timedelta(days=pickup_days)
     with open(curr_date_str + 'log.txt', 'w', encoding='utf8') as w:
+        w.write('日期{}\n'.format(log_date))
         w.write("\n".join(log))
         w.close()
 

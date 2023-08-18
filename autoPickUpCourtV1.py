@@ -4,12 +4,12 @@ import base64
 import datetime
 import json
 import os
-import sqlite3
+import random
 import sys
 import time
 import traceback
 from asyncio import as_completed
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import as_completed
 from ctypes import windll
 from itertools import groupby
 
@@ -21,8 +21,10 @@ import requests
 import schedule
 import win32con
 import win32gui
+from chinese_calendar import is_holiday, is_workday
 
 from ddddocr import DdddOcr
+import pynput
 
 temp_url = "https://user.jusssportsvenue.com/api/block/ground/list?venuesId={}&sportsType=9&startTime={}&skuId={}"
 notice_url = 'http://www.pushplus.plus/send?token=7cb7768ebc2b41a4b4ca047ccdc621a1&title={}&content={}&template=html'
@@ -54,22 +56,10 @@ field_no = 30
 times = []
 logged = False
 pickup_days = 6
-# 1 羽毛球
-# pyautogui.click(curr[0]+280, curr[1]+380, clicks=0)
-# 2 我要订场
-# pyautogui.click(curr[0]+320, curr[1]+450, clicks=0)
-# 3 场馆
-# pyautogui.click(curr[0]+32, curr[1]+187, clicks=0)
-# 4 19
-# pyautogui.click(curr[0]+18, curr[1]+450, clicks=0)
-# 5 确认提交
-# pyautogui.click(curr[0]+330, curr[1]+710, clicks=0)
-# 6 滑块
-# pyautogui.click(curr[0]+95, curr[1]+525, clicks=0)
-# 7 刷新
-# pyautogui.click(curr[0]+330, curr[1]+557, clicks=0)
-# 8 立即支付
-# pyautogui.click(curr[0]+330, curr[1]+710, clicks=0)
+real_days = 7
+court_times = []
+court_field_no = 30
+
 coord1 = {}
 coord2 = {}
 coord3 = {}
@@ -84,16 +74,59 @@ duration = 0.5
 court_no = ''
 db_file_path = ''
 buy_account = 'test'
+orderJson = [
+    {'id': '159-羽毛球17号场-11', 'status': 1, 'userName': None, 'userPhone': None, 'userId': None, 'userAvatar': None,
+     'groundId': 159, 'groundName': '羽毛球17号场', 'isNormal': True, 'sportsType': 9, 'price': 120, 'source': None,
+     'isChoosing': False, 'isCheckout': None, 'orderId': None, 'noteType': None, 'name': '羽毛球17号场',
+     'startTime': 1692270000000, 'endTime': 1692273600000, 'chosen': True},
+    {'id': '159-羽毛球17号场-12', 'status': 1, 'userName': None, 'userPhone': None, 'userId': None, 'userAvatar': None,
+     'groundId': 159, 'groundName': '羽毛球17号场', 'isNormal': True, 'sportsType': 9, 'price': 120, 'source': None,
+     'isChoosing': False, 'isCheckout': None, 'orderId': None, 'noteType': None, 'name': '羽毛球17号场',
+     'startTime': 1692273600000, 'endTime': 1692277200000, 'chosen': True}]
+
+target_time = ''
+work_price_dict = [{'court_time': '08', 'price': 50},
+                   {'court_time': '09', 'price': 50},
+                   {'court_time': '10', 'price': 50},
+                   {'court_time': '11', 'price': 50},
+                   {'court_time': '12', 'price': 100},
+                   {'court_time': '13', 'price': 100},
+                   {'court_time': '14', 'price': 100},
+                   {'court_time': '15', 'price': 100},
+                   {'court_time': '16', 'price': 100},
+                   {'court_time': '17', 'price': 120},
+                   {'court_time': '18', 'price': 120},
+                   {'court_time': '19', 'price': 120},
+                   {'court_time': '20', 'price': 120},
+                   {'court_time': '21', 'price': 120},
+                   {'court_time': '22', 'price': 120}]
+
+weekend_price_list = [{'court_time': '08', 'price': 50},
+                      {'court_time': '09', 'price': 120},
+                      {'court_time': '10', 'price': 120},
+                      {'court_time': '11', 'price': 120},
+                      {'court_time': '12', 'price': 120},
+                      {'court_time': '13', 'price': 120},
+                      {'court_time': '14', 'price': 120},
+                      {'court_time': '15', 'price': 120},
+                      {'court_time': '16', 'price': 120},
+                      {'court_time': '17', 'price': 120},
+                      {'court_time': '18', 'price': 120},
+                      {'court_time': '19', 'price': 120},
+                      {'court_time': '20', 'price': 120},
+                      {'court_time': '21', 'price': 120},
+                      {'court_time': '22', 'price': 120}]
+start_interval = 1
 
 
 def _main_():
-    global field_no, times, pickup_days, success, error, db_file_path, buy_account
+    global court_field_no, court_times, real_days, success, error, db_file_path, buy_account, start_interval
     if not os.path.exists('D:\\private'):
         os.makedirs('D:\\private')
     with open("autojiushi.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
-    if len(configList) != 6:
+    if len(configList) != 7:
         print('配置文件错误！')
         input('输入任意键退出')
         sys.exit()
@@ -101,18 +134,19 @@ def _main_():
         if config_str.startswith('抢票时间'):
             exec_time = config_str.replace('\n', '').split('=')[1]
         if config_str.startswith('场地号'):
-            field_no = config_str.replace('\n', '').split('=')[1]
+            court_field_no = config_str.replace('\n', '').split('=')[1]
         if config_str.startswith('时间段'):
             times_str = config_str.replace('\n', '').split('=')[1]
             if times_str != '':
-                times = times_str.split(',')
+                court_times = times_str.split(',')
         if config_str.startswith('几天后'):
-            pickup_days = config_str.replace('\n', '').split('=')[1]
+            real_days = config_str.replace('\n', '').split('=')[1]
         if config_str.startswith('当前账号'):
             buy_account = config_str.replace('\n', '').split('=')[1]
         if config_str.startswith('数据库路径'):
             db_file_path = config_str.replace('\n', '').split('=')[1]
-    loop_sqlite()
+        if config_str.startswith('启动间隔'):
+            start_interval = config_str.replace('\n', '').split('=')[1]
     # pickup_days = 7
     # field_no = '8'
     # times = ['15', '16']
@@ -120,54 +154,119 @@ def _main_():
     #     prepare()
     #     if pickup_court():
     #         break
-    # schedule_task(exec_time)
+    # exec_time = '23:50'
+    # active_window()
+    # update_body_txt()
+    # pickup_new(exec_time)
+    # last_pickup()
+
+    schedule_task(exec_time)
 
 
-def loop_sqlite():
-    global pickup_days, field_no, times, court_no
-    prepare()
+def update_body_txt():
+    global target_time
+    group_id = ''
+    court_number = int(court_field_no)
+    if court_number == 1 or court_number == 2:
+        group_id = court_number + 175
+        for i in range(len(court_times)):
+            court_times[i] = court_times[i] + '30'
+    if 9 > court_number > 2:
+        group_id = court_number + 177 - 2
+        for i in range(len(court_times)):
+            court_times[i] = court_times[i] + '30'
+    if 34 > court_number > 8:
+        group_id = court_number + 150 - 8
+        for i in range(len(court_times)):
+            court_times[i] = court_times[i] + '00'
+    if 36 > court_number > 33:
+        group_id = court_number + 215 - 33
+        for i in range(len(court_times)):
+            court_times[i] = court_times[i] + '00'
+    start_time = create_court_time(court_times[0])
+    end_time = create_court_time(str(int(court_times[0]) + 100))
+    if len(court_times) == 2:
+        end_time = create_court_time(court_times[1])
+        last_time = create_court_time(str(int(court_times[1]) + 100))
+    orderJson[0]['startTime'] = start_time
+    orderJson[0]['endTime'] = end_time
+    orderJson[0]['groundId'] = group_id
+    orderJson[0]['id'] = "{}-羽毛球{}号场-{}".format(str(group_id), str(court_number),
+                                                     str(int(court_times[0][0:2]) - 8))
+    orderJson[0]['groundName'] = "羽毛球{}号场".format(str(court_number))
+    orderJson[0]['name'] = "羽毛球{}号场".format(str(court_number))
+    if len(court_times) == 2:
+        orderJson[1]['startTime'] = end_time
+        orderJson[1]['endTime'] = last_time
+        orderJson[1]['groundId'] = group_id
+        orderJson[1]['id'] = "{}-羽毛球{}号场-{}".format(str(group_id), str(court_number),
+                                                         str(int(court_times[1][0:2]) - 8))
+        orderJson[1]['groundName'] = "羽毛球{}号场".format(str(court_number))
+        orderJson[1]['name'] = "羽毛球{}号场".format(str(court_number))
+    today = datetime.datetime.today()
+    target_time = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=int(real_days))
+    price_list = work_price_dict
+    if is_holiday(target_time):
+        price_list = weekend_price_list
+    for price_item in price_list:
+        if price_item['court_time'] == court_times[0][0:2]:
+            orderJson[0]['price'] = price_item['price']
+        if len(court_times) == 2:
+            if price_item['court_time'] == court_times[1][0:2]:
+                orderJson[1]['price'] = price_item['price']
+    if len(court_times) == 1:
+        orderJson.remove(orderJson[1])
+    result_str = json.dumps(orderJson)
+    result_str = 'orderJson=' + result_str
+    result_str = result_str.encode('latin-1').decode('unicode_escape').replace(' ', '')
+    with open('D:\\private\\createBlcok_body_input.txt', 'w+', encoding='UTF-16') as f:
+        f.write(result_str)
+        f.close()
+
+
+def create_court_time(timespan):
+    today = datetime.datetime.today()
+    item_date = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=int(real_days))
+    return get_total_milliseconds(item_date +
+                                  datetime.timedelta(hours=int(timespan[0:2]),
+                                                     minutes=int(timespan[2:4])))
+
+
+def pickup_new(exec_time):
+    global field_no, times, pickup_days
+    update_body_txt()
+    pickup_days = 6
+    temp_time = datetime.datetime.strptime(exec_time, '%H:%M')
+    curr_date = datetime.datetime.today()
+    temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
+    target_is_workday = is_workday(temp_time + datetime.timedelta(days=int(real_days)))
+    for i in range(2, pickup_days):
+        calc_time = temp_time + datetime.timedelta(days=i)
+        if target_is_workday:
+            if is_workday(calc_time):
+                pickup_days = i
+                break
+        else:
+            if is_holiday(calc_time):
+                pickup_days = i
+                break
+    info = exec_search()
+
+    field_no = info['site']
+    times = [info['time'][0:2]]
+    pickup_court()
+    # with pynput.mouse.Listener(on_click=on_click) as listener:
+    #     listener.join()
+
     while True:
-        try:
-            conn = sqlite3.connect(db_file_path)
-            c = conn.cursor()
-            c.execute('select * from jiushi_court where COURT_STATUS=0 limit 1')
-            rows = c.fetchall()
-            if len(rows) == 0:
-                c.close()
-                conn.close()
-                time.sleep(2)
-                continue
-            else:
-                c.execute(
-                    "select * from jiushi_court where buy_account='{}' and COURT_DATE='{}' and COURT_STATUS in (1,2)  limit 1 ".format(
-                        buy_account, rows[0][1]))
-                result_row = c.fetchall()
-                if len(result_row) > 0:
-                    print('当前账号{}已订购日期{}的场地了'.format(buy_account, rows[0][1]))
-                    c.close()
-                    conn.close()
-                    time.sleep(2)
-                    continue
-                c.execute(
-                    "update jiushi_court set COURT_STATUS=1,BUY_ACCOUNT='{}' where id='{}'".format(
-                        buy_account,
-                        rows[0][0]))
-                conn.commit()
-                c.close()
-                conn.close()
-                current = datetime.datetime.strptime(rows[0][1], '%Y-%m-%d') - datetime.datetime.today()
-                pickup_days = current.days + 1
-                field_no = rows[0][2]
-                times = str(rows[0][3]).split(',')
-                court_no = rows[0][7]
-                for i in range(1):
-                    if pickup_court():
-                        prepare()
-                        break
-                    prepare()
-        except:
-            traceback.print_exc()
-            time.sleep(2)
+
+        diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
+        if 0 < diff_seconds < 20:
+            print('12点数据收集中，等待{}秒'.format(str(diff_seconds + 0.01)))
+            time.sleep(diff_seconds - float(start_interval))
+            last_pickup()
+        else:
+            time.sleep(5)
 
 
 def manual_exec(day_input, field_no_input, times_input):
@@ -181,8 +280,9 @@ def manual_exec(day_input, field_no_input, times_input):
 
 def schedule_task(exec_time):
     # 每天exec_time执行
-    temp_time = datetime.datetime.strptime(exec_time, '%H:%M')
-    schedule.every().day.at(exec_time).do(exec_pickup)
+    temp_time = datetime.datetime.strptime(exec_time, '%H:%M') + datetime.timedelta(minutes=-1)
+    before_time_str = datetime.datetime.strftime(temp_time, '%H:%M')
+    schedule.every().day.at(before_time_str).do(pickup_new, exec_time)
     global task_is_run, logged
     while True:
         if task_is_run:
@@ -294,25 +394,30 @@ def pickup_court():
     pick_up()
     if is_run(get_price_is_success, 20) is False:
         return False
-    end = time.perf_counter()
-    print('1耗时：{:.4f}s'.format(end - start))
+
+
+def last_pickup():
+    active_window()
+    start = time.perf_counter()
+    print('时间{},开始预订'.format(datetime.datetime.now()))
     for i in range(20):
         code_validation()
         if get_answer(['correct answer']):
             end = time.perf_counter()
             print('验证码通过耗时：{:.4f}s'.format(end - start))
+            print('当前时间：{}'.format(datetime.datetime.now()))
             if is_run(pay_is_begin, 100) is False:
                 print('时间{}, 场地{},时间{}已经被预订'.format(datetime.datetime.now(), field_no, times))
                 break
-            # image_l = pyautogui.locateOnScreen('img\\6.png', 5)
-            # center = pyautogui.center(image_l)
             pyautogui.click(coord8, clicks=1)
-            print('{}，订购成功,场地{},时间{},购买账号{}'.format(datetime.datetime.now(), field_no, times, buy_account))
-            save_result(2)
+            print('{}，订购成功,场地{},时间{},购买账号{}'.format(datetime.datetime.now(), court_field_no, court_times,
+                                                                buy_account))
             requests.get(
                 notice_url.format('预定场地成功',
-                                  '预定场地成功,等待付款,日期{},场地{},时间{},购买账号{}'.format(init_date, field_no,
-                                                                                                 times, buy_account)),
+                                  '预定场地成功,等待付款,日期{},场地{},时间{},购买账号{}'.format(target_time,
+                                                                                                 court_field_no,
+                                                                                                 court_times,
+                                                                                                 buy_account)),
                 proxies=proxies,
                 verify="FiddlerRoot.pem")
             return True
@@ -321,18 +426,7 @@ def pickup_court():
             continue
     end = time.perf_counter()
     print('3失败耗时：{:.4f}s'.format(end - start))
-    save_result(3)
     return False
-
-
-def save_result(court_status):
-    conn = sqlite3.connect(db_file_path)
-    c = conn.cursor()
-    c.execute(
-        "update jiushi_court set COURT_STATUS={},BUY_ACCOUNT='{}' where COURT_NO='{}' and COURT_STATUS=1 and COURT_TIMES='{}'".format(court_status, buy_account,
-                                                                                              court_no,','.join(times)))
-    conn.commit()
-    conn.close()
 
 
 def active_window():
@@ -358,12 +452,13 @@ def active_window():
     coord2 = (curr[0] + 320, curr[1] + 450)
     # 3 场馆
     coord3 = (curr[0] + 32, curr[1] + 187)
-    # 4 19
-    coord4 = (curr[0] + 18, curr[1] + 450)
+    # 4 12
+    coord4 = (curr[0] + 18, curr[1] + 223)
     # 5 确认提交
     coord5 = (curr[0] + 330, curr[1] + 710)
     # 6 滑块
     coord6 = (curr[0] + 95, curr[1] + 525)
+
     # 7 刷新
     coord7 = (curr[0] + 330, curr[1] + 557)
     # 8 立即支付
@@ -414,7 +509,7 @@ def second_is_success(args):
 
 def third_is_success(args):
     url = load_log()
-    if '/api/block/filter?storeId=4&venuesId=30' in url:
+    if '/api/block/filter?storeId=4' in url:
         return True
     else:
         return False
@@ -460,15 +555,20 @@ def code_validation():
         f.close()
     target_bytes = base64.b64decode(imageDataL)
     background_bytes = base64.b64decode(ImageDataS)
-    diff = 0
     res = det.slide_match(target_bytes, background_bytes, simple_target=True)
-    # image_l = find_image('img\\slider.png', 20)
-    # center = pyautogui.center(image_l)
     pyautogui.moveTo(coord6, duration=0)
     time.sleep(0.5)
+    # move_distance = valid_coord[0] - coord6[0]
     # square_x = (res['target'][2] - res['target'][0])
-    length = (res['target'][0]) / 2 - diff
-    pyautogui.dragRel(length, 0, duration=0.5, button='left')
+    length = (res['target'][0]) / 2 - random.randint(20, 22)
+    print('滑动距离{}'.format(length))
+    # print('手动测量滑动距离{}'.format(move_distance))
+    # pyautogui.dragRel(move_distance, 0, duration=0.8, button='left')
+    pyautogui.mouseDown(button='left')
+    pyautogui.moveTo(length + coord6[0], coord6[1], duration=0.4)
+    time.sleep(0.3)
+    pyautogui.mouseUp(button='left')
+    is_run(get_answer, 10, args=['correct answer'])
 
 
 # 加载指定日期场地信息
@@ -575,7 +675,7 @@ def click_day(x, y, days):
 def click_time(court_id, time_ids):
     # 向下滚动
     time.sleep(0.2)
-    pyautogui.scroll(-900)
+    pyautogui.scroll(-200)
     time.sleep(0.2)
     # 标点19：30
     # img = 'img\\03.png'
@@ -595,18 +695,18 @@ def click_time(court_id, time_ids):
         time.sleep(0.01)
     for time_id in time_ids:
         if court_id in [5, 6, 7, 8]:
-            pyautogui.click(x + (court_id - 4) * 80, y + (int(time_id) - 19) * 40, clicks=1,
+            pyautogui.click(x + (court_id - 4) * 80, y + (int(time_id) - 12) * 40, clicks=1,
                             duration=duration)
             continue
         if court_id > 32:
-            pyautogui.click(x + (court_id - 31) * 80, y + (int(time_id) - 19) * 40, clicks=1,
+            pyautogui.click(x + (court_id - 31) * 80, y + (int(time_id) - 12) * 40, clicks=1,
                             duration=duration)
             continue
         if court_id == 2:
-            pyautogui.click(x + court_id * 80, y + (int(time_id) - 19) * 40, clicks=1,
+            pyautogui.click(x + court_id * 80, y + (int(time_id) - 12) * 40, clicks=1,
                             duration=duration)
             continue
-        pyautogui.click(x + 80, y + (int(time_id) - 19) * 40, clicks=1,
+        pyautogui.click(x + 80, y + (int(time_id) - 12) * 40, clicks=1,
                         duration=duration)
         time.sleep(0.01)
 
@@ -649,51 +749,21 @@ def pick_up():
     time.sleep(0.1)
 
 
-def get_info():
-    begin = datetime.datetime.now()
-    item_date = datetime.datetime(int(str(config['date'])[0:4]), int(str(config['date'])[4:6]),
-                                  int(str(config['date'])[6:8]))
-    start_time = get_total_milliseconds(item_date)
-    url = temp_url.format(30, start_time, 37)
-    start_times = []
-    for timespan in config['time']:
-        start_times.append(
-            get_total_milliseconds(item_date +
-                                   datetime.timedelta(hours=int(str(timespan)[0:2]),
-                                                      minutes=int(str(timespan)[2:4]))))
-    normals = http_request(url, start_times)
-    for i in range(len(normals)):
-        if i == 0 or normals[i]['date'] != normals[i - 1]['date']:
-            print('*************日期：' + normals[i]['date'])
-        data_str = "日期:{},星期{},时间段:{},场地号:{}".format(
-            normals[i]['date'],
-            get_week_name(normals[i]['site_time'].isoweekday()),
-            normals[i]['time'],
-            normals[i]['site'])
-        print("****************************************************" + data_str)
-    interval = datetime.datetime.now() - begin
-    print('搜索用时：{}毫秒'.format(int(interval.total_seconds() * 1000)))
-
-
 def exec_search():
     print("{}开始搜索空闲场地~~".format(datetime.datetime.now()))
-    obj_list = []
-    with ThreadPoolExecutor(max_workers=5) as t:
-        for item in group_param:
-            start_times = []
-            today = datetime.date.today()
-            item_date = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=6)
-            temp = week_timespans if item_date.isoweekday() == 6 or item_date.isoweekday() == 7 else timespans
-            for timespan in temp:
-                start_times.append(
-                    get_total_milliseconds(item_date +
-                                           datetime.timedelta(hours=int(timespan[0:2]),
-                                                              minutes=int(timespan[2:4]))))
-            start_time = get_total_milliseconds(item_date)
-            url = temp_url.format(item['venuesId'], start_time, item['skuId'])
-            obj = t.submit(http_request, url, start_times)
-            obj_list.append(obj)
-        print_result(obj_list)
+    result = []
+    sku_id = 36
+    if int(court_field_no) > 8:
+        sku_id = 38
+    for item in group_param:
+        if item['skuId'] != sku_id:
+            continue
+        today = datetime.date.today()
+        item_date = datetime.datetime(today.year, today.month, today.day) + datetime.timedelta(days=pickup_days)
+        start_time = get_total_milliseconds(item_date)
+        url = temp_url.format(item['venuesId'], start_time, item['skuId'])
+        result = http_request(url)
+    return result[0]
 
 
 def print_result(obj_list):
@@ -808,24 +878,23 @@ def print_win(print_list):
                      verify="FiddlerRoot.pem")
 
 
-def http_request(url, start_times):
+def http_request(url):
     normals = []
     response = requests.get(url, proxies=proxies, verify="FiddlerRoot.pem")
     result_json = json.loads(response.content)
     if result_json is not None:
         for block in result_json['data']['modelList']:
-            if (np.array(start_times) == block['startTime']).any():
-                for block_item in block['blockModel']:
-                    if block_item['status'] == 1:
-                        current = get_datetime(block['startTime'])
-                        site_name = int((block_item['groundName']).replace('羽毛球', '').replace('号场', ''))
-                        # if (np.array(sites) == site_name).any():
-                        normals.append(
-                            {
-                                'site_time': current,
-                                'date': current.strftime('%Y-%m-%d'),
-                                'time': current.strftime('%H:%M'),
-                                'site': site_name})
+            for block_item in block['blockModel']:
+                if block_item['status'] == 1:
+                    current = get_datetime(block['startTime'])
+                    site_name = int((block_item['groundName']).replace('羽毛球', '').replace('号场', ''))
+                    # if (np.array(sites) == site_name).any():
+                    normals.append(
+                        {
+                            'site_time': current,
+                            'date': current.strftime('%Y-%m-%d'),
+                            'time': current.strftime('%H:%M'),
+                            'site': site_name})
 
     return normals
 
@@ -911,6 +980,17 @@ def at_name(name):
     pyautogui.press('enter')
     pyautogui.press('enter')
     time.sleep(0.1)
+
+
+valid_coord = {0, 0}
+
+
+def on_click(x, y, button, pressed):
+    global valid_coord
+    if pressed:
+        valid_coord = (x, y)
+        print('点击坐标{}，{}'.format(x, y))
+        return False
 
 
 if __name__ == '__main__':

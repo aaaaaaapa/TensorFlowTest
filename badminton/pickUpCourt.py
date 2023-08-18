@@ -4,8 +4,8 @@ import datetime
 import json
 import os
 import random
+import sqlite3
 import sys
-import threading
 import time
 import traceback
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -21,8 +21,7 @@ import urllib3
 import win32con
 import win32gui
 from bs4 import BeautifulSoup
-from chinese_calendar import is_workday, is_holiday
-import sqlite3
+from chinese_calendar import is_holiday
 
 temp_url = "https://user.jusssportsvenue.com/api/block/ground/list?venuesId={}&sportsType=9&startTime={}&skuId={}&_t={}"
 notice_url = 'http://www.pushplus.plus/send?token=7cb7768ebc2b41a4b4ca047ccdc621a1&title={}&content={}&template=html'
@@ -52,8 +51,20 @@ proxies_num = 50
 agent_headers = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36",
 }
-db_file_path=''
-day_n='1'
+user_agent_list = [
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/68.0.3440.106 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) Gecko/20100101 Firefox/61.0",
+    "Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/64.0.3282.186 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.62 Safari/537.36",
+    "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.101 Safari/537.36",
+    "Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.0)",
+    "Mozilla/5.0 (Macintosh; U; PPC Mac OS X 10.5; en-US; rv:1.9.2.15) Gecko/20110303 Firefox/3.6.15",
+]
+db_file_path = ''
+day_n = '1'
+
+
 def get_ip_list(url):
     web_data = requests.get(url, headers=agent_headers)
 
@@ -106,7 +117,7 @@ def refush_proxy_file(file_path):
 
 
 def _main_():
-    global timespans, week_timespans, random_start, random_end, wechat_name, names, wechat_list, is_agent,db_file_path,day_n
+    global timespans, week_timespans, random_start, random_end, wechat_name, names, wechat_list, is_agent, db_file_path, day_n
 
     file_path = 'proxies' + datetime.datetime.today().strftime('%Y-%m-%d') + '.txt'
     refush_proxy_file(file_path)
@@ -157,7 +168,7 @@ def _main_():
         curr_date = datetime.datetime.today()
         temp_time = datetime.datetime(curr_date.year, curr_date.month, curr_date.day, temp_time.hour, temp_time.minute)
         diff_seconds = (temp_time - datetime.datetime.now()).total_seconds()
-        if 0 < diff_seconds < 10:
+        if 0 < diff_seconds < 20:
             print('12点数据收集中，等待{}秒'.format(str(diff_seconds + 0.01)))
             time.sleep(diff_seconds + 0.01)
             exec_search(True)
@@ -182,7 +193,7 @@ def exec_search(is_current):
         for i in range(7):
             if datetime.datetime.now().hour < 12 and i == 6:
                 continue
-            if i <int(day_n):
+            if i < int(day_n):
                 continue
             if is_current is True:
                 if i != timing_days:
@@ -299,7 +310,7 @@ def write_txt(log):
 def write_txt_real(log):
     curr_date_str = datetime.datetime.today().strftime('%Y-%m-%d')
     with open(curr_date_str + 'real_log.txt', 'a+', encoding='utf8') as w:
-        w.write("\n".join(log))
+        w.write("\n".join(log)+'\n')
         w.close()
 
 
@@ -308,14 +319,20 @@ def print_win(print_list):
         print('无空场地')
     print_list.sort(key=lambda x: (x['date'], x['site'], x['time']), reverse=False)
     uses = []
-    for i in range(len(print_list) - 1):
-        timedelta = print_list[i + 1]['site_time'] - print_list[i]['site_time']
-        if abs(timedelta.total_seconds()) == 3600 \
-                and print_list[i + 1] not in np.array(uses) \
-                and print_list[i + 1]['date'] == print_list[i]['date'] \
-                and print_list[i + 1]['site'] == print_list[i]['site']:
-            uses.append(print_list[i])
-            uses.append(print_list[i + 1])
+    signal_list = []
+    if len(print_list) == 1:
+        signal_list.append(print_list[0])
+    else:
+        for i in range(len(print_list) - 1):
+            timedelta = print_list[i + 1]['site_time'] - print_list[i]['site_time']
+            if abs(timedelta.total_seconds()) == 3600 \
+                    and print_list[i + 1] not in np.array(uses) \
+                    and print_list[i + 1]['date'] == print_list[i]['date'] \
+                    and print_list[i + 1]['site'] == print_list[i]['site']:
+                uses.append(print_list[i])
+                uses.append(print_list[i + 1])
+            elif print_list[i] not in np.array(uses):
+                signal_list.append(print_list[i])
 
     for i in range(len(print_list)):
         if i == 0 or print_list[i]['date'] != print_list[i - 1]['date']:
@@ -340,16 +357,24 @@ def print_win(print_list):
             '****************************************************' + data_str)
 
         uses_str = uses_str + data_str + '\n'
-    insert_court(uses)
-    #     request_get(notice_url.format('2小时场地数量：{}'.format(int(len(uses) / 2)), uses_str))
+    insert_court(uses, signal_list)
+
+
+# request_get(notice_url.format('2小时场地数量：{}'.format(int(len(uses) / 2)), uses_str))
 
 
 def request_get(url):
-    if is_agent:
-        return requests.get(url, proxies=get_random_ip(), verify=False, stream=True)
-    else:
+    for i in range(5):
+        try:
+            if is_agent:
+                return requests.get(url, proxies=get_random_ip(), verify=False, stream=True,
+                                    headers={'User-Agent': random.choice(user_agent_list)}, timeout=5)
+            else:
 
-        return requests.get(url, verify=False, stream=True)
+                return requests.get(url, verify=False, stream=True, timeout=5)
+        except:
+            traceback.print_exc()
+            continue
 
 
 def get_random_ip():
@@ -484,9 +509,6 @@ def schedule_task(exec_time):
         time.sleep(interval)
 
 
-
-
-
 def conn_sqlite():
     return sqlite3.connect(db_file_path)
 
@@ -509,7 +531,7 @@ def create_court_table():
     conn.close()
 
 
-def insert_court(court_list):
+def insert_court(court_list, sign_list):
     conn = conn_sqlite()
     c = conn.cursor()
     c.execute('DELETE FROM jiushi_court WHERE court_status in (0,1) ')
@@ -523,15 +545,24 @@ def insert_court(court_list):
                     and court_list[i + 1]['site'] == court_list[i]['site']:
                 uses.append(court_list[i])
                 uses.append(court_list[i + 1])
-                COURT_TIME = str(court_list[i]['time']).replace(':00', '').replace(':30', '') + ',' + str(
+                court_time = str(court_list[i]['time']).replace(':00', '').replace(':30', '') + ',' + str(
                     court_list[i + 1]['time']).replace(':00', '').replace(':30', '')
-                COURT_NO = court_list[i]['date'] + str(court_list[i]['site']) + COURT_TIME
+                court_no = court_list[i]['date'] + str(court_list[i]['site']) + court_time
                 c.execute("INSERT INTO jiushi_court (COURT_DATE,COURT_SITE,COURT_TIME,COURT_STATUS,BUY_ACCOUNT,APPEAR_TIME,COURT_NO) \
                       VALUES ('{}', '{}','{}',{},'{}','{}','{}')".format(court_list[i]['date'], court_list[i]['site'],
-                                                                         COURT_TIME, 0,
+                                                                         court_time, 0,
                                                                          '', str(datetime.datetime.now()),
-                                                                         COURT_NO))
-
+                                                                         court_no))
+    # if len(sign_list) > 0:
+    #     for sign in sign_list:
+    #         court_time = str(sign['time']).replace(':00', '').replace(':30', '')
+    #         court_no = sign['date'] + str(sign['site']) + str(sign['time']).replace(':00', '').replace(':30', '')
+    #         c.execute("INSERT INTO jiushi_court (COURT_DATE,COURT_SITE,COURT_TIME,COURT_STATUS,BUY_ACCOUNT,APPEAR_TIME,COURT_NO) \
+    #                               VALUES ('{}', '{}','{}',{},'{}','{}','{}')".format(sign['date'],
+    #                                                                                  sign['site'],
+    #                                                                                  court_time, 0,
+    #                                                                                  '', str(datetime.datetime.now()),
+    #                                                                                  court_no))
     conn.commit()
     conn.close()
 

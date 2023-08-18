@@ -1,11 +1,10 @@
+import base64
 import datetime
 import json
 import os
-import random
 import sys
 import time
 import traceback
-from ctypes import windll
 
 import psutil
 import pyautogui
@@ -15,6 +14,7 @@ import win32con
 import win32gui
 
 from comm import autoUtil
+from ddddocr import DdddOcr
 
 proxies = {"http": "http://127.0.0.1:8888", "https": "http://127.0.0.1:8888"}
 verify_str = "FiddlerRoot.pem"
@@ -41,11 +41,14 @@ court_sort_no = 0
 success_num = 0
 curr_point = []
 days = 6
+coord6 = {}
+slide_png_path = r'd:\\private\\slide.png'
+bg_png_path = r'd:\\private\\bg.png'
 
 
 def _main_():
     global info_list, start_diff, court_sort_no, days
-    exec_times =[ '00:00','12:00']
+    exec_times = ['00:00', '12:00']
     with open("configInfo/51yundong.txt", "r", encoding='utf8') as f:
         configList = f.readlines()
         f.close()
@@ -75,10 +78,12 @@ def _main_():
     # info_list = [{'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[0])},
     #              {'resourceDate': init_date, 'fieldNo': field_no, 'time': float(times[1])}]
     # fiddler_start()
+    # time.sleep(2)
+    # pyautogui.hotkey('winleft', 'm')
     # for i in range(1):
     #     close_win_class()
     #     login()
-    #     task()
+    #     task(2)
     schedule_task(exec_times)
 
 
@@ -98,7 +103,7 @@ def before_calc(content):
     temp_second = 0
 
     for item in court_all_list:
-        if item['fieldNo'] == 1 or item['fieldNo'] == 9:
+        if court_type == 1 and (item['fieldNo'] == 1 or item['fieldNo'] == 9):
             continue
         if num == 0:
             break
@@ -147,6 +152,10 @@ def task(courttype):
             pyautogui.moveTo((curr_point[0] + 80, curr_point[1] + 100))
             if os.path.exists(fllow_file_path):
                 os.remove(fllow_file_path)
+            if os.path.exists(bg_png_path):
+                os.remove(bg_png_path)
+            if os.path.exists(slide_png_path):
+                os.remove(slide_png_path)
             if court_type == 1:
                 # 卢湾
                 auto_pickup()
@@ -296,7 +305,7 @@ def get_access_token():
 
 
 def login():
-    global start, logged, curr_point
+    global start, logged, curr_point, coord6
     logged = True
     start = time.perf_counter()
 
@@ -306,6 +315,7 @@ def login():
         os.startfile(r"C:\Users\Administrator\Desktop\来沪动丨健身地图.lnk")
         print('1当前时间：{}'.format(datetime.datetime.now()))
         # access_token = get_access_token()
+        time.sleep(2)
         is_run(is_success, 100, '/api/user/users/info')
         print('2当前时间：{}'.format(datetime.datetime.now()))
         # if access_token is None:
@@ -321,6 +331,8 @@ def login():
         print('未获得焦点')
         traceback.print_exc()
     print(curr_point)
+    # 6 滑块
+    coord6 = (curr_point[0] + 95, curr_point[1] + 525)
     time.sleep(0.5)
     pyautogui.click((curr_point[0] + 370, curr_point[1] + 750), clicks=1, duration=1)
     time.sleep(0.5)
@@ -457,7 +469,14 @@ def auto_pickup():
     # print('成功耗时：{:.4f}s'.format(end - auto_start))
     # return
     pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
-    submit_result = is_run(is_success, 50, 'orders?orderType=1')
+    for i in range(5):
+        code_validation()
+        submit_result = is_run(is_success, 50, 'orders?orderType=1')
+        if submit_result:
+            break
+        else:
+            time.sleep(0.5)
+
     info_str = str(info_list[0]['time'])
     if submit_result:
 
@@ -485,8 +504,8 @@ def is_run(task, max_num=5, args=None):
 
 def is_success(args):
     logs = load_log()
-    for log in logs:
-        infos = log.split('||')
+    for i in range(len(logs) - 1, -1, -1):
+        infos = logs[i].split('||')
         if len(infos) == 2 and args in str(infos[0]):
             result = json.loads(infos[1])
             return result['code'] == 200
@@ -514,15 +533,15 @@ def wanti_auto_pickup():
     is_run(is_success, 200, 'api/stadium/resources')
 
     # 点击展开
-    pyautogui.click((curr_point[0] + 367, curr_point[1] + 512), clicks=1, duration=0.1)
-    time.sleep(0.5)
+    pyautogui.click((curr_point[0] + 367, curr_point[1] + 512), clicks=1, duration=0.3)
+    time.sleep(0.2)
     # 点击羽毛球空间
     pyautogui.click((curr_point[0] + 150, curr_point[1] + 555), clicks=1, duration=0.1)
     is_run(is_success, 200, 'dates?stadiumItemId')
-    time.sleep(0.5)
+    time.sleep(0.2)
     # 往下滚动
     pyautogui.scroll(-500)
-    time.sleep(0.5)
+    time.sleep(0.2)
     # 点击最新日期
     print('场馆详情页面点击：{}'.format(datetime.datetime.now()))
     pyautogui.click((curr_point[0] + 345, curr_point[1] + (int(days) * 57) + 300), clicks=1, duration=0.1)
@@ -540,15 +559,15 @@ def wanti_auto_pickup():
     print('加载场地耗时：{:.4f}s'.format(end - load_start))
     print('加载完毕：{}'.format(datetime.datetime.now()))
 
-    pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 525), duration=0)
+    pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 355), duration=0)
     time.sleep(0.1)
-    pyautogui.scroll(-50)
+    pyautogui.scroll(-100)
     time.sleep(0.1)
     num = int(info_list[0]['time'])
     if num > 18:
         num = 18
     pyautogui.keyDown('shift')
-    pyautogui.scroll(-29 * (num - 9))
+    pyautogui.scroll(-25 * (num - 8))
     pyautogui.keyUp('shift')
     end = time.perf_counter()
     print('选择场地前耗时：{:.4f}s'.format(end - auto_start))
@@ -565,7 +584,7 @@ def wanti_auto_pickup():
     for info in info_list:
         time.sleep(0.1)
         pyautogui.click((curr_point[0] + 135 + x_diff * (int(info['time']) - num)),
-                        (curr_point[1] + 365 + y_diff * (int(info['fieldNo']) - variate)), clicks=1)
+                        (curr_point[1] + 150 + y_diff * (int(info['fieldNo'])) - variate), clicks=1)
         if int(info['fieldNo']) > 10:
             pyautogui.moveTo((curr_point[0] + 250, curr_point[1] + 325), duration=0)
             time.sleep(0.1)
@@ -576,7 +595,14 @@ def wanti_auto_pickup():
     time.sleep(0.1)
 
     pyautogui.click((curr_point[0] + 270, curr_point[1] + 720), clicks=1, duration=0.2)
-    submit_result = is_run(is_success, 50, 'orders?orderType=1')
+    for i in range(5):
+        code_validation()
+        submit_result = is_run(is_success, 50, 'orders?orderType=1')
+        if submit_result:
+            break
+        else:
+            time.sleep(0.5)
+    # submit_result = is_run(is_success, 50, 'orders?orderType=1')
     info_str = str(info_list[0]['time'])
     court_no = str(int(info_list[0]['fieldNo']) + 2)
     if submit_result:
@@ -631,7 +657,44 @@ def schedule_task(exec_times):
         time.sleep(interval)
 
 
+def code_validation():
+    for i in range(50):
+        if os.path.exists(slide_png_path) is False:
+            time.sleep(0.2)
+        else:
+            break
+    if os.path.exists(slide_png_path) is False:
+        print('10秒未弹出滑动框')
+        return
+    det = DdddOcr(det=False, ocr=False)
+    target_bytes = read_img(slide_png_path)
+
+    background_bytes = read_img(bg_png_path)
+    diff = 0
+    res = det.slide_match(target_bytes, background_bytes, simple_target=True)
+    pyautogui.moveTo(coord6, duration=0)
+    time.sleep(0.5)
+    length = (res['target'][0]) - diff
+    pyautogui.dragRel(length, 0, duration=0.5, button='left')
+    print(length)
+
+
+def read_img(file):
+    with open(file, 'rb') as f:
+        img_data = f.read()
+        base64_data = base64.b64encode(img_data)
+        # print(type(base64_data))
+        # # print(base64_data)
+        # # 如果想要在浏览器上访问base64格式图片，需要在前面加上：data:image/jpeg;base64,
+        # base64_str = str(base64_data, 'utf-8')
+        # print(base64_str)
+        return img_data
+
+
 if __name__ == '__main__':
+    # curr_point = autoUtil.active_window("Chrome_WidgetWin_0", "来沪动丨健身地图")
+    # coord6 = (curr_point[0] + 95, curr_point[1] + 525)
+    # code_validation()
     try:
         _main_()
     except:
